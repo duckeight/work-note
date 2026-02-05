@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:dmd="urn:BLUEONE:DATA_MODEL_DEFINITION"
+	attributeFormDefault="unqualified" elementFormDefault="qualified"
+	targetNamespace="urn:BLUEONE:DATA_MODEL_DEFINITION"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:sdd="urn:ISO19848:SHIP_DATA_DEFINITION">
+	<xs:import schemaLocation="ship_data_definition.xsd" namespace="urn:ISO19848:SHIP_DATA_DEFINITION"></xs:import>
+
+	<xs:complexType name="DataModel">
+		<xs:sequence>
+			<xs:element name="ModelInformation"
+				type="dmd:ModelInformation" maxOccurs="1" minOccurs="1">
+			</xs:element>
+			<xs:element name="LocalIDReferences"
+				type="dmd:LocalIDReference" maxOccurs="1" minOccurs="1">
+			</xs:element>
+			<xs:element name="DataNodeList" type="dmd:DataNodeList" maxOccurs="unbounded" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ModelInformation">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string" maxOccurs="1"
+				minOccurs="1">
+			</xs:element>
+			<xs:element name="Version" type="xs:string" maxOccurs="1"
+				minOccurs="1">
+			</xs:element>
+			<xs:element name="Author" type="xs:string" maxOccurs="1"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="Copyright" type="xs:string" maxOccurs="1"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="ReferenceSpecification" type="xs:string"
+				maxOccurs="1" minOccurs="0">
+			</xs:element>
+			<xs:element name="ModelType" maxOccurs="1" minOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Basement"></xs:enumeration>
+						<xs:enumeration value="Application"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ParentModel" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="LocalIDReference">
+		<xs:sequence>
+			<xs:element name="MaxParts" type="xs:int" maxOccurs="1"
+				minOccurs="1">
+			</xs:element>
+			<xs:element name="LocalIDProperties" type="dmd:LocalIDProperties" maxOccurs="1" minOccurs="1"></xs:element>
+			<xs:element name="IDPartList" type="dmd:IDPartList"
+				maxOccurs="1" minOccurs="1">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="IDPart">
+		<xs:sequence>
+			<xs:element name="Order" type="xs:int" maxOccurs="1"
+				minOccurs="1">
+			</xs:element>
+			<xs:element name="Name" type="xs:string" maxOccurs="1"
+				minOccurs="1">
+			</xs:element>
+			<xs:element name="Hierarchy" type="xs:boolean" maxOccurs="1"
+				minOccurs="1">
+			</xs:element>
+			<xs:element name="Index" type="dmd:Index" maxOccurs="1"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="DataNodeList" type="dmd:DataNodeList" maxOccurs="1" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NameObjectList">
+		<xs:sequence>
+			<xs:element name="NameObject" type="sdd:NameObject" maxOccurs="unbounded" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Index">
+		<xs:sequence>
+			<xs:element name="IndexType" maxOccurs="1" minOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="None"></xs:enumeration>
+						<xs:enumeration value="Postfix"></xs:enumeration>
+						<xs:enumeration value="Reference"></xs:enumeration>
+						<xs:enumeration value="Self"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ReferenceOrder" type="xs:int" maxOccurs="1" minOccurs="0"></xs:element>
+			<xs:element name="IndexDigit" type="xs:int" maxOccurs="1" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AlarmThreshold">
+		<xs:sequence>
+			<xs:element name="LowMinor" type="sdd:emptyOrDecimal"
+				maxOccurs="1" minOccurs="0">
+			</xs:element>
+			<xs:element name="LowMajor" type="sdd:emptyOrDecimal"
+				maxOccurs="1" minOccurs="0">
+			</xs:element>
+			<xs:element name="HighMinor" type="sdd:emptyOrDecimal"
+				maxOccurs="1" minOccurs="0">
+			</xs:element>
+			<xs:element name="HighMajor" type="sdd:emptyOrDecimal"
+				maxOccurs="1" minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="IDPartList">
+		<xs:sequence>
+			<xs:element name="IDPart" type="dmd:IDPart" maxOccurs="unbounded" minOccurs="1"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="LocalIDProperties">
+		<xs:sequence>
+            <xs:element name="IDElement" type="xs:string" maxOccurs="1" minOccurs="1">
+			</xs:element>
+            <xs:element name="AllowEmpty" type="xs:boolean" maxOccurs="1" minOccurs="1"></xs:element>
+            <xs:element name="Delimiter" type="xs:string" maxOccurs="1"
+				minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:complexType name="DataNode">
+    	<xs:sequence>
+    		<xs:element name="ID" type="xs:string" maxOccurs="1"
+    			minOccurs="1">
+    		</xs:element>
+    		<xs:element name="Level" type="xs:int" maxOccurs="1"
+    			minOccurs="1">
+    		</xs:element>
+    		<xs:element name="Name" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+    		<xs:element name="NameObject" type="sdd:NameObject"
+    			maxOccurs="1" minOccurs="1">
+    		</xs:element>
+    		<xs:element name="DataChannelID" type="sdd:DataChannelID"
+    			maxOccurs="1" minOccurs="0">
+    		</xs:element>
+    		<xs:element name="Property" type="sdd:Property"
+    			maxOccurs="1" minOccurs="0">
+    		</xs:element>
+    		<xs:element name="DataNodeList" type="dmd:DataNodeList"
+    			maxOccurs="1" minOccurs="0">
+    		</xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DataNodeList">
+    	<xs:sequence>
+    		<xs:element name="DataNode" type="dmd:DataNode" maxOccurs="unbounded" minOccurs="1"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+	<xs:element name="DataModel" type="dmd:DataModel"></xs:element>
+
+	<xs:element name="InoutType">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="AI"></xs:enumeration>
+				<xs:enumeration value="AO"></xs:enumeration>
+				<xs:enumeration value="AIO"></xs:enumeration>
+				<xs:enumeration value="DI"></xs:enumeration>
+				<xs:enumeration value="DO"></xs:enumeration>
+				<xs:enumeration value="DIO"></xs:enumeration>
+			</xs:restriction>
+		</xs:simpleType>
+    </xs:element>
+
+	<xs:element name="AlarmThreshold" type="dmd:AlarmThreshold"></xs:element>
+
+    <xs:element name="Scale" type="xs:float"></xs:element>
+
+    <xs:element name="InstCode" type="xs:string"></xs:element>
+
+    <xs:element name="Direction">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="RO"></xs:enumeration>
+				<xs:enumeration value="RW"></xs:enumeration>
+				<xs:enumeration value="WO"></xs:enumeration>
+			</xs:restriction>
+		</xs:simpleType>
+    </xs:element>
+
+    <xs:element name="ChannelType">
+        <xs:simpleType>
+    		<xs:restriction base="xs:string">
+    			<xs:enumeration value="Alarm"></xs:enumeration>
+    			<xs:enumeration value="Data"></xs:enumeration>
+    		</xs:restriction>
+    	</xs:simpleType>
+    </xs:element>
+
+
+    <xs:element name="Description" type="xs:string"></xs:element>
+</xs:schema>

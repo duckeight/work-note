@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		targetNamespace="urn:HDKSOE:ISS2_DATA_MODEL_EXTENTSION"
+		xmlns:hd="urn:HDKSOE:ISS2_DATA_MODEL_EXTENSION"
+		elementFormDefault="qualified">
+
+    <xs:complexType name="NameObjectPart">
+    	<xs:sequence>
+    		<xs:element name="Name" type="xs:string" maxOccurs="1"
+    			minOccurs="1">
+    		</xs:element>
+    		<xs:element name="Description" type="xs:string" maxOccurs="1"
+    			minOccurs="0">
+    		</xs:element>
+    		<xs:element name="Abbreviation" type="xs:string" maxOccurs="1"
+    			minOccurs="1">
+    		</xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="CategoryName" type="hd:NameObjectPart"></xs:element>
+	<xs:element name="CategorySeq" type="hd:NameObjectPart"></xs:element>
+    <xs:element name="SubCategoryName" type="hd:NameObjectPart"></xs:element>
+    <xs:element name="SubCategorySeq" type="hd:NameObjectPart"></xs:element>
+    <xs:element name="Content" type="hd:NameObjectPart"></xs:element>
+    <xs:element name="Position" type="hd:NameObjectPart"></xs:element>
+    <xs:element name="Item" type="hd:NameObjectPart"></xs:element>
+    <xs:element name="ItemSeq" type="hd:NameObjectPart"></xs:element>
+
+    <xs:complexType name="DescriptionHistory">
+    	<xs:sequence>
+    		<xs:element name="Description" type="xs:string" maxOccurs="unbounded" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="DescriptionHistory"
+    	type="hd:DescriptionHistory">
+    </xs:element>
+	<!-- 집계 유형 (TBD) -->
+	<xs:element name="SamplingMethod">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="mean"/>
+				<xs:enumeration value="median"/>
+				<xs:enumeration value="lastOne"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+
+</xs:schema>

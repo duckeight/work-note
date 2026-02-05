@@ -1,0 +1,32 @@
+2. Talk List
+    1) findRoomBoardList (search by title)
+3. Talk Register
+    1) findStudentRecordList (search by name, studentId, email)
+    2) findInstructorProfile (search by name, researcherId, email)
+    3) registerChatRoom
+4-1. Talk Default
+    1) findRoomBoardDetail
+    2) registerTalk with websocket
+    3) findTalkList with websocket
+    4) findTalkList with http (search with talkSequence, message)
+    5) registerClip
+    6) DeleteRoomieBoard
+4-2. Talk Search
+    1) findTalkBySearch (4-1.4)
+    2) findTalkList
+4-3. Talk Action
+    skip
+5-1. Settings Default
+    1) findRoomBoardDetail
+    2) findRoomieList
+    3) registerDialogTalk
+    4) deleteRoomie
+    5) registerAdmin
+    6) deleteAdmin
+    7) findStudentRecordList 3.1)
+    8) findInstructorProfile 3.2)
+    9) registerRoomieList
+    10) findDepotListByCabinetId
+5-2. Settings Edit
+    1) modifyRoomBoard
+

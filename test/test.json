@@ -1,0 +1,322 @@
+[
+  {
+    "id": "TL-ERR-001",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1712534400100,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1712534400100,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-BAD-01",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1712534400000,
+    "description": "지각했습니다. (09:45 출근, 45분 지연)"
+  },
+  {
+    "id": "TL-ERR-003",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1712620800300,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1712620800300,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-BAD-01",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1712620800000,
+    "description": "점심시간 복귀가 지연되었습니다. (13:30 복귀)"
+  },
+  {
+    "id": "TL-ERR-005",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1712707200500,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1712707200500,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-BAD-01",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1712707200000,
+    "description": "승인받지 않은 조기 퇴근이 감지되었습니다. (17:00 퇴실)"
+  },
+  {
+    "id": "TL-ERR-007",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1712793600700,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1712793600700,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-BAD-01",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1712793600000,
+    "description": "대리 출근 시도가 적발되어 경고 조치되었습니다."
+  },
+  {
+    "id": "TL-ERR-009",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1712880000900,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1712880000900,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-BAD-01",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1712880000000,
+    "description": "근무지 이탈이 확인되었습니다. (2시간 부재)"
+  },
+  {
+    "id": "TL-ERR-011",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1712966401100,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1712966401100,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-BAD-01",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1712966400000,
+    "description": "개인 사정으로 당일 통보 후 결근했습니다."
+  },
+  {
+    "id": "TL-ERR-013",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1713052801300,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1713052801300,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-BAD-01",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1713052800000,
+    "description": "지각했습니다. (09:15 출근, 상습 지각 경고)"
+  },
+  {
+    "id": "TL-ERR-015",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1713139201500,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1713139201500,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-BAD-01",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1713139200000,
+    "description": "시말서를 제출하고 정상 출근했습니다."
+  },
+  {
+    "id": "TL-ERR-017",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1713225601700,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1713225601700,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-BAD-01",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1713225600000,
+    "description": "재택근무 중 연락이 두절되었습니다. (3시간)"
+  },
+  {
+    "id": "TL-ERR-019",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1713312001900,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1713312001900,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-BAD-01",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1713312000000,
+    "description": "병가 증빙 서류 미제출로 무단 결근 처리되었습니다."
+  },
+  {
+    "id": "TL-201",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1711929000100,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1711929000100,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-001",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1711929000000,
+    "description": "사무실 정문에서 출근 체크를 완료했습니다."
+  },
+  {
+    "id": "TL-204",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1711962000100,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1711962000100,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-001",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1711962000000,
+    "description": "오후 반차 사용으로 조기 퇴근했습니다."
+  },
+  {
+    "id": "TL-208",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1712015700150,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1712015700150,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-001",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1712015700000,
+    "description": "출근 체크를 완료했습니다."
+  },
+  {
+    "id": "TL-211",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1712050200100,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1712050200100,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-001",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1712050200000,
+    "description": "정시 퇴근했습니다."
+  },
+  {
+    "id": "TL-218",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1712275200100,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1712275200100,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-001",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1712275200000,
+    "description": "주말 당직 근무를 위해 출근했습니다."
+  },
+  {
+    "id": "TL-219",
+    "entityVersion": 1,
+    "registeredBy": "SYSTEM",
+    "registeredOn": 1712293200200,
+    "modifiedBy": "SYSTEM",
+    "modifiedOn": 1712293200200,
+    "requesterKey": {
+      "id": "0@0:0:0-0",
+      "type": "Actor",
+      "usid": null
+    },
+    "stageId": null,
+    "pavilionId": "PAV-KR-01",
+    "entityId": "WORKER-001",
+    "entityType": "Worker",
+    "category": "Commute",
+    "occurredAt": 1712293200000,
+    "description": "주말 당직 근무를 마치고 퇴근했습니다."
+  }
+]

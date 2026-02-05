@@ -1,0 +1,20 @@
+[Role]
+~~
+[Instruction]
+~~
+[user Query]
+~~
+[TOOL]
+~~
+[Rubrics]
+~~
+[Context]
+Profile
+이름: ㅁㄴㅇ
+나이: ㅁㄴㅇ
+
+Work
+2015-01-01
+11시 커밋함
+12시 커밋함
+13시 커밋함

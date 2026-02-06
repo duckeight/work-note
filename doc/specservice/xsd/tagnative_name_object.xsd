@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		targetNamespace="urn:BLUEONE_TAG_NATIVE_NAME_OBJECT"
+		xmlns:tn="urn:BLUEONE_TAGNATIVE_NAME_OBJECT"
+		elementFormDefault="qualified">
+
+    <xs:element name="Device" type="xs:string" ></xs:element>
+    <xs:element name="Interface" type="xs:string"></xs:element>
+    <xs:element name="TagName" type="xs:string"></xs:element>
+</xs:schema>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dmd:DataModel xmlns:dmd="urn:BLUEONE:DATA_MODEL_DEFINITION" xmlns:hd="urn:HDKSOE:ISS2_DATA_MODEL_EXTENSION"
+               xmlns:sdd="urn:ISO19848:SHIP_DATA_DEFINITION" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <dmd:ModelInformation>
+        <dmd:Name>iss2</dmd:Name>
+        <dmd:Version>3</dmd:Version>
+        <dmd:Author>admin</dmd:Author>
+        <dmd:Copyright>2022 UANGEL Corporation</dmd:Copyright>
+        <dmd:ReferenceSpecification>urn:ISO19848:SHIP_DATA_DEFINITION</dmd:ReferenceSpecification>
+        <dmd:ModelType>Application</dmd:ModelType>
+        <dmd:ParentModel>ISO19848</dmd:ParentModel>
+    </dmd:ModelInformation>
+    <dmd:LocalIDReferences>
+        <dmd:MaxParts>3</dmd:MaxParts>
+        <dmd:LocalIDProperties>
+            <dmd:IDElement>ID</dmd:IDElement>
+            <dmd:AllowEmpty>true</dmd:AllowEmpty>
+            <dmd:Delimiter>/</dmd:Delimiter>
+        </dmd:LocalIDProperties>
+        <dmd:IDPartList>
+            <dmd:IDPart>
+                <dmd:Order>1</dmd:Order>
+                <dmd:Name>Naming Rule</dmd:Name>
+                <dmd:Hierarchy>true</dmd:Hierarchy>
+                <dmd:Index>
+                    <dmd:IndexType>None</dmd:IndexType>
+                </dmd:Index>
+                <dmd:DataNodeList>
+                    <dmd:DataNode>
+                        <dmd:ID>iss2</dmd:ID>
+                        <dmd:Level>1</dmd:Level>
+                        <dmd:NameObject>
+                            <sdd:NamingRule>iss2</sdd:NamingRule>
+                        </dmd:NameObject>
+                    </dmd:DataNode>
+                    <dmd:DataNode>
+                        <dmd:ID>tag</dmd:ID>
+                        <dmd:Level>1</dmd:Level>
+                        <dmd:NameObject>
+                            <sdd:NamingRule>tag native</sdd:NamingRule>
+                        </dmd:NameObject>
+                    </dmd:DataNode>
+                </dmd:DataNodeList>
+            </dmd:IDPart>
+            <dmd:IDPart>
+                <dmd:Order>2</dmd:Order>
+                <dmd:Name>Category</dmd:Name>
+                <dmd:Hierarchy>true</dmd:Hierarchy>
+                <dmd:Index>
+                    <dmd:IndexType>Postfix</dmd:IndexType>
+                </dmd:Index>
+                <dmd:DataNodeList/>
+            </dmd:IDPart>
+            <dmd:IDPart>
+                <dmd:Order>3</dmd:Order>
+                <dmd:Name>Property</dmd:Name>
+                <dmd:Hierarchy>false</dmd:Hierarchy>
+                <dmd:Index>
+                    <dmd:IndexType>None</dmd:IndexType>
+                </dmd:Index>
+                <dmd:DataNodeList/>
+            </dmd:IDPart>
+        </dmd:IDPartList>
+    </dmd:LocalIDReferences>
+    <dmd:DataNodeList>
+        <dmd:DataNode>
+            <dmd:ID>iss2</dmd:ID>
+            <dmd:Level>1</dmd:Level>
+            <dmd:NameObject>
+                <sdd:NamingRule>iss2</sdd:NamingRule>
+            </dmd:NameObject>
+            <dmd:DataNodeList>
+                <dmd:DataNode>
+                    <dmd:ID>Generator03</dmd:ID>
+                    <dmd:Level>2</dmd:Level>
+                    <dmd:NameObject>
+                        <sdd:NamingRule>iss2</sdd:NamingRule>
+                    </dmd:NameObject>
+                    <dmd:DataNodeList>
+                        <dmd:DataNode>
+                            <dmd:ID>WindingPhaseRTemp</dmd:ID>
+                            <dmd:Level>3</dmd:Level>
+                            <dmd:NameObject>
+                                <sdd:NamingRule>iss2
+                                </sdd:NamingRule>
+                            </dmd:NameObject>
+                            <dmd:DataChannelID>
+                                <sdd:LocalID>
+                                    /iss2/Generator/03/N/N/N/N/Winding/PhaseR/Temp/N
+                                </sdd:LocalID>
+                                <sdd:ShortID>
+                                    Generator03_WindingPhaseRTemp
+                                </sdd:ShortID>
+                            </dmd:DataChannelID>
+                            <dmd:Property>
+                                <sdd:DataChannelType/>
+                                <sdd:Format/>
+                                <sdd:Unit>
+                                    <sdd:UnitSymbol>ºC
+                                    </sdd:UnitSymbol>
+                                </sdd:Unit>
+                                <sdd:Name>
+                                    Generator03_WindingPhaseRTemp
+                                </sdd:Name>
+                                <dmd:Description>NO.3
+                                    D/G WINDING TEMP(R)
+                                </dmd:Description>
+                                <hd:DescriptionHistory>
+                                    <hd:Description>NO.3
+                                        D/G WINDING(R)
+                                        TEMP
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        D/G WINDING U
+                                        (TEMP)
+                                    </hd:Description>
+                                    <hd:Description>DG 3
+                                        WINDING(R) TEMP
+                                    </hd:Description>
+                                    <hd:Description>DG3
+                                        WINDING U TEMP
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GEN. WINDING R
+                                        TEMP
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GEN. WINDING
+                                        TEMP U1
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GEN WINDING(R)
+                                        TEMP
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        G/E WINDING(R)
+                                        TEMP.
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GEN. WIND TEMP
+                                        (R)
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        D/G WINDING
+                                        TEMP.(R)
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        D/G WINDING
+                                        TEMP(R)
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GEN WINDING U
+                                        TEMP
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        G/E STATOR
+                                        WINDING (R) TEMP
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GEN.WIN.TEMP(R)
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        G/E WINDING(R)
+                                        TEMP
+                                    </hd:Description>
+                                    <hd:Description>GEN3
+                                        WINDING TEMP.(U)
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        G/E WIND TEMP
+                                        (R)
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GENERATOR WIND
+                                        TEMP (R)
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GEN. WINDING R
+                                        TEMP NGWINDING
+                                        RGN AHIGAH
+                                        INDICATION(TIAH/TIAHH)
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GEN. WINDING
+                                        TEMP(R)
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GEN. WINDING(R)
+                                        TEMP
+                                    </hd:Description>
+                                    <hd:Description>
+                                        MAIN(NO.3) GEN.
+                                        WINDING(R) TEMP
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GEN.WIND.TEMP(R)
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GEN. WINDING(R)
+                                        TEMP
+                                    </hd:Description>
+                                    <hd:Description>NO.3
+                                        GEN STATOR(R)
+                                        WIND TEMP
+                                    </hd:Description>
+                                </hd:DescriptionHistory>
+                                <dmd:Scale/>
+                                <dmd:Range/>
+                            </dmd:Property>
+                        </dmd:DataNode>
+                    </dmd:DataNodeList>
+                </dmd:DataNode>
+            </dmd:DataNodeList>
+        </dmd:DataNode>
+    </dmd:DataNodeList>
+</dmd:DataModel>

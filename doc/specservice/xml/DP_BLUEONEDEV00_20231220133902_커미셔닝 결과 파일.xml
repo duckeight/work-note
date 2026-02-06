@@ -1,0 +1,1685 @@
+<sdd:Package xmlns:device="urn:BLUEONE:DEVICE_DATA_MAP" xmlns:dmd="urn:BLUEONE:DATA_MODEL_DEFINITION" xmlns:sdd="urn:ISO19848:SHIP_DATA_DEFINITION" xmlns:tn="urn:BLUEONE_TAGNATIVE_NAME_OBJECT" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:ISO19848:SHIP_DATA_DEFINITION ship_data_definition.xsd       urn:BLUEONE:DATA_MODEL_DEFINITION blueone_data_model_definition.xsd       urn:BLUEONE:DEVICE_DATA_MAP blueone_device_data_map.xsd       urn:BLUEONE_JSMEA_NAME_OBJECT jsmea_name_object.xsd       urn:BLUEONE_TAGNATIVE_NAME_OBJECT tagnative_name_object.xsd       urn:BLUEONE:KMODEL_NAME_OBJECT kmodel_name_object.xsd">
+    <sdd:Header>
+        <sdd:ShipID>BLUEONEDEV00</sdd:ShipID>
+        <sdd:DataChannelListID>
+            <sdd:ID>BLUEONEDEV00</sdd:ID>
+            <sdd:TimeStamp>2023-12-19T04:44:10</sdd:TimeStamp>
+        </sdd:DataChannelListID>
+        <sdd:Author>UANGEL Corporation</sdd:Author>
+    </sdd:Header>
+    <sdd:DataChannelList>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS_ALARM/AlarmTest</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS_ALARM</tn:Interface>
+                    <tn:TagName>
+                        AlarmTest</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                     <sdd:Type>Inst</sdd:Type>
+                     <sdd:UpdateCycle>60</sdd:UpdateCycle>
+                     <sdd:CalculationPeriod>60</sdd:CalculationPeriod>
+                 </sdd:DataChannelType>
+                 <sdd:Format>
+                     <sdd:Type>Boolean</sdd:Type>
+                 </sdd:Format>
+                 <sdd:Range>
+                     <sdd:High />
+                     <sdd:Low />
+                 </sdd:Range>
+                 <sdd:Unit>
+                     <sdd:UnitSymbol>MPa</sdd:UnitSymbol>
+                     <sdd:QuantityName>pressure</sdd:QuantityName>
+                 </sdd:Unit>
+                 <dmd:AlarmThreshold>
+                     <dmd:LowMinor />
+                     <dmd:LowMajor />
+                     <dmd:HighMinor />
+                     <dmd:HighMajor />
+                 </dmd:AlarmThreshold>
+                 <dmd:ChannelType>Alarm</dmd:ChannelType>
+                 <dmd:Direction>RO</dmd:Direction>
+                 <dmd:InoutType>DI</dmd:InoutType>
+                 <dmd:InstCode>Inst</dmd:InstCode>
+                 <dmd:Description>
+                     M/E CROSSHEAD LO IN  P</dmd:Description>
+                <device:DeviceProperty>
+                    <device:ID>AMS</device:ID>
+                    <device:InterfaceID>AMS_ALARM</device:InterfaceID>
+                    <device:OriginTag>AlarmTest</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="0" bit="" description="M/E CROSSHEAD LO IN  P" parsingFormat="Boolean" wordSwap="" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/TA004.01</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        TA004.01</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High>200</sdd:High>
+                    <sdd:Low>0</sdd:Low>
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol>deg.C</sdd:UnitSymbol>
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        TA004.01</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="1" description="ME CYL.1 SCAV AIR FIRE DET T H" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/TA007.01</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        TA007.01</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        TA007.01</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="2" description="NO.1 SCAV AIR TEMP BEF A/C T" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/TA008.01</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        TA008.01</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        TA008.01</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="3" description="NO.1 SCAV AIR AFT A/C TEMP H" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/EG006</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        EG006</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        EG006</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="4" description="EXH GAS BLR EXH GAS OUT TEMP H" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/EG008.01</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        EG008.01</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High>600</sdd:High>
+                    <sdd:Low>0</sdd:Low>
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol>deg.C</sdd:UnitSymbol>
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        EG008.01</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="5" description="ME NO.1 T/C AIR INTAKE TEMP 1" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/EG008.02</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        EG008.02</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High>600</sdd:High>
+                    <sdd:Low>0</sdd:Low>
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol>deg.C</sdd:UnitSymbol>
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        EG008.02</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="6" description="ME NO.1 T/C AIR INTAKE TEMP 2" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/GE101.01</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        GE101.01</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        GE101.01</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="7" description="NO.1 GE WINDING(R-PHASE) TEMP H" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/GE101.02</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        GE101.02</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        GE101.02</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="8" description="NO.1 GE WINDING(S-PHASE) TEMP H" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/GE101.03</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        GE101.03</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        GE101.03</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="9" description="NO.1 GE WINDING(T-PHASE) TEMP H" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/EE086</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        EE086</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        EE086</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="10" description="MEAT RM TEMP H" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/EE087</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        EE087</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        EE087</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="11" description="FISH RM TEMP H" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/EE088</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        EE088</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        EE088</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="12" description="VEGETABLE RM TEMP H" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/EE119.01</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        EE119.01</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        EE119.01</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="13" description="NO.1 MID-SHIP HV TR(R) TEMP" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/EE121.01</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        EE121.01</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        EE121.01</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="14" description="NO.1 MID-SHIP REEFER TR(R) TEMP" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/EE123.01</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        EE123.01</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        EE123.01</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="15" description="NO.1 MAIN HV TR(R-PHASE) TEMP H" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/EE127.01</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        EE127.01</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        EE127.01</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="16" description="NO.3 REEFER TR(R-PHASE) TEMP H" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/EE174</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        EE174</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        EE174</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="17" description="ENGINE RM TEMP IND" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/EE175</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        EE175</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        EE175</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="18" description="COLD CHAMBER LOBBY TEMP IND" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/OE101</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        OE101</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        OE101</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="19" description="NO.1 GE FO INLET PRESS L" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/AMS/AMS/OE102</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        AMS</tn:Device>
+                    <tn:Interface>
+                        AMS</tn:Interface>
+                    <tn:TagName>
+                        OE102</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        AMS</device:ID>
+                    <device:InterfaceID>
+                        AMS</device:InterfaceID>
+                    <device:OriginTag>
+                        OE102</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:ModbusTCP address="20" description="NO.1 GE FO FILTER INLET PRESS" parsingFormat="Short" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/VDR/AGRSA/starboard_rudder_sensor</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        VDR</tn:Device>
+                    <tn:Interface>
+                        AGRSA</tn:Interface>
+                    <tn:TagName>
+                        starboard_rudder_sensor</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        VDR</device:ID>
+                    <device:InterfaceID>
+                        AGRSA</device:InterfaceID>
+                    <device:OriginTag>
+                        starboard_rudder_sensor</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:NMEA0183 talker="AG" sentence="RSA" pos="1" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/VDR/AGRSA/starboard_rudder_sensor_status</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        VDR</tn:Device>
+                    <tn:Interface>
+                        AGRSA</tn:Interface>
+                    <tn:TagName>
+                        starboard_rudder_sensor_status</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>String</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        VDR</device:ID>
+                    <device:InterfaceID>
+                        AGRSA</device:InterfaceID>
+                    <device:OriginTag>
+                        starboard_rudder_sensor_status</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:NMEA0183 talker="AG" sentence="RSA" pos="2" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/VDR/AGRSA/port_rudder_sensor</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        VDR</tn:Device>
+                    <tn:Interface>
+                        AGRSA</tn:Interface>
+                    <tn:TagName>
+                        port_rudder_sensor</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        VDR</device:ID>
+                    <device:InterfaceID>
+                        AGRSA</device:InterfaceID>
+                    <device:OriginTag>
+                        port_rudder_sensor</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:NMEA0183 talker="AG" sentence="RSA" pos="3" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/VDR/AGRSA/port_rudder_sensor_status</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        VDR</tn:Device>
+                    <tn:Interface>
+                        AGRSA</tn:Interface>
+                    <tn:TagName>
+                        port_rudder_sensor_status</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>String</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        VDR</device:ID>
+                    <device:InterfaceID>
+                        AGRSA</device:InterfaceID>
+                    <device:OriginTag>
+                        port_rudder_sensor_status</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:NMEA0183 talker="AG" sentence="RSA" pos="4" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/VDR/AIHBT/repetition_cycle_setting</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        VDR</tn:Device>
+                    <tn:Interface>
+                        AIHBT</tn:Interface>
+                    <tn:TagName>
+                        repetition_cycle_setting</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        VDR</device:ID>
+                    <device:InterfaceID>
+                        AIHBT</device:InterfaceID>
+                    <device:OriginTag>
+                        repetition_cycle_setting</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:NMEA0183 talker="AI" sentence="HBT" pos="1" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/VDR/AIHBT/equipment_status</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        VDR</tn:Device>
+                    <tn:Interface>
+                        AIHBT</tn:Interface>
+                    <tn:TagName>
+                        equipment_status</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>String</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        VDR</device:ID>
+                    <device:InterfaceID>
+                        AIHBT</device:InterfaceID>
+                    <device:OriginTag>
+                        equipment_status</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:NMEA0183 talker="AI" sentence="HBT" pos="2" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/VDR/AIHBT/sequence_number</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        VDR</tn:Device>
+                    <tn:Interface>
+                        AIHBT</tn:Interface>
+                    <tn:TagName>
+                        sequence_number</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        VDR</device:ID>
+                    <device:InterfaceID>
+                        AIHBT</device:InterfaceID>
+                    <device:OriginTag>
+                        sequence_number</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:NMEA0183 talker="AI" sentence="HBT" pos="3" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/VDR/AGROR/starboard_rudder_order</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        VDR</tn:Device>
+                    <tn:Interface>
+                        AGROR</tn:Interface>
+                    <tn:TagName>
+                        starboard_rudder_order</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>Decimal</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        VDR</device:ID>
+                    <device:InterfaceID>
+                        AGROR</device:InterfaceID>
+                    <device:OriginTag>
+                        starboard_rudder_order</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:NMEA0183 talker="AG" sentence="ROR" pos="1" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/VDR/AGROR/starboard_rudder_order_status</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        VDR</tn:Device>
+                    <tn:Interface>
+                        AGROR</tn:Interface>
+                    <tn:TagName>
+                        starboard_rudder_order_status</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>String</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        VDR</device:ID>
+                    <device:InterfaceID>
+                        AGROR</device:InterfaceID>
+                    <device:OriginTag>
+                        starboard_rudder_order_status</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:NMEA0183 talker="AG" sentence="ROR" pos="2" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+        <sdd:DataChannel>
+            <sdd:DataChannelID>
+                <sdd:LocalID>/VDR/AGROR/command_source_location</sdd:LocalID>
+                <sdd:NameObject>
+                    <sdd:NamingRule>blueone_tagnative</sdd:NamingRule>
+                    <tn:Device>
+                        VDR</tn:Device>
+                    <tn:Interface>
+                        AGROR</tn:Interface>
+                    <tn:TagName>
+                        command_source_location</tn:TagName>
+                </sdd:NameObject>
+            </sdd:DataChannelID>
+            <sdd:Property>
+                <sdd:DataChannelType>
+                    <sdd:Type>Inst</sdd:Type>
+                </sdd:DataChannelType>
+                <sdd:Format>
+                    <sdd:Type>String</sdd:Type>
+                </sdd:Format>
+                <sdd:Range>
+                    <sdd:High />
+                    <sdd:Low />
+                </sdd:Range>
+                <sdd:Unit>
+                    <sdd:UnitSymbol />
+                </sdd:Unit>
+                <dmd:AlarmThreshold>
+                    <dmd:LowMinor />
+                    <dmd:LowMajor />
+                    <dmd:HighMinor />
+                    <dmd:HighMajor />
+                </dmd:AlarmThreshold>
+                <dmd:ChannelType>
+                    Data</dmd:ChannelType>
+                <dmd:Direction>
+                    RO</dmd:Direction>
+                <dmd:InoutType />
+                <dmd:InstCode />
+                <dmd:Scale />
+                <device:DeviceProperty>
+                    <device:ID>
+                        VDR</device:ID>
+                    <device:InterfaceID>
+                        AGROR</device:InterfaceID>
+                    <device:OriginTag>
+                        command_source_location</device:OriginTag>
+                    <device:Tag />
+                    <device:DataSet>
+                        <device:NMEA0183 talker="AG" sentence="ROR" pos="5" />
+                    </device:DataSet>
+                </device:DeviceProperty>
+            </sdd:Property>
+        </sdd:DataChannel>
+    </sdd:DataChannelList>
+</sdd:Package>

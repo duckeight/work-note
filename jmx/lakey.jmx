@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+    </TestPlan>
+    <hashTree>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-외부" enabled="false">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">Authorization</stringProp>
+            <stringProp name="Header.value">Bearer 7pZXNGwoAPRuu+LKsK3m6VNY2Y0TQH6qk8NV8/hU4yIB1VmClL5UErVJaHhUWWce</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">Content-Type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-내부">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">Content-Type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="외부" enabled="false">
+        <stringProp name="HTTPSampler.domain">ollama.vizend.io</stringProp>
+        <stringProp name="HTTPSampler.protocol">https</stringProp>
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value"></stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+            </elementProp>
+          </collectionProp>
+        </elementProp>
+        <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+      </ConfigTestElement>
+      <hashTree/>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="내부" enabled="false">
+        <stringProp name="HTTPSampler.domain">10.0.2.13</stringProp>
+        <stringProp name="HTTPSampler.port">11434</stringProp>
+        <stringProp name="HTTPSampler.protocol">http</stringProp>
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+          <collectionProp name="Arguments.arguments"/>
+        </elementProp>
+        <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+      </ConfigTestElement>
+      <hashTree/>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="lakey-local">
+        <stringProp name="HTTPSampler.domain">localhost</stringProp>
+        <stringProp name="HTTPSampler.port">9093</stringProp>
+        <stringProp name="HTTPSampler.protocol">http</stringProp>
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+          <collectionProp name="Arguments.arguments"/>
+        </elementProp>
+        <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+      </ConfigTestElement>
+      <hashTree/>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="lakey-local-var">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="prefix" elementType="Argument">
+            <stringProp name="Argument.name">prefix</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="ollama" enabled="false">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="generate" enabled="true">
+          <stringProp name="HTTPSampler.path">api/generate</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;model&quot;: &quot;gpt-oss:120b&quot;,&#xd;
+    &quot;prompt&quot;: &quot;너는 데이터들을 분석하여 경향성을 파악하는 데이터 분석가야. 다음에 기술된 &apos;규칙&apos;을 반드시 지켜서 &apos;질문&apos;에 답변해. ## 규칙 1. &apos;context data&apos;를 바탕으로 답변할 것 2. 모를 시 모른다고 답변할 것 ## 질문 2024년 학생들의 활동을 요약해줘 ## context data [ 너는 데이터들을 분석하여 경향성을 파악하는 데이터 분석가야. 다음에 기술된 &apos;규칙&apos;을 반드시 지켜서 &apos;질문&apos;에 답변해. ## 규칙 1. &apos;context data&apos;를 바탕으로 답변할 것 2. 모를 시 모른다고 답변할 것 ## 질문 2024년 중에 학습 활동에 부정적인 문제가 발생했을 것으로 추정되는 학생이 있는지 확인하고 내용을 알려줘 ## context data [ { \&quot;id\&quot;: \&quot;TL-003\&quot;, \&quot;entityId\&quot;: \&quot;CRS-CS101\&quot;, \&quot;entityType\&quot;: \&quot;Course\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1709614800000, \&quot;description\&quot;: \&quot;컴퓨터 구조 강의 계획서가 업로드되었습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-005\&quot;, \&quot;entityId\&quot;: \&quot;STUD-2023055\&quot;, \&quot;entityType\&quot;: \&quot;Student\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1713578400000, \&quot;description\&quot;: \&quot;운영체제 중간고사에서 55점을 받았습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-007\&quot;, \&quot;entityId\&quot;: \&quot;CRS-ENG202\&quot;, \&quot;entityType\&quot;: \&quot;Course\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1715745600000, \&quot;description\&quot;: \&quot;영어 회화 과제 제출 기한이 연장되었습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-008\&quot;, \&quot;entityId\&quot;: \&quot;STUD-2024001\&quot;, \&quot;entityType\&quot;: \&quot;Student\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1718672400000,  \&quot;description\&quot;: \&quot;영어 회화 과제 제출 기한을 넘겼습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-009\&quot;, \&quot;entityId\&quot;: \&quot;PROF-CS101\&quot;, \&quot;entityType\&quot;: \&quot;Professor\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1718863200000, \&quot;description\&quot;: \&quot;학부생 연구 인턴 모집 공고를 올렸습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-012\&quot;, \&quot;entityId\&quot;: \&quot;CRS-AI301\&quot;, \&quot;entityType\&quot;: \&quot;Course\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1728543600000, \&quot;description\&quot;: \&quot;인공지능 프로젝트 팀 구성이 완료되었습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-014\&quot;, \&quot;entityId\&quot;: \&quot;PROF-MATH02\&quot;, \&quot;entityType\&quot;: \&quot;Professor\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1732068000000, \&quot;description\&quot;: \&quot;해외 학회 참석으로 인한 휴강을 공지했습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-015\&quot;, \&quot;entityId\&quot;: \&quot;STUD-2022010\&quot;, \&quot;entityType\&quot;: \&quot;Student\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1734224400000, \&quot;description\&quot;: \&quot;캡스톤 디자인 최종 발표를 마쳤습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-017\&quot;, \&quot;entityId\&quot;: \&quot;STUD-2024001\&quot;, \&quot;entityType\&quot;: \&quot;Student\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1767139200000, \&quot;description\&quot;: \&quot;수학 과목에서 A를 받았습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-020\&quot;, \&quot;entityId\&quot;: \&quot;CRS-AI301\&quot;, \&quot;entityType\&quot;: \&quot;Course\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1771567200000, \&quot;description\&quot;: \&quot;차기 학기 강의실이 공학관 301호로 변경되었습니다.\&quot; } ] ]&quot;,&#xd;
+    &quot;stream&quot;: false&#xd;
+  }</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="lakey">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="requestAnalysisByFullPrompt" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/request-analysis-by-full-prompt/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;prompt&quot;: &quot;Answer the following user&apos;s query based on the instruction and the context provided. \n ## Role : You are a helpful assistant. \n ## Instruction : Preserve the original format of any provided time data. For instance, do not convert numeric millisecond timestamps; return them exactly as received. \n Output contains No markdown. If you don&apos;t know the answer, say you don&apos;t know. \n Never hallucinate or invent information not present in the provided context. \n ## User Query : 출퇴근 기록을 요약해줘. entityId 별로 \n ## Context : [EntityId : WORKER-BAD-01 \n Commute \n [1712534400000 지각했습니다. (09:45 출근, 45분 지연), 1712620800000 점심시간 복귀가 지연되었습니다. (13:30 복귀), 1712707200000 승인받지 않은 조기 퇴근이 감지되었습니다. (17:00 퇴실), 1712793600000 대리 출근 시도가 적발되어 경고 조치되었습니다., 1712880000000 근무지 이탈이 확인되었습니다. (2시간 부재), 1712966400000 개인 사정으로 당일 통보 후 결근했습니다., 1713052800000 지각했습니다. (09:15 출근, 상습 지각 경고), 1713139200000 시말서를 제출하고 정상 출근했습니다., 1713225600000 재택근무 중 연락이 두절되었습니다. (3시간), 1713312000000 병가 증빙 서류 미제출로 무단 결근 처리되었습니다.] \n , EntityId : WORKER-001 \n Commute \n [1711929000000 사무실 정문에서 출근 체크를 완료했습니다., 1711962000000 오후 반차 사용으로 조기 퇴근했습니다., 1712015700000 출근 체크를 완료했습니다., 1712050200000 정시 퇴근했습니다., 1712275200000 주말 당직 근무를 위해 출근했습니다., 1712293200000 주말 당직 근무를 마치고 퇴근했습니다.] \n ]&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerAnalysisJob">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/register-analysis-job/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;name&quot;: &quot;analysis-job-test&quot;,&#xd;
+  &quot;requestQuery&quot;: &quot;지난 7일 동안의 출퇴근 기록을 특이사항을 중심으로 한 줄 요약해줘&quot;,&#xd;
+  &quot;scope&quot;: {&#xd;
+    &quot;lookbackPeriod&quot;: &quot;P7D&quot;,&#xd;
+    &quot;subjectType&quot;: &quot;Member&quot;,&#xd;
+    &quot;subjectIds&quot;: [&#xd;
+    &quot;WORKER-BAD-01&quot;,&#xd;
+    &quot;WORKER-BAD-02&quot;&#xd;
+    ]&#xd;
+  },&#xd;
+  &quot;cronSchedule&quot;: &quot;0 * * * * *&quot;,&#xd;
+  &quot;reportPath&quot;: &quot;test-commute-sum&quot;,&#xd;
+  &quot;systemId&quot;: &quot;Devlime&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="removeAnalysisJob" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/remove-analysis-job/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+	&quot;id&quot;:&quot;019c0ddf-81c8-7000-8bad-927b9dc327dc&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

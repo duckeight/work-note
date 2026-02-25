@@ -5,8 +5,6 @@
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
-      <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
       <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-외부" enabled="false">
@@ -57,7 +55,16 @@
         <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
       </ConfigTestElement>
       <hashTree/>
-      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="lakey-local">
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="lakey-dev">
+        <stringProp name="HTTPSampler.domain">lab.vizend.io</stringProp>
+        <stringProp name="HTTPSampler.protocol">https</stringProp>
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+          <collectionProp name="Arguments.arguments"/>
+        </elementProp>
+        <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+      </ConfigTestElement>
+      <hashTree/>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="lakey-local" enabled="false">
         <stringProp name="HTTPSampler.domain">localhost</stringProp>
         <stringProp name="HTTPSampler.port">9093</stringProp>
         <stringProp name="HTTPSampler.protocol">http</stringProp>
@@ -67,7 +74,17 @@
         <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
       </ConfigTestElement>
       <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="lakey-local-var">
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="lakey-dev">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="prefix" elementType="Argument">
+            <stringProp name="Argument.name">prefix</stringProp>
+            <stringProp name="Argument.value">/api/lakey/</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="lakey-local-var" enabled="false">
         <collectionProp name="Arguments.arguments">
           <elementProp name="prefix" elementType="Argument">
             <stringProp name="Argument.name">prefix</stringProp>
@@ -88,7 +105,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="generate" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="generate">
           <stringProp name="HTTPSampler.path">api/generate</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -100,7 +117,7 @@
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;model&quot;: &quot;gpt-oss:120b&quot;,&#xd;
-    &quot;prompt&quot;: &quot;너는 데이터들을 분석하여 경향성을 파악하는 데이터 분석가야. 다음에 기술된 &apos;규칙&apos;을 반드시 지켜서 &apos;질문&apos;에 답변해. ## 규칙 1. &apos;context data&apos;를 바탕으로 답변할 것 2. 모를 시 모른다고 답변할 것 ## 질문 2024년 학생들의 활동을 요약해줘 ## context data [ 너는 데이터들을 분석하여 경향성을 파악하는 데이터 분석가야. 다음에 기술된 &apos;규칙&apos;을 반드시 지켜서 &apos;질문&apos;에 답변해. ## 규칙 1. &apos;context data&apos;를 바탕으로 답변할 것 2. 모를 시 모른다고 답변할 것 ## 질문 2024년 중에 학습 활동에 부정적인 문제가 발생했을 것으로 추정되는 학생이 있는지 확인하고 내용을 알려줘 ## context data [ { \&quot;id\&quot;: \&quot;TL-003\&quot;, \&quot;entityId\&quot;: \&quot;CRS-CS101\&quot;, \&quot;entityType\&quot;: \&quot;Course\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1709614800000, \&quot;description\&quot;: \&quot;컴퓨터 구조 강의 계획서가 업로드되었습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-005\&quot;, \&quot;entityId\&quot;: \&quot;STUD-2023055\&quot;, \&quot;entityType\&quot;: \&quot;Student\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1713578400000, \&quot;description\&quot;: \&quot;운영체제 중간고사에서 55점을 받았습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-007\&quot;, \&quot;entityId\&quot;: \&quot;CRS-ENG202\&quot;, \&quot;entityType\&quot;: \&quot;Course\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1715745600000, \&quot;description\&quot;: \&quot;영어 회화 과제 제출 기한이 연장되었습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-008\&quot;, \&quot;entityId\&quot;: \&quot;STUD-2024001\&quot;, \&quot;entityType\&quot;: \&quot;Student\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1718672400000,  \&quot;description\&quot;: \&quot;영어 회화 과제 제출 기한을 넘겼습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-009\&quot;, \&quot;entityId\&quot;: \&quot;PROF-CS101\&quot;, \&quot;entityType\&quot;: \&quot;Professor\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1718863200000, \&quot;description\&quot;: \&quot;학부생 연구 인턴 모집 공고를 올렸습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-012\&quot;, \&quot;entityId\&quot;: \&quot;CRS-AI301\&quot;, \&quot;entityType\&quot;: \&quot;Course\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1728543600000, \&quot;description\&quot;: \&quot;인공지능 프로젝트 팀 구성이 완료되었습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-014\&quot;, \&quot;entityId\&quot;: \&quot;PROF-MATH02\&quot;, \&quot;entityType\&quot;: \&quot;Professor\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1732068000000, \&quot;description\&quot;: \&quot;해외 학회 참석으로 인한 휴강을 공지했습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-015\&quot;, \&quot;entityId\&quot;: \&quot;STUD-2022010\&quot;, \&quot;entityType\&quot;: \&quot;Student\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1734224400000, \&quot;description\&quot;: \&quot;캡스톤 디자인 최종 발표를 마쳤습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-017\&quot;, \&quot;entityId\&quot;: \&quot;STUD-2024001\&quot;, \&quot;entityType\&quot;: \&quot;Student\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1767139200000, \&quot;description\&quot;: \&quot;수학 과목에서 A를 받았습니다.\&quot; }, { \&quot;id\&quot;: \&quot;TL-020\&quot;, \&quot;entityId\&quot;: \&quot;CRS-AI301\&quot;, \&quot;entityType\&quot;: \&quot;Course\&quot;, \&quot;category\&quot;: \&quot;Academics\&quot;, \&quot;occuredAt\&quot;: 1771567200000, \&quot;description\&quot;: \&quot;차기 학기 강의실이 공학관 301호로 변경되었습니다.\&quot; } ] ]&quot;,&#xd;
+    &quot;prompt&quot;: &quot;Answer the following user&apos;s query based on the instruction and the context provided.## Role : You are an intelligent Query Parameter. Your goal is to analyze the user&apos;s natural language query and extract: `TimelineCategory` list. ## Instruction : Output **ONLY** a valid JSON object to convert Java Plain Object. No markdown, no other text.Never hallucinate or invent information not present in the provided context.## User Query : If you can&apos;t extract `TimelineCategory`, answer empty list, `[]`.업무 기록을 특이사항을 중심으로 한 줄 요약해줘## Context : # Enum Definitions1. **Timeline Category**:   - `Attendance`: Commuting, arrival, departure, working hours, vacation, assignment, etc.   - `Profile`: User&apos;s bio, photos, static info, position, skills, etc.   - `Sprint`: Sprint cycles, goals, planning, retrospectives, reviews, etc.   - `Work`: Tasks, projects, issues, commits, pull requests, deliverables, etc.   - `DailyScrum`: Meetings, daily reports, work logs, reviews, etc.# Output FormatOutput **ONLY** a valid JSON object to convert Java Plain Object (List). No markdown, no other text.[&quot;Enum Value&quot;, ...]# Few-Shot ExamplesUser: &quot;어제 작성한 데일리 스크럼 정리해서 보여줘.&quot;Output: [&quot;DailyScrum&quot;]User: &quot;최근 3개월간 내 초과 근무 패턴을 분석해서, 업무 부하가 가장 심하게 걸리는 요일이 언제인지 파악해줘.&quot;Output: [&quot;Attendance&quot;]User: &quot;우리 팀원들의 보유 기술(Skills) 데이터를 분석해서, 현재 진행 중인 프로젝트에 비해 부족한 역량이 무엇인지 진단해줘.&quot;Output: [&quot;Profile&quot;]User: &quot;지난 5번의 스프린트 동안의 포인트 달성률 추이를 분석해서, 우리 팀의 개발 속도(Velocity)가 상승세인지 정체기인지 알려줘.&quot;Output: [&quot;Sprint&quot;]User: &quot;이번 달 발생한 버그 티켓들의 원인을 유형별로 분석해서, QA 단계에서 놓치고 있는 취약점이 무엇인지 리포트해줘.&quot;Output: [&quot;Work&quot;]User: &quot;지난 2주간 팀원들이 데일리 스크럼에 기록한 &apos;방해 요소(Blocker)&apos; 키워드들을 분석해서, 프로젝트 진행을 막는 주된 원인이 무엇인지 요약해줘.&quot;Output: [&quot;DailyScrum&quot;]&quot;,&#xd;
     &quot;stream&quot;: false&#xd;
   }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -177,7 +194,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerAnalysisJob">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerAnalysisJob" enabled="false">
           <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/register-analysis-job/command</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -189,9 +206,62 @@
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
   &quot;name&quot;: &quot;analysis-job-test&quot;,&#xd;
-  &quot;requestQuery&quot;: &quot;지난 7일 동안의 출퇴근 기록을 특이사항을 중심으로 한 줄 요약해줘&quot;,&#xd;
+    &quot;goal&quot;: &quot;업무 기록을 특이사항을 중심으로 한 줄 요약해줘&quot;,&#xd;
+    &quot;instructions&quot;: [&#xd;
+    &quot;다음 지시들을 충실히 이행해야 해&quot;&#xd;
+  ],&#xd;
+    &quot;resultType&quot;: {&#xd;
+    &quot;dataType&quot;: &quot;String&quot;,&#xd;
+    &quot;keys&quot;: [&#xd;
+      &quot;&quot;&#xd;
+    ]&#xd;
+  },&#xd;
+  &quot;langCode&quot;: &quot;ko&quot;,&#xd;
   &quot;scope&quot;: {&#xd;
-    &quot;lookbackPeriod&quot;: &quot;P7D&quot;,&#xd;
+    &quot;lookbackPeriod&quot;: &quot;P6M&quot;,&#xd;
+    &quot;subjectType&quot;: &quot;Member&quot;,&#xd;
+    &quot;subjectIds&quot;: [&#xd;
+    &quot;MH_1&quot;,&#xd;
+    &quot;CS_1&quot;&#xd;
+    ]&#xd;
+  },&#xd;
+  &quot;cronSchedule&quot;: &quot;0 * * * * *&quot;,&#xd;
+  &quot;code&quot;: &quot;test-code&quot;,&#xd;
+  &quot;systemId&quot;: &quot;Devlime&quot;&#xd;
+}&#xd;
+&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerAnalysisJob" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/register-analysis-job/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;name&quot;: &quot;analysis-job-test&quot;,&#xd;
+  &quot;goal&quot;: &quot;출퇴근 기록을 특이사항을 중심으로 한 줄 요약해줘&quot;,&#xd;
+    &quot;instructions&quot;: [&#xd;
+    &quot;다음 지시들을 충실히 이행해야 해&quot;&#xd;
+  ],&#xd;
+    &quot;resultType&quot;: {&#xd;
+    &quot;dataType&quot;: &quot;Json&quot;,&#xd;
+    &quot;keys&quot;: [&#xd;
+      &quot;지각&quot;&#xd;
+    ]&#xd;
+  },&#xd;
+  &quot;langCode&quot;: &quot;ko&quot;,&#xd;
+  &quot;scope&quot;: {&#xd;
+    &quot;lookbackPeriod&quot;: &quot;P6M&quot;,&#xd;
     &quot;subjectType&quot;: &quot;Member&quot;,&#xd;
     &quot;subjectIds&quot;: [&#xd;
     &quot;WORKER-BAD-01&quot;,&#xd;
@@ -199,8 +269,149 @@
     ]&#xd;
   },&#xd;
   &quot;cronSchedule&quot;: &quot;0 * * * * *&quot;,&#xd;
-  &quot;reportPath&quot;: &quot;test-commute-sum&quot;,&#xd;
+  &quot;code&quot;: &quot;test2222&quot;,&#xd;
   &quot;systemId&quot;: &quot;Devlime&quot;&#xd;
+}&#xd;
+&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="modifyAnalysisJob" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/modify-analysis-job/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: &quot;019c316a-7b53-7000-826a-b3084402478d&quot;,&#xd;
+  &quot;nameValueList&quot;: {&#xd;
+    &quot;nameValues&quot;: [&#xd;
+      {&#xd;
+        &quot;name&quot;: &quot;goal&quot;,&#xd;
+        &quot;value&quot;: &quot;전체 출퇴근 기록을 특이사항을 중심으로 한 줄 요약해줘&quot;&#xd;
+      }&#xd;
+    ]&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="modifyAnalysisJob" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/modify-analysis-job/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: &quot;019c8811-7525-7000-ae95-f55d8958eaea&quot;,&#xd;
+  &quot;nameValueList&quot;: {&#xd;
+    &quot;nameValues&quot;: [&#xd;
+      {&#xd;
+        &quot;name&quot;: &quot;cronSchedule&quot;,&#xd;
+        &quot;value&quot;: &quot;0 * * * * *&quot;&#xd;
+      }&#xd;
+    ]&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="modifyAnalysisJob" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/modify-analysis-job/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: &quot;019c7483-40e1-7000-bb66-e0ceea07b892&quot;,&#xd;
+  &quot;nameValueList&quot;: {&#xd;
+    &quot;nameValues&quot;: [&#xd;
+      {&#xd;
+        &quot;name&quot;: &quot;cronSchedule&quot;,&#xd;
+        &quot;value&quot;: &quot;0 * * * * *&quot;&#xd;
+      }&#xd;
+    ]&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="modifyAnalysisJob" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/modify-analysis-job/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: &quot;019c316a-7b53-7000-826a-b3084402478d&quot;,&#xd;
+  &quot;nameValueList&quot;: {&#xd;
+    &quot;nameValues&quot;: [&#xd;
+      {&#xd;
+        &quot;name&quot;: &quot;goal&quot;,&#xd;
+        &quot;value&quot;: &quot;출퇴근 기록을 특이사항을 중심으로 한 줄 요약해줘&quot;&#xd;
+      },&#xd;
+      {&#xd;
+        &quot;name&quot;: &quot;scope&quot;,&#xd;
+        &quot;value&quot;: &quot;{\&quot;lookbackPeriod\&quot;: \&quot;P1M\&quot;, \&quot;subjectType\&quot;:\&quot;Member\&quot;, \&quot;subjectIds\&quot;: [\&quot;WORKER-BAD-02\&quot;]}&quot;&#xd;
+      }&#xd;
+    ]&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="deactivateAnalysisJob">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/modify-analysis-job/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: &quot;019c316a-7b53-7000-826a-b3084402478d&quot;,&#xd;
+  &quot;nameValueList&quot;: {&#xd;
+    &quot;nameValues&quot;: [&#xd;
+      {&#xd;
+        &quot;name&quot;: &quot;active&quot;,&#xd;
+        &quot;value&quot;: &quot;true&quot;&#xd;
+      }&#xd;
+    ]&#xd;
+  }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -219,7 +430,74 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;id&quot;:&quot;019c0ddf-81c8-7000-8bad-927b9dc327dc&quot;&#xd;
+	&quot;id&quot;:&quot;019c7a32-4e7d-7000-9b01-a06bae732e3f&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findAnalysisJobExecutions" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/find-analysis-job-executions/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;code&quot;: &quot;test-code&quot;,&#xd;
+  &quot;offset&quot;: {&#xd;
+    &quot;offset&quot;: 0,&#xd;
+    &quot;limit&quot;: 10,&#xd;
+    &quot;sortingField&quot;:&quot;round&quot;,&#xd;
+    &quot;sortDirection&quot;:&quot;ASCENDING&quot;&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findAnalysisResults" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/find-analysis-results/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;analysisJobExecutionId&quot;: &quot;019c89d2-d829-7000-971b-59dbac0df2d8&quot;,&#xd;
+  &quot;offset&quot;: {&#xd;
+    &quot;offset&quot;: 0,&#xd;
+    &quot;limit&quot;: 10&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findAnalysisResult" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/find-analysis-result/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;analysisResultId&quot;: &quot;019c89d3-f857-7000-9e87-4c8d726f591e&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>

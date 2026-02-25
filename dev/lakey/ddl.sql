@@ -161,3 +161,25 @@ CREATE TABLE vizend_lakey_dev.timeline_summary_job (
                                                        CONSTRAINT timeline_summary_job_pkey PRIMARY KEY (id),
                                                        CONSTRAINT timeline_summary_job_summary_period_check CHECK (((summary_period)::text = ANY ((ARRAY['Daily'::character varying, 'Weekly'::character varying, 'Monthly'::character varying])::text[])))
 );
+
+-- vizend_lakey_dev.raw_event definition
+
+-- Drop table
+
+-- DROP TABLE vizend_lakey_dev.raw_event;
+
+CREATE TABLE vizend_lakey_dev.raw_event (
+                                            id varchar(255) NOT NULL,
+                                            event_id varchar(255) NULL,
+                                            event_type varchar(255) NULL,
+                                            payload_json text NULL,
+                                            occurred_at int8 NOT NULL,
+                                            topic_name varchar(255) NULL,
+                                            conversion_status varchar(255) NULL,
+                                            entity_version int8 NOT NULL,
+                                            modified_by varchar(255) NULL,
+                                            modified_on int8 NOT NULL,
+                                            registered_by varchar(255) NULL,
+                                            registered_on int8 NOT NULL,
+                                            CONSTRAINT raw_event_pkey PRIMARY KEY (id)
+);

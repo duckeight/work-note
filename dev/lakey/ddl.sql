@@ -118,7 +118,23 @@ VALUES
     ('TL-ERR-110', 1, 'SYSTEM', 1769499001000, 'SYSTEM', 1769499001000, 'Attendance', '퇴근 시간 30분 전부터 업무 중단하고 대기했습니다.', 'WORKER-BAD-02', 'Member', 'TL-ERR-110', 1769499000000);
 
 
-
+CREATE TABLE vizend_lakey_dev.timeline (
+                                           id varchar(255) NOT NULL,
+                                           subject_type varchar(255) NULL,
+                                           description varchar(255) NULL,
+                                           occurred_at int8 NOT NULL,
+                                           summarized bool NOT NULL,
+                                           event_id varchar(255) NULL,
+                                           entity_version int8 NOT NULL,
+                                           modified_on int8 NOT NULL,
+                                           modified_by varchar(255) NULL,
+                                           registered_by varchar(255) NULL,
+                                           registered_on int8 NOT NULL,
+                                           pavilion_id varchar(255) NULL,
+                                           stage_id varchar(255) NULL,
+                                           actor_id varchar(255) NULL,
+                                           CONSTRAINT timeline_pkey PRIMARY KEY (id)
+);
 
 CREATE TABLE vizend_lakey_dev.timeline_summary (
                                                    id varchar(255) NOT NULL,

@@ -31,27 +31,29 @@ CREATE TABLE vizend_lakey_dev.analysis_history (
 
 -- DROP TABLE vizend_lakey_dev.ANALYSIS_JOB;
 
-CREATE TABLE vizend_lakey_dev.analysis_job (
-                                               id varchar(255) NOT NULL,
-                                               "name" varchar(255) NULL,
-                                               goal text NULL,
-                                               scope_json text NULL,
-                                               cron_schedule varchar(255) NULL,
-                                               report_path varchar(255) NULL,
-                                               active bool NOT NULL,
-                                               instructions_json text NULL,
-                                               lang_code varchar(255) NULL,
-                                               result_type_json text NULL,
-                                               system_id varchar(255) NULL,
-                                               registered_on int8 NOT NULL,
-                                               entity_version int8 NOT NULL,
-                                               modified_by varchar(255) NULL,
-                                               modified_on int8 NOT NULL,
-                                               registered_by varchar(255) NULL,
-                                               actor_id varchar(255) NULL,
-                                               pavilion_id varchar(255) NULL,
-                                               stage_id varchar(255) NULL,
-                                               CONSTRAINT analysis_job_pkey PRIMARY KEY (id)
+CREATE TABLE lakey.analysis_job (
+                                    id varchar(255) NOT NULL,
+                                    "name" varchar(255) NULL,
+                                    goal text NULL,
+                                    scope_json text NULL,
+                                    cron_schedule varchar(255) NULL,
+                                    code varchar(255) NULL,
+                                    active bool NOT NULL,
+                                    instructions_json text NULL,
+                                    lang_code varchar(255) NULL,
+                                    result_type_json text NULL,
+                                    context_type varchar(255) NULL,
+                                    system_id varchar(255) NULL,
+                                    registered_on int8 NOT NULL,
+                                    entity_version int8 NOT NULL,
+                                    modified_by varchar(255) NULL,
+                                    modified_on int8 NOT NULL,
+                                    registered_by varchar(255) NULL,
+                                    actor_id varchar(255) NULL,
+                                    pavilion_id varchar(255) NULL,
+                                    stage_id varchar(255) NULL,
+                                    CONSTRAINT analysis_job_context_type_check CHECK (((context_type)::text = ANY ((ARRAY['Timeline'::character varying, 'Profile'::character varying])::text[]))),
+	                                CONSTRAINT analysis_job_pkey PRIMARY KEY (id)
 );
 
 -- vizend_lakey_dev.analysis_job_execution definition

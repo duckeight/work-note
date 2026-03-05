@@ -121,6 +121,8 @@ VALUES
 CREATE TABLE vizend_lakey_dev.timeline (
                                            id varchar(255) NOT NULL,
                                            subject_type varchar(255) NULL,
+                                           subject_id varchar(255) NULL,
+                                           category varchar(255) NULL,
                                            description varchar(255) NULL,
                                            occurred_at int8 NOT NULL,
                                            summarized bool NOT NULL,

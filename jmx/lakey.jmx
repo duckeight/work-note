@@ -26,6 +26,10 @@
             <stringProp name="Header.name">Content-Type</stringProp>
             <stringProp name="Header.value">application/json</stringProp>
           </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">Origin</stringProp>
+            <stringProp name="Header.value">https://nextree-devlime.vizend.io</stringProp>
+          </elementProp>
         </collectionProp>
       </HeaderManager>
       <hashTree/>
@@ -105,7 +109,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="generate">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="generate" enabled="true">
           <stringProp name="HTTPSampler.path">api/generate</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -194,7 +198,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerAnalysisJob" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerAnalysisJob">
           <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/register-analysis-job/command</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -205,10 +209,9 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;name&quot;: &quot;analysis-job-test&quot;,&#xd;
-    &quot;goal&quot;: &quot;업무 기록을 특이사항을 중심으로 한 줄 요약해줘&quot;,&#xd;
+  &quot;name&quot;: &quot;devlime-test&quot;,&#xd;
+    &quot;goal&quot;: &quot;지난 주 업무 내용을 토대로 이번주 Daily Scrum 의 topic을 추천해줘&quot;,&#xd;
     &quot;instructions&quot;: [&#xd;
-    &quot;다음 지시들을 충실히 이행해야 해&quot;&#xd;
   ],&#xd;
     &quot;resultType&quot;: {&#xd;
     &quot;dataType&quot;: &quot;String&quot;,&#xd;
@@ -218,16 +221,16 @@
   },&#xd;
   &quot;langCode&quot;: &quot;ko&quot;,&#xd;
   &quot;scope&quot;: {&#xd;
-    &quot;lookbackPeriod&quot;: &quot;P6M&quot;,&#xd;
-    &quot;subjectType&quot;: &quot;Member&quot;,&#xd;
+    &quot;lookbackPeriod&quot;: &quot;P2Y&quot;,&#xd;
+    &quot;subjectType&quot;: &quot;ScrumTeam&quot;,&#xd;
     &quot;subjectIds&quot;: [&#xd;
-    &quot;MH_1&quot;,&#xd;
-    &quot;CS_1&quot;&#xd;
+    &quot;AB_DEV_001&quot;&#xd;
     ]&#xd;
   },&#xd;
   &quot;cronSchedule&quot;: &quot;0 * * * * *&quot;,&#xd;
-  &quot;code&quot;: &quot;test-code&quot;,&#xd;
-  &quot;systemId&quot;: &quot;Devlime&quot;&#xd;
+  &quot;code&quot;: &quot;code-for-devlime-dailyscrum&quot;,&#xd;
+  &quot;contextType&quot;: &quot;Timeline&quot;&#xd;
+&#xd;
 }&#xd;
 &#xd;
 </stringProp>
@@ -248,29 +251,27 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;name&quot;: &quot;analysis-job-test&quot;,&#xd;
-  &quot;goal&quot;: &quot;출퇴근 기록을 특이사항을 중심으로 한 줄 요약해줘&quot;,&#xd;
+  &quot;name&quot;: null,&#xd;
+  &quot;goal&quot;: &quot;경복궁 소개글 기사 하나 써&quot;,&#xd;
     &quot;instructions&quot;: [&#xd;
-    &quot;다음 지시들을 충실히 이행해야 해&quot;&#xd;
+    &quot;글 작성 스타일은 SNS 스타일로 해줘&quot;&#xd;
   ],&#xd;
     &quot;resultType&quot;: {&#xd;
-    &quot;dataType&quot;: &quot;Json&quot;,&#xd;
+    &quot;dataType&quot;: &quot;String&quot;,&#xd;
     &quot;keys&quot;: [&#xd;
-      &quot;지각&quot;&#xd;
     ]&#xd;
   },&#xd;
   &quot;langCode&quot;: &quot;ko&quot;,&#xd;
   &quot;scope&quot;: {&#xd;
-    &quot;lookbackPeriod&quot;: &quot;P6M&quot;,&#xd;
-    &quot;subjectType&quot;: &quot;Member&quot;,&#xd;
+    &quot;lookbackPeriod&quot;: null,&#xd;
+    &quot;subjectType&quot;: &quot;Spot&quot;,&#xd;
     &quot;subjectIds&quot;: [&#xd;
-    &quot;WORKER-BAD-01&quot;,&#xd;
-    &quot;WORKER-BAD-02&quot;&#xd;
+    &quot;Spot-1&quot;&#xd;
     ]&#xd;
   },&#xd;
-  &quot;cronSchedule&quot;: &quot;0 * * * * *&quot;,&#xd;
-  &quot;code&quot;: &quot;test2222&quot;,&#xd;
-  &quot;systemId&quot;: &quot;Devlime&quot;&#xd;
+  &quot;cronSchedule&quot;: null,&#xd;
+  &quot;code&quot;: null,&#xd;
+  &quot;contextType&quot;: &quot;Profile&quot;&#xd;
 }&#xd;
 &#xd;
 </stringProp>
@@ -291,12 +292,12 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;id&quot;: &quot;019c316a-7b53-7000-826a-b3084402478d&quot;,&#xd;
+  &quot;code&quot;: &quot;code-for-devlime-dailyscrum&quot;,&#xd;
   &quot;nameValueList&quot;: {&#xd;
     &quot;nameValues&quot;: [&#xd;
       {&#xd;
-        &quot;name&quot;: &quot;goal&quot;,&#xd;
-        &quot;value&quot;: &quot;전체 출퇴근 기록을 특이사항을 중심으로 한 줄 요약해줘&quot;&#xd;
+        &quot;name&quot;: &quot;instructions&quot;,&#xd;
+        &quot;value&quot;: &quot;[\&quot;가장 추천하는 토픽 한 개만 추천해\&quot;, \&quot;업무 특이사항, 업무 발전에 도움이 되는 사항, 업무 방해 사항 등을 위주로 검토해서 추천해\&quot;]&quot;&#xd;
       }&#xd;
     ]&#xd;
   }&#xd;
@@ -307,7 +308,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="modifyAnalysisJob" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="deactivateAnalysisJob" enabled="false">
           <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/modify-analysis-job/command</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -318,92 +319,7 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;id&quot;: &quot;019c8811-7525-7000-ae95-f55d8958eaea&quot;,&#xd;
-  &quot;nameValueList&quot;: {&#xd;
-    &quot;nameValues&quot;: [&#xd;
-      {&#xd;
-        &quot;name&quot;: &quot;cronSchedule&quot;,&#xd;
-        &quot;value&quot;: &quot;0 * * * * *&quot;&#xd;
-      }&#xd;
-    ]&#xd;
-  }&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-        </HTTPSamplerProxy>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="modifyAnalysisJob" enabled="false">
-          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/modify-analysis-job/command</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-  &quot;id&quot;: &quot;019c7483-40e1-7000-bb66-e0ceea07b892&quot;,&#xd;
-  &quot;nameValueList&quot;: {&#xd;
-    &quot;nameValues&quot;: [&#xd;
-      {&#xd;
-        &quot;name&quot;: &quot;cronSchedule&quot;,&#xd;
-        &quot;value&quot;: &quot;0 * * * * *&quot;&#xd;
-      }&#xd;
-    ]&#xd;
-  }&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-        </HTTPSamplerProxy>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="modifyAnalysisJob" enabled="false">
-          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/modify-analysis-job/command</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-  &quot;id&quot;: &quot;019c316a-7b53-7000-826a-b3084402478d&quot;,&#xd;
-  &quot;nameValueList&quot;: {&#xd;
-    &quot;nameValues&quot;: [&#xd;
-      {&#xd;
-        &quot;name&quot;: &quot;goal&quot;,&#xd;
-        &quot;value&quot;: &quot;출퇴근 기록을 특이사항을 중심으로 한 줄 요약해줘&quot;&#xd;
-      },&#xd;
-      {&#xd;
-        &quot;name&quot;: &quot;scope&quot;,&#xd;
-        &quot;value&quot;: &quot;{\&quot;lookbackPeriod\&quot;: \&quot;P1M\&quot;, \&quot;subjectType\&quot;:\&quot;Member\&quot;, \&quot;subjectIds\&quot;: [\&quot;WORKER-BAD-02\&quot;]}&quot;&#xd;
-      }&#xd;
-    ]&#xd;
-  }&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-        </HTTPSamplerProxy>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="deactivateAnalysisJob">
-          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/modify-analysis-job/command</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-  &quot;id&quot;: &quot;019c316a-7b53-7000-826a-b3084402478d&quot;,&#xd;
+  &quot;code&quot;: &quot;019c316a-7b53-7000-826a-b3084402478d&quot;,&#xd;
   &quot;nameValueList&quot;: {&#xd;
     &quot;nameValues&quot;: [&#xd;
       {&#xd;
@@ -430,7 +346,26 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;id&quot;:&quot;019c7a32-4e7d-7000-9b01-a06bae732e3f&quot;&#xd;
+	&quot;code&quot;:&quot;code-for-devlime-dailyscrum&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findAnalysisJob" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/find-analysis-job/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;code&quot;: &quot;code_4510eb40d061&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -449,12 +384,10 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;code&quot;: &quot;test-code&quot;,&#xd;
+  &quot;analysisJobCode&quot;: &quot;code_4510eb40d061&quot;,&#xd;
   &quot;offset&quot;: {&#xd;
     &quot;offset&quot;: 0,&#xd;
-    &quot;limit&quot;: 10,&#xd;
-    &quot;sortingField&quot;:&quot;round&quot;,&#xd;
-    &quot;sortDirection&quot;:&quot;ASCENDING&quot;&#xd;
+    &quot;limit&quot;: 10&#xd;
   }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -474,7 +407,7 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;analysisJobExecutionId&quot;: &quot;019c89d2-d829-7000-971b-59dbac0df2d8&quot;,&#xd;
+  &quot;analysisJobExecutionId&quot;: &quot;019c9304-a0cf-7000-b514-1a07fc3a1cbc&quot;,&#xd;
   &quot;offset&quot;: {&#xd;
     &quot;offset&quot;: 0,&#xd;
     &quot;limit&quot;: 10&#xd;
@@ -497,7 +430,66 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;analysisResultId&quot;: &quot;019c89d3-f857-7000-9e87-4c8d726f591e&quot;&#xd;
+  &quot;analysisResultId&quot;: &quot;019c9304-d5e8-7000-afe1-8531398064e2&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="========== Restful ========== " enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findAnalysisResultsByAnalysisJobCode" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/restful/analysis/find-analysis-results-by-analysis-job-code/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;analysisJobCode&quot;: &quot;dYjWLQTT4azbNOgXPnWYrk&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="atlas test" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/atlas-test/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;eventId&quot;: &quot;eventId_ec927a9245fe&quot;,&#xd;
+  &quot;eventType&quot;: &quot;eventType_cd731d264dbc&quot;,&#xd;
+  &quot;topicName&quot;: &quot;topicName_7799cb49b3b2&quot;,&#xd;
+  &quot;conversionStatus&quot;: &quot;Awaiting&quot;,&#xd;
+  &quot;occurredAt&quot;: 0,&#xd;
+  &quot;payload&quot;: {},&#xd;
+  &quot;requesterKey&quot;: {&#xd;
+    &quot;usid&quot;: &quot;usid_8bc325c4408c&quot;,&#xd;
+    &quot;id&quot;: &quot;id_079b5f7eb319&quot;,&#xd;
+    &quot;type&quot;: &quot;Square&quot;&#xd;
+  }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>

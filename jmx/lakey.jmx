@@ -5,6 +5,8 @@
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
       <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-외부" enabled="false">
@@ -20,7 +22,16 @@
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-내부">
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-내부" enabled="false">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">Content-Type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="lakey header">
         <collectionProp name="HeaderManager.headers">
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">Content-Type</stringProp>
@@ -59,7 +70,7 @@
         <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
       </ConfigTestElement>
       <hashTree/>
-      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="lakey-dev">
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="lakey-dev" enabled="false">
         <stringProp name="HTTPSampler.domain">lab.vizend.io</stringProp>
         <stringProp name="HTTPSampler.protocol">https</stringProp>
         <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
@@ -68,7 +79,7 @@
         <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
       </ConfigTestElement>
       <hashTree/>
-      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="lakey-local" enabled="false">
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="lakey-local">
         <stringProp name="HTTPSampler.domain">localhost</stringProp>
         <stringProp name="HTTPSampler.port">9093</stringProp>
         <stringProp name="HTTPSampler.protocol">http</stringProp>
@@ -78,7 +89,7 @@
         <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
       </ConfigTestElement>
       <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="lakey-dev">
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="lakey-dev" enabled="false">
         <collectionProp name="Arguments.arguments">
           <elementProp name="prefix" elementType="Argument">
             <stringProp name="Argument.name">prefix</stringProp>
@@ -88,7 +99,7 @@
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="lakey-local-var" enabled="false">
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="lakey-local-var">
         <collectionProp name="Arguments.arguments">
           <elementProp name="prefix" elementType="Argument">
             <stringProp name="Argument.name">prefix</stringProp>
@@ -109,7 +120,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="generate" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="generate">
           <stringProp name="HTTPSampler.path">api/generate</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -121,7 +132,7 @@
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;model&quot;: &quot;gpt-oss:120b&quot;,&#xd;
-    &quot;prompt&quot;: &quot;Answer the following user&apos;s query based on the instruction and the context provided.## Role : You are an intelligent Query Parameter. Your goal is to analyze the user&apos;s natural language query and extract: `TimelineCategory` list. ## Instruction : Output **ONLY** a valid JSON object to convert Java Plain Object. No markdown, no other text.Never hallucinate or invent information not present in the provided context.## User Query : If you can&apos;t extract `TimelineCategory`, answer empty list, `[]`.업무 기록을 특이사항을 중심으로 한 줄 요약해줘## Context : # Enum Definitions1. **Timeline Category**:   - `Attendance`: Commuting, arrival, departure, working hours, vacation, assignment, etc.   - `Profile`: User&apos;s bio, photos, static info, position, skills, etc.   - `Sprint`: Sprint cycles, goals, planning, retrospectives, reviews, etc.   - `Work`: Tasks, projects, issues, commits, pull requests, deliverables, etc.   - `DailyScrum`: Meetings, daily reports, work logs, reviews, etc.# Output FormatOutput **ONLY** a valid JSON object to convert Java Plain Object (List). No markdown, no other text.[&quot;Enum Value&quot;, ...]# Few-Shot ExamplesUser: &quot;어제 작성한 데일리 스크럼 정리해서 보여줘.&quot;Output: [&quot;DailyScrum&quot;]User: &quot;최근 3개월간 내 초과 근무 패턴을 분석해서, 업무 부하가 가장 심하게 걸리는 요일이 언제인지 파악해줘.&quot;Output: [&quot;Attendance&quot;]User: &quot;우리 팀원들의 보유 기술(Skills) 데이터를 분석해서, 현재 진행 중인 프로젝트에 비해 부족한 역량이 무엇인지 진단해줘.&quot;Output: [&quot;Profile&quot;]User: &quot;지난 5번의 스프린트 동안의 포인트 달성률 추이를 분석해서, 우리 팀의 개발 속도(Velocity)가 상승세인지 정체기인지 알려줘.&quot;Output: [&quot;Sprint&quot;]User: &quot;이번 달 발생한 버그 티켓들의 원인을 유형별로 분석해서, QA 단계에서 놓치고 있는 취약점이 무엇인지 리포트해줘.&quot;Output: [&quot;Work&quot;]User: &quot;지난 2주간 팀원들이 데일리 스크럼에 기록한 &apos;방해 요소(Blocker)&apos; 키워드들을 분석해서, 프로젝트 진행을 막는 주된 원인이 무엇인지 요약해줘.&quot;Output: [&quot;DailyScrum&quot;]&quot;,&#xd;
+    &quot;prompt&quot;: &quot;hi&quot;,&#xd;
     &quot;stream&quot;: false&#xd;
   }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -130,7 +141,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -198,7 +209,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerAnalysisJob">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerAnalysisJob" enabled="false">
           <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/register-analysis-job/command</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -209,26 +220,25 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;name&quot;: &quot;devlime-test&quot;,&#xd;
-    &quot;goal&quot;: &quot;지난 주 업무 내용을 토대로 이번주 Daily Scrum 의 topic을 추천해줘&quot;,&#xd;
+  &quot;name&quot;: &quot;devlime topic NT:1:d-1&quot;,&#xd;
+    &quot;goal&quot;: &quot;지난 주 업무 내용을 및 직원 근태 상태를 토대로 이번주 Daily Scrum 의 topic을 추천해줘&quot;,&#xd;
     &quot;instructions&quot;: [&#xd;
   ],&#xd;
     &quot;resultType&quot;: {&#xd;
-    &quot;dataType&quot;: &quot;String&quot;,&#xd;
+    &quot;dataType&quot;: &quot;StringList&quot;,&#xd;
     &quot;keys&quot;: [&#xd;
-      &quot;&quot;&#xd;
     ]&#xd;
   },&#xd;
   &quot;langCode&quot;: &quot;ko&quot;,&#xd;
   &quot;scope&quot;: {&#xd;
-    &quot;lookbackPeriod&quot;: &quot;P2Y&quot;,&#xd;
+    &quot;lookbackPeriod&quot;: &quot;P1D&quot;,&#xd;
     &quot;subjectType&quot;: &quot;ScrumTeam&quot;,&#xd;
     &quot;subjectIds&quot;: [&#xd;
-    &quot;AB_DEV_001&quot;&#xd;
+    &quot;NT:1:d-1&quot;&#xd;
     ]&#xd;
   },&#xd;
-  &quot;cronSchedule&quot;: &quot;0 * * * * *&quot;,&#xd;
-  &quot;code&quot;: &quot;code-for-devlime-dailyscrum&quot;,&#xd;
+  &quot;cronSchedule&quot;: &quot;0 */10 * * * *&quot;,&#xd;
+  &quot;code&quot;: &quot;code-for-devlime-dailyscrum-2&quot;,&#xd;
   &quot;contextType&quot;: &quot;Timeline&quot;&#xd;
 &#xd;
 }&#xd;
@@ -281,6 +291,47 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerAnalysisJobTest">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/register-analysis-job-test/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;name&quot;: null,&#xd;
+  &quot;goal&quot;: &quot;경복궁 소개글 기사 하나 써&quot;,&#xd;
+    &quot;instructions&quot;: [&#xd;
+    &quot;글 작성 스타일은 SNS 스타일로 해줘&quot;&#xd;
+  ],&#xd;
+    &quot;resultType&quot;: {&#xd;
+    &quot;dataType&quot;: &quot;String&quot;,&#xd;
+    &quot;keys&quot;: [&#xd;
+    ]&#xd;
+  },&#xd;
+  &quot;langCode&quot;: &quot;ko&quot;,&#xd;
+  &quot;scope&quot;: {&#xd;
+    &quot;lookbackPeriod&quot;: null,&#xd;
+    &quot;subjectType&quot;: &quot;Spot&quot;,&#xd;
+    &quot;subjectIds&quot;: [&#xd;
+    &quot;Spot-1&quot;&#xd;
+    ]&#xd;
+  },&#xd;
+  &quot;cronSchedule&quot;: null,&#xd;
+  &quot;code&quot;: null,&#xd;
+  &quot;contextType&quot;: &quot;Profile&quot;&#xd;
+}&#xd;
+&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="modifyAnalysisJob" enabled="false">
           <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/modify-analysis-job/command</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -292,12 +343,12 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;code&quot;: &quot;code-for-devlime-dailyscrum&quot;,&#xd;
+  &quot;code&quot;: &quot;code-for-devlime-dailyscrum-2&quot;,&#xd;
   &quot;nameValueList&quot;: {&#xd;
     &quot;nameValues&quot;: [&#xd;
       {&#xd;
-        &quot;name&quot;: &quot;instructions&quot;,&#xd;
-        &quot;value&quot;: &quot;[\&quot;가장 추천하는 토픽 한 개만 추천해\&quot;, \&quot;업무 특이사항, 업무 발전에 도움이 되는 사항, 업무 방해 사항 등을 위주로 검토해서 추천해\&quot;]&quot;&#xd;
+        &quot;name&quot;: &quot;goal&quot;,&#xd;
+        &quot;value&quot;: &quot;지난 업무 내용 및 직원 근태 상태를 토대로 이번주 Daily Scrum 의 topic을 추천해줘&quot;&#xd;
       }&#xd;
     ]&#xd;
   }&#xd;
@@ -319,7 +370,7 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;code&quot;: &quot;019c316a-7b53-7000-826a-b3084402478d&quot;,&#xd;
+  &quot;code&quot;: &quot;code-for-devlime-dailyscrum&quot;,&#xd;
   &quot;nameValueList&quot;: {&#xd;
     &quot;nameValues&quot;: [&#xd;
       {&#xd;

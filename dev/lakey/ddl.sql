@@ -31,7 +31,7 @@ CREATE TABLE vizend_lakey_dev.analysis_history (
 
 -- DROP TABLE vizend_lakey_dev.ANALYSIS_JOB;
 
-CREATE TABLE lakey.analysis_job (
+CREATE TABLE vizend_lakey_dev.analysis_job (
                                     id varchar(255) NOT NULL,
                                     "name" varchar(255) NULL,
                                     goal text NULL,
@@ -125,9 +125,8 @@ CREATE TABLE vizend_lakey_dev.timeline (
                                            subject_type varchar(255) NULL,
                                            subject_id varchar(255) NULL,
                                            category varchar(255) NULL,
-                                           description varchar(255) NULL,
+                                           description text NULL,
                                            occurred_at int8 NOT NULL,
-                                           summarized bool NOT NULL,
                                            event_id varchar(255) NULL,
                                            entity_version int8 NOT NULL,
                                            modified_on int8 NOT NULL,
@@ -139,6 +138,7 @@ CREATE TABLE vizend_lakey_dev.timeline (
                                            actor_id varchar(255) NULL,
                                            CONSTRAINT timeline_pkey PRIMARY KEY (id)
 );
+CREATE INDEX timeline_event_id_idx ON vizend_lakey_dev.timeline USING btree (event_id);
 
 CREATE TABLE vizend_lakey_dev.timeline_summary (
                                                    id varchar(255) NOT NULL,
@@ -158,8 +158,7 @@ CREATE TABLE vizend_lakey_dev.timeline_summary (
                                                    actor_id varchar(255) NULL,
                                                    pavilion_id varchar(255) NULL,
                                                    stage_id varchar(255) NULL,
-                                                   CONSTRAINT timeline_summary_pkey PRIMARY KEY (id),
-                                                   CONSTRAINT timeline_summary_summary_period_check CHECK (((summary_period)::text = ANY ((ARRAY['Daily'::character varying, 'Weekly'::character varying, 'Monthly'::character varying])::text[])))
+                                                   CONSTRAINT timeline_summary_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE vizend_lakey_dev.timeline_summary_job (
@@ -178,8 +177,7 @@ CREATE TABLE vizend_lakey_dev.timeline_summary_job (
                                                        actor_id varchar(255) NULL,
                                                        pavilion_id varchar(255) NULL,
                                                        stage_id varchar(255) NULL,
-                                                       CONSTRAINT timeline_summary_job_pkey PRIMARY KEY (id),
-                                                       CONSTRAINT timeline_summary_job_summary_period_check CHECK (((summary_period)::text = ANY ((ARRAY['Daily'::character varying, 'Weekly'::character varying, 'Monthly'::character varying])::text[])))
+                                                       CONSTRAINT timeline_summary_job_pkey PRIMARY KEY (id)
 );
 
 -- vizend_lakey_dev.raw_event definition
@@ -202,4 +200,28 @@ CREATE TABLE vizend_lakey_dev.raw_event (
                                             registered_by varchar(255) NULL,
                                             registered_on int8 NOT NULL,
                                             CONSTRAINT raw_event_pkey PRIMARY KEY (id)
+);
+
+-- vizend_lakey_dev.profile definition
+
+-- Drop table
+
+-- DROP TABLE vizend_lakey_dev.profile;
+
+CREATE TABLE vizend_lakey_dev.profile (
+                                          id varchar(255) NOT NULL,
+                                          event_id varchar(255) NULL,
+                                          subject_id varchar(255) NULL,
+                                          subject_type varchar(255) NULL,
+                                          content_descriptions_json text NULL,
+                                          related_subjects_json text NULL,
+                                          entity_version int8 NOT NULL,
+                                          modified_by varchar(255) NULL,
+                                          modified_on int8 NOT NULL,
+                                          registered_by varchar(255) NULL,
+                                          registered_on int8 NOT NULL,
+                                          actor_id varchar(255) NULL,
+                                          pavilion_id varchar(255) NULL,
+                                          stage_id varchar(255) NULL,
+                                          CONSTRAINT profile_pkey PRIMARY KEY (id)
 );

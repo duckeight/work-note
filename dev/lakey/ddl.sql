@@ -104,21 +104,6 @@ CREATE TABLE vizend_lakey_dev.analysis_result (
                                                   CONSTRAINT analysis_result_pkey PRIMARY KEY (id)
 );
 
-INSERT INTO timeline
-(id, entity_version, modified_by, modified_on, registered_by, registered_on, category, description, subject_id, subject_type, event_id, occurred_at)
-VALUES
-    ('TL-ERR-101', 1, 'SYSTEM', 1769300400100, 'SYSTEM', 1769300400100, 'Attendance', '주말 당직 근무에 지각했습니다. (09:20 도착)', 'WORKER-BAD-01', 'Member', 'TL-ERR-101', 1769300400000),
-    ('TL-ERR-102', 1, 'SYSTEM', 1769314800200, 'SYSTEM', 1769314800200, 'Attendance', '점심시간 복귀가 1시간 지연되었습니다.', 'WORKER-BAD-02', 'Member', 'TL-ERR-102', 1769314800000),
-    ('TL-ERR-103', 1, 'SYSTEM', 1769332800300, 'SYSTEM', 1769332800300, 'Attendance', '승인되지 않은 조기 퇴근을 시도했습니다.', 'WORKER-BAD-01', 'Member', 'TL-ERR-103', 1769332800000),
-    ('TL-ERR-104', 1, 'SYSTEM', 1769364000400, 'SYSTEM', 1769364000400, 'Profile', '새벽 시간대(03:00) 사내 서버 비정상 접속 기록 발생.', 'WORKER-BAD-02', 'Member', 'TL-ERR-104', 1769364000000),
-    ('TL-ERR-105', 1, 'SYSTEM', 1769403600500, 'SYSTEM', 1769403600500, 'DailyScrum', '휴일 긴급 회의에 연락 두절로 불참했습니다.', 'WORKER-BAD-01', 'Member', 'TL-ERR-105', 1769403600000),
-    ('TL-ERR-106', 1, 'SYSTEM', 1769473800600, 'SYSTEM', 1769473800600, 'Attendance', '월요일 정기 회의 시간에 30분 늦게 출근했습니다.', 'WORKER-BAD-02', 'Member', 'TL-ERR-106', 1769473800000),
-    ('TL-ERR-107', 1, 'SYSTEM', 1769475600700, 'SYSTEM', 1769475600700, 'DailyScrum', '업무 도중 잡담으로 주의를 받았습니다.', 'WORKER-BAD-01', 'Member', 'TL-ERR-107', 1769475600000),
-    ('TL-ERR-108', 1, 'SYSTEM', 1769479200800, 'SYSTEM', 1769479200800, 'Attendance', '업무 시간 중 휴게실에서 취침하다 적발되었습니다.', 'WORKER-BAD-02', 'Member', 'TL-ERR-108', 1769479200000),
-    ('TL-ERR-109', 1, 'SYSTEM', 1769490000900, 'SYSTEM', 1769490000900, 'Attendance', '근무지 이탈 (사우나 방문 의심) 정황이 포착되었습니다.', 'WORKER-BAD-01', 'Member', 'TL-ERR-109', 1769490000000),
-    ('TL-ERR-110', 1, 'SYSTEM', 1769499001000, 'SYSTEM', 1769499001000, 'Attendance', '퇴근 시간 30분 전부터 업무 중단하고 대기했습니다.', 'WORKER-BAD-02', 'Member', 'TL-ERR-110', 1769499000000);
-
-
 CREATE TABLE vizend_lakey_dev.timeline (
                                            id varchar(255) NOT NULL,
                                            subject_type varchar(255) NULL,
@@ -243,3 +228,6 @@ CREATE TABLE vizend_lakey_dev.profile_vector (
                                                  stage_id varchar(255) NULL,
                                                  CONSTRAINT profile_vector_pkey PRIMARY KEY (id)
 );
+
+CREATE INDEX idx_pv_related_subjects_cast_gin
+    ON vizend_lakey_dev.profile_vector USING gin ((related_subjects_json::jsonb) jsonb_path_ops);

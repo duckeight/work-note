@@ -31,7 +31,7 @@
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="lakey header">
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="lakey header" enabled="true">
         <collectionProp name="HeaderManager.headers">
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">Content-Type</stringProp>
@@ -79,7 +79,7 @@
         <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
       </ConfigTestElement>
       <hashTree/>
-      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="lakey-local">
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="lakey-local" enabled="true">
         <stringProp name="HTTPSampler.domain">localhost</stringProp>
         <stringProp name="HTTPSampler.port">9093</stringProp>
         <stringProp name="HTTPSampler.protocol">http</stringProp>
@@ -120,7 +120,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="generate">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="generate" enabled="true">
           <stringProp name="HTTPSampler.path">api/generate</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -141,7 +141,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -195,17 +195,9 @@
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-  &quot;prompt&quot;: &quot;Answer the following user&apos;s query based on the instruction and the context provided.## Role : You are a helpful assistant.## Instruction : - Never hallucinate or invent information not present in the provided context.- Generate topics only based on events present in the context.- Do not include assumptions or general Scrum advice that are not present in the context.- For attendance records, only consider the most recent date.- Do not mention entity names or internal event record structures appearing in the context.- Each topic should include an appropriate discussion point related to that topic.- Return the result as a bullet list without a title.- Use Context data from one day ago, but if today is Monday, use context data from three days ago (last Friday).- If you need to use time data, preserve the original format of any provided time data. For instance, do not convert numeric millisecond timestamps; return them exactly as received.- If the data is insufficient, say you don&apos;t know.## Output Language : 한국어## Output Format : The output data Type must be strictly in String List type. Do not include markdown formatting.### Output Example.[\&quot;answer-1\&quot;, ...]## User Query : 지난 주 업무 내용을 및 직원 근태 상태를 토대로 이번주 Daily Scrum 의 topic을 추천해줘## Context : Attendance2026-02-27[Member:7@NT:1]  modified. presentType : WorkFromHome, dutyType : Present2026-02-28[Member:20@NT:1] dutyType : Leave, leaveType : AnnualLeave2026-03-03[Member:1e@NT:1]  modified. presentType : WorkFromHome, dutyType : Present[Member:1s@NT:1]  modified. presentType : WorkFromHome, dutyType : Present2026-03-04[Member:1e@NT:1]  modified. presentType : Office, dutyType : Present[Member:7@NT:1]  modified. presentType : Office, dutyType : Present[Member:1h@NT:1]  modified. presentType : Offshore, dutyType : Present[Member:1u@NT:1]  modified. presentType : Office, dutyType : Present2026-03-05[Member:1q@NT:1] dutyType : Absent, absenceType : NoCallNoShow[Member:1s@NT:1] dutyType : Absent, absenceType : UnauthorizedAbsence[Member:1e@NT:1]  modified. presentType : WorkFromHome, dutyType : Present[Member:7@NT:1]  modified. presentType : Office, dutyType : Present[Member:20@NT:1]  modified. presentType : Office, dutyType : Present[Member:20@NT:1]  modified. leaveType : AnnualLeave, dutyType : Leave2026-03-06[Member:1s@NT:1] dutyType : Absent, absenceType : UnauthorizedAbsence[Member:1e@NT:1]  modified. presentType : WorkFromHome, dutyType : Present[Member:x@NT:1]  modified. presentType : WorkFromHome, dutyType : Present2026-03-09[Member:1u@NT:1] dutyType : Leave, leaveType : AnnualLeave[Member:1s@NT:1]  modified. presentType : WorkFromHome, dutyType : Present[Member:1h@NT:1]  modified. presentType : WorkFromHome, dutyType : Present2026-03-10[Member:1u@NT:1] dutyType : Leave, leaveType : AnnualLeave[Member:1e@NT:1]  modified. presentType : WorkFromHome, dutyType : Present[Member:7@NT:1]  modified. presentType : Office, dutyType : Present2026-03-11[Member:7@NT:1]  modified. presentType : Office, dutyType : Present2026-03-12[Member:2b@NT:1]  modified. presentType : Office, dutyType : Present2026-03-16[Member:2b@NT:1]  modified. presentType : WorkFromHome, dutyType : Present[Member:1q@NT:1]  modified. presentType : WorkFromHome, dutyType : Present[Member:1h@NT:1]  modified. presentType : Office, dutyType : PresentSprint2026-02-27[BacklogItem:NT:1-251:35]  modified. backlogItemStatus : Planned[BacklogItem:NT:1-251:15]  modified. title : Org Attendance Dashboard page, backlogItemType : Task, backlogItemStatus : Assigned, priority : Medium, storyPoints : 6, valueScore : 12, description : Org Attendance Dashboard page, assignee : 7@NT:1, dueTime : 2026-02-24T23:59:59[BacklogItem:NT:1-251:15]  modified. title : Org Attendance Dashboard page, backlogItemType : Task, backlogItemStatus : Assigned, priority : Medium, storyPoints : 1, valueScore : 12, description : Org Attendance Dashboard page, assignee : 7@NT:1, dueTime : 2026-02-24T23:59:59[BacklogItem:NT:1-251:10]  modified. title : 화면 별 줄바꿈 반영, backlogItemType : Story, backlogItemStatus : Completed, priority : Medium, storyPoints : 2, valueScore : 50, assignee : 1s@NT:1[BacklogItem:NT:1-251:10]  modified. title : 화면 별 줄바꿈 반영, backlogItemType : Story, backlogItemStatus : Completed, priority : Medium, storyPoints : 1, valueScore : 50, assignee : 1s@NT:1[BacklogItem:NT:1-251:25]  modified. title : 퍼블리싱 반영, backlogItemType : Task, backlogItemStatus : InProgress, priority : Medium, storyPoints : 3, valueScore : 5, assignee : 1s@NT:1, dueTime : 2026-02-13T23:59:59[BacklogItem:NT:1-251:10]  modified. title : 화면 별 줄바꿈 반영, backlogItemType : Story, backlogItemStatus : Completed, priority : Medium, storyPoints : 2, valueScore : 50, assignee : 1s@NT:1[BacklogItem:NT:1-251:10]  modified. title : 화면 별 줄바꿈 반영, backlogItemType : Story, backlogItemStatus : Completed, priority : Medium, storyPoints : 3, valueScore : 50, assignee : 1s@NT:1[BacklogItem:NT:1-251:25]  modified. title : 퍼블리싱 반영, backlogItemType : Task, backlogItemStatus : InProgress, priority : Medium, storyPoints : 4, valueScore : 5, assignee : 1s@NT:1, dueTime : 2026-02-13T23:59:59[BacklogItem:NT:1-251:14]  modified. title : Lingo 및 다국어 라벨 적용, backlogItemType : Story, backlogItemStatus : Completed, priority : Medium, storyPoints : 13, valueScore : 12, description : App에 Lingo 기능을 적용하고, 언어 선택을 지원하고, Title 및 Label에 다국어 라벨을 적용한다., assignee : 1u@NT:1[BacklogItem:NT:1-251:14]  modified. title : Lingo 및 다국어 라벨 적용, backlogItemType : Story, backlogItemStatus : Completed, priority : Medium, storyPoints : 5, valueScore : 12, description : App에 Lingo 기능을 적용하고, 언어 선택을 지원하고, Title 및 Label에 다국어 라벨을 적용한다., assignee : 1u@NT:12026-03-05[BacklogItem:NT:1-251:36]  registered. title : dasd, backlogItemType : Story, backlogItemStatus : Planned, priority : Medium, storyPoints : 1, valueScore : 1, description : asdasd, sprintId : NT:1-251:2:Domain:S42026-03-13[BacklogItem:NT:1-251:15]  modified. title : Org Attendance Dashboard page, backlogItemType : Task, backlogItemStatus : Assigned, priority : Medium, storyPoints : 1, valueScore : 12, description : Org Attendance Dashboard page, acceptanceCriteria : test test, assignee : 7@NT:1, dueTime : 2026-02-24T23:59:59[BacklogItem:NT:1-251:15]  modified. title : Org Attendance Dashboard page, backlogItemType : Task, backlogItemStatus : Assigned, priority : Medium, storyPoints : 1, valueScore : 12, description : Org Attendance Dashboard page, acceptanceCriteria : test test -&amp;gt; test, assignee : 7@NT:1, dueTime : 2026-02-24T23:59:59[BacklogItem:NT:1-251:33]  modified. title : I function 적용, backlogItemType : Task, backlogItemStatus : Assigned, priority : Low, storyPoints : 1, valueScore : 1, acceptanceCriteria : sfddf,sdfZ ,, assignee : 20@NT:1[BacklogItem:NT:1-251:33]  modified. backlogItemStatus : InProgress, startTime : 2026-03-13T12:35:01.825782502[BacklogItem:NT:1-251:15]  modified. title : Org Attendance Dashboard page, backlogItemType : Task, backlogItemStatus : Assigned, priority : Medium, storyPoints : 1, valueScore : 12, description : Org Attendance Dashboard page, acceptanceCriteria : test test -&amp;gt; test, assignee : 7@NT:1, dueTime : 2026-02-24T23:59:59[BacklogItem:NT:1-251:33]  modified. title : I function 적용, backlogItemType : Task, backlogItemStatus : InProgress, priority : Low, storyPoints : 1, valueScore : 1, acceptanceCriteria : sfddf  &amp;gt; dsdsd,sdfZ ,, assignee : 20@NT:1[BacklogItem:NT:1-251:15]  modified. title : Org Attendance Dashboard page, backlogItemType : Task, backlogItemStatus : Assigned, priority : Medium, storyPoints : 1, valueScore : 12, description : Org Attendance Dashboard page &amp;gt; dsdsd, acceptanceCriteria : test test -&amp;gt; test, assignee : 7@NT:1, dueTime : 2026-02-24T23:59:59[BacklogItem:NT:1-251:15]  modified. title : Org Attendance Dashboard page, backlogItemType : Task, backlogItemStatus : Assigned, priority : Medium, storyPoints : 1, valueScore : 12, description : Org Attendance Dashboard page &amp;gt; dsdsdasdasdasd, acceptanceCriteria : test test -&amp;gt; test, assignee : 7@NT:1, dueTime : 2026-02-24T23:59:59[BacklogItem:NT:1-251:15]  modified. title : Org Attendance Dashboard page, backlogItemType : Task, backlogItemStatus : Assigned, priority : Medium, storyPoints : 1, valueScore : 12, description : Org Attendance Dashboard pageㅇㅁㄴㅇㅁㄴ이ㅓㅏㅁㅇasdasdasd, acceptanceCriteria : test test -&amp;gt; test, assignee : 7@NT:1, dueTime : 2026-02-24T23:59:59[BacklogItem:NT:1-251:15]  modified. title : Org Attendance Dashboard page, backlogItemType : Task, backlogItemStatus : Assigned, priority : Medium, storyPoints : 1, valueScore : 12, description : Org Attendance Dashboard page &amp;gt; dasad, acceptanceCriteria : test test -&amp;gt; test, assignee : 7@NT:1, dueTime : 2026-02-24T23:59:59[BacklogItem:NT:1-251:37]  registered. title : test -&amp;gt; test, backlogItemType : Story, backlogItemStatus : Assigned, priority : Medium, storyPoints : 1, valueScore : 1, description : test -&amp;gt; test, acceptanceCriteria : test -&amp;gt; test, assignee : 1s@NT:1, dueTime : 2026-03-19 23:59:59, sprintId : NT:1-251:2:Domain:S4&quot;&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
@@ -251,7 +243,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerAnalysisJob">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerAnalysisJob" enabled="false">
           <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/register-analysis-job/command</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -278,6 +270,47 @@
     &quot;subjectType&quot;: &quot;Spot&quot;,&#xd;
     &quot;subjectIds&quot;: [&#xd;
     &quot;LxEHOifN&quot;&#xd;
+    ]&#xd;
+  },&#xd;
+  &quot;cronSchedule&quot;: null,&#xd;
+  &quot;code&quot;: null,&#xd;
+  &quot;contextType&quot;: &quot;Profile&quot;&#xd;
+}&#xd;
+&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerAnalysisJob">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/analysis/cm/register-analysis-job/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;name&quot;: null,&#xd;
+  &quot;goal&quot;: &quot;관광 코스 가이드 소개글 작성해줘&quot;,&#xd;
+    &quot;instructions&quot;: [&#xd;
+    &quot;글 작성 스타일은 SNS 스타일로 해줘&quot;&#xd;
+  ],&#xd;
+    &quot;resultType&quot;: {&#xd;
+    &quot;dataType&quot;: &quot;String&quot;,&#xd;
+    &quot;keys&quot;: [&#xd;
+    ]&#xd;
+  },&#xd;
+  &quot;langCode&quot;: &quot;ko-KR&quot;,&#xd;
+  &quot;scope&quot;: {&#xd;
+    &quot;lookbackPeriod&quot;: null,&#xd;
+    &quot;subjectType&quot;: &quot;Spot&quot;,&#xd;
+    &quot;subjectIds&quot;: [&#xd;
+    &quot;M115ZtO9&quot;&#xd;
     ]&#xd;
   },&#xd;
   &quot;cronSchedule&quot;: null,&#xd;

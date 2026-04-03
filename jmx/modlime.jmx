@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-postin-admin">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">content-type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">authorization</stringProp>
+            <stringProp name="Header.value">Bearer eyJraWQiOiJ2aXplbmQiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJwb3N0aW4tYWRtaW4iLCJpc3MiOiJodHRwOi8vY2VsbGxpbWUtZGV2LnZpemVuZC5pbyIsImRpc3BsYXlfbmFtZSI6IlBvc3RpbiBBZG1pbiIsImF1ZCI6InZpemVuZCIsInBhc3N3b3JkIjoiIiwibmJmIjoxNzc1MTExOTAwLCJzY29wZSI6WyJjaXRpemVuIl0sImF0dHJpYnV0ZXMiOnsiZGV2aWNlX2lwIjoiMTE2LjQ1Ljk1LjU5IiwiY2l0aXplbl9pZCI6IjNATlQ6NSIsImNpdGl6ZW5fc2Vzc2lvbl9pZCI6IjAxOWQ0Y2NlLTkzODctNzAwMC04NTU5LTEwMjk5ZjEyZTZiNCIsImxvY2F0aW9uIjoiU291dGggS29yZWE6Tm9ydGggQ2h1bmdjaGVvbmc6Q2hlb25nanUtc2kiLCJkZXZpY2VfdHlwZSI6IkRlc2t0b3A6Q2hyb21lOk1hY09TIiwicGF2aWxpb25faWQiOiJOVDo1IiwiY2l0aXplbl91c2VyX2lkIjoiMDE5Yzk3MmItMWU1ZS03MDAwLWIxNzktOTAzN2Y3MDgzZmUxIiwiY2luZXJvb21faWRzIjpbIk5UOjU6MiJdfSwiZXhwIjoxNzc1MTEzMTAwLCJpYXQiOjE3NzUxMTE5MDAsImp0aSI6IjAxOWQ0Y2VhLTBjN2ItNzAwMC1hODc3LWJkZDYxZjgwMjU3YyIsImVtYWlsIjoicG9zdGluQG5leHRyZWUuaW8iLCJ1c2VybmFtZSI6InBvc3Rpbi1hZG1pbiJ9.a12HTJp6FmBZ2JQCUYfqZZGOp8hvphQFW8RhCbiW1zxRfgCKn98vg665dNpHohZ-og8Uby5eLuO6gdvjDzmfKdAJHFEikOWXrZ5L4p_B-zIbia5xAxxRWg8nMd2JhYbwjjNah5wjR1B4tI7sAeLfXFMUqMVwL1PBrfJIUXAlA_jKBblhzw_7O1ZMW3TevHZlOEB19x0Whg5NDT0O00pylSQi1K15r5CEbjNdquGJLaCSZmFNEFh1EilQh8ZXzrZZd8r1u-T1c7nAx_Hx_h5KuaoMz7tz-Dax7CTPhc9mPwGysZpoJ0EDZkl_yqL3HaA12I4QkCjLpL186PbzmmRTZg</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">referer</stringProp>
+            <stringProp name="Header.value">https://celllime-dev.vizend.io/postin-boards/pavilion-boards-usr/notice</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">actorid</stringProp>
+            <stringProp name="Header.value">3@NT:5:2-2 </stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-postin-user" enabled="false">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">content-type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">authorization</stringProp>
+            <stringProp name="Header.value">Bearer eyJraWQiOiJ2aXplbmQiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJwb3N0aW4tdXNlciIsImlzcyI6Imh0dHA6Ly9jZWxsbGltZS1kZXYudml6ZW5kLmlvIiwiZGlzcGxheV9uYW1lIjoiUG9zdGluIFVzZXIiLCJhdWQiOiJ2aXplbmQiLCJwYXNzd29yZCI6IiIsIm5iZiI6MTc3NDk0NjAxMiwic2NvcGUiOlsiY2l0aXplbiJdLCJhdHRyaWJ1dGVzIjp7ImRldmljZV9pcCI6IjExMi4xNjguMjM1LjI1MiIsImNpdGl6ZW5faWQiOiI0QE5UOjUiLCJjaXRpemVuX3Nlc3Npb25faWQiOiIwMTlkNDJmOS0xNzQ1LTcwMDAtYWIwYS1hYjg1YWVmM2ZiYzMiLCJsb2NhdGlvbiI6IlNvdXRoIEtvcmVhOm51bGw6bnVsbCIsImRldmljZV90eXBlIjoiRGVza3RvcDpDaHJvbWU6TWFjT1MiLCJwYXZpbGlvbl9pZCI6Ik5UOjUiLCJjaXRpemVuX3VzZXJfaWQiOiIwMTljOTcyYi01ZmUyLTcwMDAtYTg5Zi0xYzY5YjA5YzlmNGEiLCJjaW5lcm9vbV9pZHMiOlsiTlQ6NToyIl19LCJleHAiOjE3NzQ5NDcyMTIsImlhdCI6MTc3NDk0NjAxMiwianRpIjoiMDE5ZDQzMDYtY2ViZi03MDAwLWE0NjgtNzQyN2JjYTU5OWYwIiwiZW1haWwiOiJwb3N0aW4tdXNlckBuZXh0cmVlLmlvIiwidXNlcm5hbWUiOiJwb3N0aW4tdXNlciJ9.RPkdORuK-OYloARPCctwElkzfMesFhcEj5Ys6-qGwo9jAfBKCKOZWG4ZCKVPrkPQGSVfBsPtE-nnxxSusbmgAxhMlNXByGrn1I2RElN4_m_vFc_LYfN6rpl46WgTTU09cL4xfGKzwcA-xYkCm70uSFEU15HU28gW99Ae8ySUXRE1HhXtGXTHhCDbLAybAdxrhLESMTEwAGDIXuetSdIZLEyWUxkjrUKgkpHXJ0XV9PvOWi-es-_qTJIhHzHkIWZxE77U8bIP2jRPzAf_g-Ak1h757bubYJeZclaIdyB11FQl_pPmosrFxJtkjzHqpQjaW5-W6VKKDWkuMAvpmvr9vQ</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">referer</stringProp>
+            <stringProp name="Header.value">https://celllime-dev.vizend.io/postin-boards/pavilion-boards-usr/notice</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">actorid</stringProp>
+            <stringProp name="Header.value">4@NT:5:2-2</stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-guest" enabled="false">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">content-type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">referer</stringProp>
+            <stringProp name="Header.value">https://celllime-dev.vizend.io/postin-boards/pavilion-boards-usr/notice</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">authorization</stringProp>
+            <stringProp name="Header.value"></stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="request default - dev" enabled="false">
+        <stringProp name="HTTPSampler.domain">celllime-dev.vizend.io</stringProp>
+        <stringProp name="HTTPSampler.protocol">https</stringProp>
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+          <collectionProp name="Arguments.arguments"/>
+        </elementProp>
+        <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+      </ConfigTestElement>
+      <hashTree/>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="request default - local">
+        <stringProp name="HTTPSampler.domain">localhost</stringProp>
+        <stringProp name="HTTPSampler.port">9091</stringProp>
+        <stringProp name="HTTPSampler.protocol">http</stringProp>
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+          <collectionProp name="Arguments.arguments"/>
+        </elementProp>
+        <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+      </ConfigTestElement>
+      <hashTree/>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="variables - dev" enabled="false">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="prefix" elementType="Argument">
+            <stringProp name="Argument.name">prefix</stringProp>
+            <stringProp name="Argument.value">/api/postin</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="variables - local">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="prefix" elementType="Argument">
+            <stringProp name="Argument.name">prefix</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="postin">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="======= user" enabled="false">
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findNoticeBoards" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/usr/notice/board/cm/find-notice-boards/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;noticeBoardFdo&quot;: {&#xd;
+        &quot;titleLike&quot;: &quot;&quot;&#xd;
+    },&#xd;
+    &quot;offset&quot;: {&#xd;
+        &quot;offset&quot;: 0,&#xd;
+        &quot;limit&quot;: 20,&#xd;
+        &quot;sortingField&quot;: &quot;registeredOn&quot;,&#xd;
+        &quot;sortDirection&quot;: &quot;DESCENDING&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="toggleBulletinThumbUp" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/role/usr/bulletin/cm/toggle-bulletin-thumb-up/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;thumbUpRecordCdo&quot;: {&#xd;
+        &quot;boardContentType&quot;: &quot;Post&quot;,&#xd;
+        &quot;boardContentId&quot;: &quot;NT:5-8:B18:3&quot;,&#xd;
+        &quot;liker&quot;: {&#xd;
+            &quot;citizenId&quot;: &quot;4@NT:5&quot;,&#xd;
+            &quot;employeeNo&quot;: &quot;4@NT:5:2-2&quot;,&#xd;
+            &quot;langDisplayNames&quot;: {&#xd;
+                &quot;defaultLangCode&quot;: &quot;en&quot;,&#xd;
+                &quot;langStringMap&quot;: {&#xd;
+                    &quot;en&quot;: &quot;Postin User&quot;,&#xd;
+                    &quot;ko&quot;: &quot;Postin User&quot;&#xd;
+                }&#xd;
+            }&#xd;
+        },&#xd;
+        &quot;thumbUpTime&quot;: &quot;2026-03-31T08:42:07.140Z&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="toggleBulletinThumbUp-comment" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/role/usr/bulletin/cm/toggle-bulletin-thumb-up/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;thumbUpRecordCdo&quot;: {&#xd;
+        &quot;boardContentType&quot;: &quot;Comment&quot;,&#xd;
+        &quot;boardContentId&quot;: &quot;NT:5-8:B18:3:3&quot;,&#xd;
+        &quot;liker&quot;: {&#xd;
+            &quot;citizenId&quot;: &quot;4@NT:5&quot;,&#xd;
+            &quot;employeeNo&quot;: &quot;4@NT:5:2-2&quot;,&#xd;
+            &quot;langDisplayNames&quot;: {&#xd;
+                &quot;defaultLangCode&quot;: &quot;en&quot;,&#xd;
+                &quot;langStringMap&quot;: {&#xd;
+                    &quot;en&quot;: &quot;Postin User&quot;,&#xd;
+                    &quot;ko&quot;: &quot;Postin User&quot;&#xd;
+                }&#xd;
+            }&#xd;
+        },&#xd;
+        &quot;thumbUpTime&quot;: &quot;2026-03-31T08:48:55.471Z&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="======= adm" enabled="false">
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="toggleBulletinThumbUp-comment" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/role/usr/bulletin/cm/toggle-bulletin-thumb-up/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;thumbUpRecordCdo&quot;: {&#xd;
+        &quot;boardContentType&quot;: &quot;Comment&quot;,&#xd;
+        &quot;boardContentId&quot;: &quot;NT:5-8:B18:3:3&quot;,&#xd;
+        &quot;liker&quot;: {&#xd;
+            &quot;citizenId&quot;: &quot;3@NT:5&quot;,&#xd;
+            &quot;employeeNo&quot;: &quot;3@NT:5:2-2&quot;,&#xd;
+            &quot;langDisplayNames&quot;: {&#xd;
+                &quot;defaultLangCode&quot;: &quot;en&quot;,&#xd;
+                &quot;langStringMap&quot;: {&#xd;
+                    &quot;en&quot;: &quot;Postin Admin&quot;,&#xd;
+                    &quot;ko&quot;: &quot;Postin Admin&quot;&#xd;
+                }&#xd;
+            }&#xd;
+        },&#xd;
+        &quot;thumbUpTime&quot;: &quot;2026-03-31T08:52:17.988Z&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findNoticeBoards" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/feature/adm/notice/board/cm/find-notice-boards/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;noticeBoardFdo&quot;: {&#xd;
+        &quot;titleLike&quot;: &quot;&quot;&#xd;
+    },&#xd;
+    &quot;offset&quot;: {&#xd;
+        &quot;offset&quot;: 0,&#xd;
+        &quot;limit&quot;: 20,&#xd;
+        &quot;sortingField&quot;: &quot;registeredOn&quot;,&#xd;
+        &quot;sortDirection&quot;: &quot;DESCENDING&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="======= neut" enabled="false">
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findBulletinPostsForAny" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/role/neut/bulletin/cm/find-bulletin-posts-for-any/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;bulletinPostFdo&quot;: {&#xd;
+        &quot;boardId&quot;: &quot;NT:5-8:B18&quot;,&#xd;
+        &quot;titleLike&quot;: &quot;&quot;&#xd;
+    },&#xd;
+    &quot;reader&quot;: {&#xd;
+        &quot;citizenId&quot;: &quot;3@NT:5&quot;,&#xd;
+        &quot;employeeNo&quot;: &quot;3@NT:5:2-2&quot;,&#xd;
+        &quot;langDisplayNames&quot;: {&#xd;
+            &quot;defaultLangCode&quot;: &quot;en&quot;,&#xd;
+            &quot;langStringMap&quot;: {&#xd;
+                &quot;en&quot;: &quot;Postin Admin&quot;,&#xd;
+                &quot;ko&quot;: &quot;Postin Admin&quot;&#xd;
+            }&#xd;
+        }&#xd;
+    },&#xd;
+    &quot;offset&quot;: {&#xd;
+        &quot;offset&quot;: 0,&#xd;
+        &quot;limit&quot;: 20,&#xd;
+        &quot;sortingField&quot;: &quot;registeredOn&quot;,&#xd;
+        &quot;sortDirection&quot;: &quot;DESCENDING&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findNeutralNoticeBoards" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/role/neut/notice/cm/find-neutral-notice-boards/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;noticeBoardFdo&quot;: {&#xd;
+        &quot;titleLike&quot;: &quot;&quot;&#xd;
+    },&#xd;
+    &quot;offset&quot;: {&#xd;
+        &quot;offset&quot;: 0,&#xd;
+        &quot;limit&quot;: 20,&#xd;
+        &quot;sortingField&quot;: &quot;registeredOn&quot;,&#xd;
+        &quot;sortDirection&quot;: &quot;DESCENDING&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findNoticeBoardsForAny">
+          <stringProp name="HTTPSampler.path">${prefix}/role/neut/notice/cm/find-notice-boards-for-any/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;noticeBoardFdo&quot;: {&#xd;
+        &quot;titleLike&quot;: &quot;&quot;&#xd;
+    },&#xd;
+    &quot;offset&quot;: {&#xd;
+        &quot;offset&quot;: 0,&#xd;
+        &quot;limit&quot;: 20,&#xd;
+        &quot;sortingField&quot;: &quot;registeredOn&quot;,&#xd;
+        &quot;sortDirection&quot;: &quot;DESCENDING&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findNoticeBoardForAny" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/role/neut/notice/cm/find-notice-board-for-any/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;boardId&quot;: &quot;NT:1-3:N5&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findNoticePostDetailRdoForAny" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/role/neut/notice/cm/find-notice-post-detail-rdo-for-any/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;noticePostId&quot;: &quot;NT:5-10:N2:5&quot;,&#xd;
+    &quot;reader&quot;: {&#xd;
+        &quot;citizenId&quot;: &quot;3@NT:5&quot;,&#xd;
+        &quot;employeeNo&quot;: &quot;3@NT:5:2-2&quot;,&#xd;
+        &quot;langDisplayNames&quot;: {&#xd;
+            &quot;defaultLangCode&quot;: &quot;en&quot;,&#xd;
+            &quot;langStringMap&quot;: {&#xd;
+                &quot;en&quot;: &quot;Postin Admin&quot;,&#xd;
+                &quot;ko&quot;: &quot;Postin Admin&quot;&#xd;
+            }&#xd;
+        }&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findNoticePostsForAny" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/role/neut/notice/cm/find-notice-posts-for-any/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;noticePostFdo&quot;: {&#xd;
+    &quot;id&quot;: &quot;id_3252abd6d5b2&quot;,&#xd;
+    &quot;category&quot;: &quot;category_500f27d437ee&quot;,&#xd;
+    &quot;titleLike&quot;: &quot;titleLike_d16e67a615ed&quot;,&#xd;
+    &quot;contentLike&quot;: &quot;contentLike_7483d5255bf3&quot;,&#xd;
+    &quot;tags&quot;: [&#xd;
+      &quot;tags_7f05f61e8d95&quot;&#xd;
+    ],&#xd;
+    &quot;authorCitizenId&quot;: &quot;authorCitizenId_f6172aee4e37&quot;,&#xd;
+    &quot;authorEmployeeNo&quot;: &quot;authorEmployeeNo_7ae9de82b923&quot;,&#xd;
+    &quot;dateTimeFrom&quot;: &quot;2026-03-25 16:23:54&quot;,&#xd;
+    &quot;dateTimeTo&quot;: &quot;2026-03-25 16:23:54&quot;,&#xd;
+    &quot;boardId&quot;: &quot;boardId_b670b2c2f738&quot;,&#xd;
+    &quot;closed&quot;: false&#xd;
+  },&#xd;
+  &quot;reader&quot;: {&#xd;
+    &quot;citizenId&quot;: &quot;citizenId_ec467566f931&quot;,&#xd;
+    &quot;employeeNo&quot;: &quot;employeeNo_ec959362f0d7&quot;,&#xd;
+    &quot;langDisplayNames&quot;: {&#xd;
+      &quot;defaultLangCode&quot;: &quot;defaultLangCode_12d57dfb4366&quot;,&#xd;
+      &quot;langStringMap&quot;: {}&#xd;
+    }&#xd;
+  },&#xd;
+  &quot;offset&quot;: {&#xd;
+    &quot;offset&quot;: 0,&#xd;
+    &quot;limit&quot;: 0,&#xd;
+    &quot;totalCount&quot;: 0,&#xd;
+    &quot;previous&quot;: false,&#xd;
+    &quot;next&quot;: false,&#xd;
+    &quot;sortingField&quot;: &quot;sortingField_1f9f18256479&quot;,&#xd;
+    &quot;sortDirection&quot;: &quot;ASCENDING&quot;&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findNoticePinsForAny" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/role/neut/notice/cm/find-notice-pins-for-any/fetch</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+	&quot;noticeBoardId&quot;:&quot;NT:1-2:N4&quot;&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

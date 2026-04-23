@@ -1,0 +1,31 @@
+{
+  "documentId": "APPROVAL_FORM_VACATION_REQUEST_1:7",
+  "documentUdo": {
+    "title": "휴가 신청서 수정",
+    "content": "content_775dae782b29",
+    "approvalStatus": "Submitted",
+    "formFieldValues": {
+      "leaveType": "연차",
+      "startDate": "2026-04-15",
+      "endDate": "2026-04-15",
+      "leaveDays": 2,
+      "reason": "개인 사유"
+    },
+    "remainedClipFileIds": []
+  },
+  "docStepRequestCdos": [
+    {
+      "order": 1,
+      "approver": {
+        "citizenId": "a@NT:5",
+        "employeeNo": "passin-admin",
+        "langDisplayNames": {
+          "defaultLangCode": "ko",
+          "langStringMap": {}
+        }
+      },
+      "approverTeam": "passin 개발",
+      "type": "Approval"
+    }
+  ]
+}

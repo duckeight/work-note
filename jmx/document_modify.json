@@ -1,8 +1,9 @@
 {
-  "documentId": "APPROVAL_FORM_VACATION_REQUEST_1:7",
+  "documentId": "APPROVAL_FORM_VACATION_REQUEST_1:18",
   "documentUdo": {
-    "title": "휴가 신청서 수정",
-    "content": "content_775dae782b29",
+    "title": "새로운 휴가 신청",
+    "team": "모드라임 팀",
+    "content": "",
     "approvalStatus": "Submitted",
     "formFieldValues": {
       "leaveType": "연차",
@@ -11,20 +12,19 @@
       "leaveDays": 2,
       "reason": "개인 사유"
     },
-    "remainedClipFileIds": []
+    "approvalFormId": "APPROVAL_FORM_VACATION_REQUEST_1"
   },
   "docStepRequestCdos": [
     {
       "order": 1,
-      "approver": {
-        "citizenId": "a@NT:5",
-        "employeeNo": "passin-admin",
-        "langDisplayNames": {
-          "defaultLangCode": "ko",
-          "langStringMap": {}
-        }
-      },
-      "approverTeam": "passin 개발",
+      "approverCitizenId": "a@NT:5",
+      "approverTeam" : "모드라임 팀",
+      "type": "Approval"
+    },
+    {
+      "order": 2,
+      "approverCitizenId": "9@NT:5",
+      "approverTeam": "모드라임 팀",
       "type": "Approval"
     }
   ]

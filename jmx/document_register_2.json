@@ -1,9 +1,9 @@
 {
   "documentRequestCdo": {
-    "title": "휴가 신청",
+    "title": "새로운 휴가 신청",
     "team": "모드라임 팀",
     "content": "",
-    "approvalStatus": "Submitted",
+    "approvalStatus": "Draft",
     "formFieldValues": {
       "leaveType": "연차",
       "startDate": "2026-04-15",
@@ -16,29 +16,13 @@
   "docStepRequestCdos": [
     {
       "order": 1,
-      "approver": {
-        "citizenId": "a@NT:5",
-        "employeeNo": "passin-admin",
-        "langDisplayNames": {
-          "defaultLangCode": "ko",
-          "langStringMap": {
-          }
-        }
-      },
-      "approverTeam": "모드라임 팀",
+      "approverCitizenId": "a@NT:5",
+      "approverTeam" : "모드라임 팀",
       "type": "Approval"
     },
     {
       "order": 2,
-      "approver": {
-        "citizenId": "9@NT:5",
-        "employeeNo": "passin-user",
-        "langDisplayNames": {
-          "defaultLangCode": "ko",
-          "langStringMap": {
-          }
-        }
-      },
+      "approverCitizenId": "9@NT:5",
       "approverTeam": "모드라임 팀",
       "type": "Approval"
     }

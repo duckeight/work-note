@@ -74,12 +74,14 @@ io.vizend.maro.domain.blueprint.cm.entity
 ├── AggregateBlueprint.java
 ├── AggregateBlueprintBinding.java
 ├── BlueprintProfile.java
+├── MsBlueprintBindingSet.java
 ├── policy
 │   └── AggregateBlueprintValidator.java
 ├── sdo
 │   ├── AggregateBlueprintCdo.java
 │   ├── AggregateBlueprintBindingCdo.java
-│   └── BlueprintProfileCdo.java
+│   ├── BlueprintProfileCdo.java
+│   └── MsBlueprintBindingSetCdo.java
 └── vo
     ├── AggregateBusinessSpecification.java
     ├── ResolvedAggregateModel.java
@@ -182,9 +184,11 @@ Binding은 다음 두 단계를 구분해야 한다.
 - **입력 단계**: 업무 명세, Blueprint 입력, Profile 선택을 보관하고 `validateInput()`을 수행한다.
 - **해석 단계**: `ResolvedAggregateModel`과 이벤트 계약을 보관하고 `validateDesign()`을 수행한다.
 
-Binding은 PR이나 Pit에 소유되지 않는 독립 `StageEntity`다. `prId`, `pitId`, `dramaId`를 Binding 필드로 추가하지 않는다. 새 PR의 Pit snapshot은 기존 Binding ID를 그대로 참조한다.
+Binding은 PR이나 Pit에 소유되지 않는 독립 `StageEntity`다. `prId`, `pitId`, `dramaId`를 Binding 필드로 추가하지 않는다. 새 PR의 Pit snapshot은 직전 최신 PR Pit의 BindingSet 참조를 복사하여 기존 Binding ID를 그대로 사용한다.
 
 같은 Aggregate 업무 설계를 변경할 때는 새 Binding을 만들지 않고 기존 Binding의 `businessSpecification`, `inputBindings`, `profileSelections`, `resolvedAggregateModel`, `resolvedDataEventContract`, `validationResult`, `status`를 함께 수정한다. `blueprintId/key/version`과 `aggregateName`은 Binding 정체성이므로 수정하지 않는다. StageEntity의 버전은 동시 수정 충돌을 검출하는 데 사용한다.
+
+BindingSet에 포함되었거나 이미 VM3로 Materialize되었다는 사실은 Binding을 불변으로 만들지 않는다. Materialization 전용/이후 전용 Binding 수정 모델을 나누거나, Materialization 이력으로 편집을 거부하면 안 된다. Pit 문맥이 없는 카탈로그 수정은 동일 Binding ID의 설계만 갱신하고 기존 Pit VM3 snapshot은 유지한다. Pit 문맥에서 수정할 때는 동일 Binding 갱신과 선택한 활성 Pit 동기화를 한 트랜잭션으로 처리한다.
 
 ### 5.3 BlueprintProfile
 
@@ -252,6 +256,30 @@ Binding별로 확정되는 데이터 이벤트 계약이다.
 - 멱등 키와 Command 문맥 전달 방식
 
 Blueprint의 `AggregateDataEventPolicy`는 허용 범위와 필수 조건만 정한다. `AggregateDataEventDefinition`의 업무별 값과 결합 경로를 Blueprint에 올리면 안 된다.
+
+### 5.7 MsBlueprintBindingSet
+
+하나의 마이크로서비스 개발 범위에서 독립적으로 설계한 Binding들을 교차 검증 및 VM3 Materialization 단위로 묶는 PR 독립 `StageEntity`다. Materialization된 Pit IR 전체는 이 Set ID를 설계 출처로 보존하지만, Set은 Pit이나 PR을 소유하거나 의존하지 않는다.
+
+| 필드 | 책임 |
+| --- | --- |
+| `bindingSetKey` | 하나의 마이크로서비스 설계 묶음을 식별하는 PR 비종속 논리 키 |
+| `aggregateBindingIds` | 구성 AggregateBlueprintBinding ID 목록 |
+| `moveBindingIds` | 구성 MoveBlueprintBinding ID 목록 |
+| `featureBindingIds` | 구성 FeatureBlueprintBinding ID 목록 |
+| `facadeBindingIds` | 구성 FacadeBlueprintBinding ID 목록 |
+| `queryModelBindingIds` | 선택적인 QueryModelBlueprintBinding ID 목록 |
+| `historyBindingIds` | 선택적인 HistoryBlueprintBinding ID 목록 |
+| `eventBindingIds` | 선택적인 EventBlueprintBinding ID 목록 |
+| `validationResult` | 구성 및 Binding 간 교차 검증의 최근 결과 |
+| `status` | Draft, Validated, Resolved 또는 Failed 상태 |
+| `aggregateBindings` | ID로 조회한 Aggregate Binding의 transient 탐색 관계 |
+
+타입별 ID 목록은 BindingSet의 구성원 참조이며 JPA에서는 JSON 값으로 저장한다. 개별 Binding이 다른 Binding의 물리 ID나 FK를 소유하면 안 된다. Move→Aggregate Operation, Feature→MoveComposition, Facade→Feature Operation 연결은 결정적인 논리 ContractRef로 표현하고 BindingSet의 Resolver/Validator가 실제 구성원에 대해 해석한다.
+
+기존 Aggregate 단일 생성 API는 호환 어댑터로만 유지한다. 해당 Aggregate Binding이 이미 하나의 BindingSet에 속하면 그 Set으로 위임하고, 최초 Materialization이며 아직 Set이 없으면 Aggregate-only BindingSet을 먼저 생성한다. 어느 경우에도 Pit Materializer가 개별 Binding을 출처 경계로 받거나 Pit에 개별 Binding ID를 저장하면 안 된다. 하나의 Aggregate Binding이 여러 BindingSet에 속해 단일 API로 Set을 판별할 수 없다면 임의로 선택하지 않고 Set ID를 받는 API를 사용한다.
+
+현재 Aggregate Binding만 구현되어 있으므로 `MsBlueprintBindingSetLogic`은 Aggregate 참조의 존재성과 `Resolved` 상태를 검증한다. 이후 Move, Feature, Facade Binding 모델이 추가되면 같은 경계에서 각 참조의 존재성과 교차 Contract를 검증한다.
 
 ## 6. 핵심 UML
 
@@ -329,12 +357,24 @@ classDiagram
         +commandContextTransfer
     }
 
+    class MsBlueprintBindingSet {
+        <<StageEntity>>
+        +bindingSetKey
+        +aggregateBindingIds
+        +moveBindingIds
+        +featureBindingIds
+        +facadeBindingIds
+        +validationResult
+        +status
+    }
+
     AggregateBlueprint "1" <-- "0..*" AggregateBlueprintBinding : 적용
     BlueprintProfile "0..*" <-- "0..*" AggregateBlueprintBinding : 선택
     AggregateBlueprintBinding "1" *-- "1" AggregateBusinessSpecification : 업무 명세
     AggregateBlueprintBinding "1" *-- "0..1" ResolvedAggregateModel : 해석 결과
     AggregateBlueprintBinding "1" *-- "0..1" AggregateDataEventDefinition : 이벤트 계약
     AggregateBlueprint ..> AggregateDataEventDefinition : 이벤트 정책으로 제약
+    MsBlueprintBindingSet "0..*" o-- "1..*" AggregateBlueprintBinding : ID 구성원 참조
 ```
 
 ## 7. 하위 모델 구조
@@ -451,19 +491,21 @@ Resolver는 특정 `blueprintKey` 상수로 분기하거나 코드에 표준 SDO
 
 ### 10.1 PR snapshot과 동일 Binding 수정·재동기화
 
-`Pit.sourceBlueprintBindingId`는 해당 Pit IR의 설계 원본인 `AggregateBlueprintBinding` ID다. 이 필드는 Blueprint 모델의 일부가 아니라 downstream Geno 참조 정보다. Blueprint와 Binding은 모두 PR과 독립적으로 존재한다.
+`Pit.sourceMsBlueprintBindingSetId`는 해당 Pit IR 전체의 설계 원본인 `MsBlueprintBindingSet` ID다. Pit은 개별 Aggregate·Move·Feature·Facade Binding ID를 출처 필드로 저장하지 않는다. 개별 Binding은 BindingSet의 타입별 구성원 ID를 통해 추적한다. 이 필드는 Blueprint 모델의 일부가 아니라 downstream Geno 참조 정보다. Blueprint, Binding과 BindingSet은 모두 PR과 독립적으로 존재한다.
 
 수정·재동기화 흐름은 다음과 같다.
 
-1. 새 PR을 만들 때 이전 PR의 Pit과 Pi 모델을 snapshot하고 `sourceBlueprintBindingId`를 그대로 복사한다.
-2. 새 PR의 Pit은 이전 Pit과 동일한 Binding ID를 참조한다. PR snapshot을 이유로 Blueprint나 Binding을 복제하지 않는다.
+1. 새 PR을 만들 때 직전 최신 PR의 Pit과 Pi 모델을 snapshot하고, 새 Pit에 직전 최신 Pit의 `sourceMsBlueprintBindingSetId`를 그대로 복사한다.
+2. 새 PR의 Pit은 직전 최신 Pit과 동일한 BindingSet ID를 참조한다. 개별 Binding ID는 해당 BindingSet의 구성원 참조로 해석한다. “Binding ID snapshot”은 Binding Entity 복제가 아니라 동일 Set 참조를 통해 같은 구성원 ID를 이어받는다는 뜻이다. PR snapshot을 이유로 Blueprint, Binding 또는 BindingSet을 복제하지 않는다.
 3. 새 PR에서 업무 설계를 수정하기 직전에 같은 Binding의 기존 `ResolvedAggregateModel`을 트랜잭션 내부 비교 기준으로 보관한다.
 4. 사용자의 새 업무 명세·입력·Profile 선택을 기존 Binding이 고정한 동일 Blueprint 버전으로 다시 resolve한다.
 5. 기존 Binding ID를 유지한 채 Binding의 변경 가능한 설계 필드와 해석 결과를 수정한다.
 6. 수정 전·후 해석 결과를 비교하여 새 PR의 활성 Pit을 동기화한다. 동일 runtime lineage의 모델은 변경 가능한 속성을 갱신하고, 새 설계 항목은 생성하며, 이전 결과에는 있지만 새 결과에는 없는 Blueprint 관리 항목만 제거한다.
-7. 성공 후에도 `Pit.sourceBlueprintBindingId`는 같은 Binding ID다.
+7. 성공 후에도 `Pit.sourceMsBlueprintBindingSetId`는 같은 BindingSet ID다.
 
 Binding 수정과 Pit 동기화 전체는 하나의 트랜잭션이어야 한다. 실패하면 Binding과 Pit 변경이 모두 롤백되어야 한다. 이전 해석 결과는 비교를 위한 트랜잭션 내부 값이지 별도 Binding이나 PR 소유 스냅샷 모델이 아니다. Aggregate Blueprint는 기존 Pit의 `PiDomain`을 소유하거나 교체하지 않는다. 사용자가 수동 생성한 모델을 Blueprint 관리 항목으로 오인해 제거하면 안 된다.
+
+카탈로그처럼 특정 PR/Pit 문맥이 없는 곳에서도 Binding은 동일 ID로 수정할 수 있다. 이 경우에는 Binding만 갱신하고 이미 생성된 Pit VM3 snapshot은 자동 동기화하지 않는다. 이후 Pit 화면에서 사용자가 동기화를 요청하거나, 새 PR 생성 시 직전 최신 Pit snapshot을 복사한 뒤 변경된 Binding을 적용하는 명시적 흐름을 사용한다. Materialization 여부를 이유로 이 카탈로그 수정을 거부하면 안 된다.
 
 공통 생성 규칙 자체를 바꾸는 경우에는 기존 Blueprint 버전을 덮어쓰지 않고 새 `blueprintVersion`을 등록한다. 다만 기존 Binding은 자신이 고정한 Blueprint 버전을 계속 사용하며, 새 버전으로의 전환을 새 PR이나 최신 버전 조회가 암묵적으로 수행하면 안 된다. Blueprint 버전 전환은 별도의 명시적 migration Spec이 생기기 전까지 같은 Binding 수정 경로의 범위 밖이다.
 
@@ -543,7 +585,10 @@ AI는 Blueprint 관련 요청을 받으면 다음 절차를 반드시 수행한�
 - 유효한 Binding에서 기대한 PiAggregate, PiEntity와 데이터 객체가 생성된다.
 - Materializer 결과의 Pi CDO에는 lineage가 없고, Geno 등록 단계에서 실제 부모 기반 lineage가 생성된다.
 - 동일 Binding을 같은 Pit에 반복 적용해도 중복 생성되지 않는다.
-- PR snapshot 후 `sourceBlueprintBindingId`가 동일하게 보존되고 같은 Binding 수정 시 수정 전·후 관리 범위만 추가·수정·삭제된다.
+- BindingSet 포함 및 Materialization 이력과 무관하게 같은 Binding ID를 수정할 수 있다.
+- 카탈로그에서 Binding만 수정하면 기존 Pit VM3 snapshot이 자동 변경되지 않는다.
+- 새 PR이 직전 최신 PR의 Pit/Pi snapshot과 `sourceMsBlueprintBindingSetId`를 복사하고 같은 Binding ID를 계속 사용한다.
+- Pit 문맥에서 같은 Binding 수정 시 수정 전·후 관리 범위만 활성 Pit에 추가·수정·삭제된다.
 
 ## 14. 완료 체크리스트
 
@@ -558,7 +603,9 @@ AI는 Blueprint 관련 요청을 받으면 다음 절차를 반드시 수행한�
 - [ ] Event Policy와 Event Definition의 책임이 분리된다.
 - [ ] Materializer가 ResolvedAggregateModel만 생성 입력으로 사용한다.
 - [ ] Materializer는 lineage를 비워 두고 Geno 등록 흐름이 실제 부모 기반 lineage를 발급한다.
-- [ ] Pit source Binding ID가 snapshot과 동일 Binding 수정 후에도 바뀌지 않는다.
+- [ ] Pit source BindingSet ID가 snapshot과 동일 Binding 수정 후에도 바뀌지 않는다.
+- [ ] BindingSet 포함 여부와 Materialization 이력을 Binding 편집 잠금 조건으로 사용하지 않는다.
+- [ ] 새 PR Pit은 직전 최신 PR Pit의 BindingSet 참조를 복사하고 같은 구성원 Binding ID를 사용한다.
 - [ ] 비활성 후보 필드, 주석 처리 필드와 임시 TODO가 없다.
 - [ ] 결정성, 유효/무효 입력과 참조 무결성 테스트가 있다.
 - [ ] `gradle :maro-domain:compileJava`가 성공한다.

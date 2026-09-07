@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maro Blueprint 전체 개념과 흐름</title>
+  <style>
+    :root {
+      --ink:#172235; --muted:#627086; --paper:#f6f8fc; --card:#fff;
+      --line:#dbe2ec; --blue:#2458d3; --blue2:#eaf0ff; --teal:#087f77;
+      --teal2:#e7f7f4; --amber:#9a5b00; --amber2:#fff3d8; --red:#a33a3a;
+      --shadow:0 12px 36px rgba(23,34,53,.08); --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;line-height:1.68}
+    a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+    .hero{background:linear-gradient(125deg,#132441 0%,#234da6 66%,#087f77 135%);color:#fff;padding:58px 24px 52px}
+    .hero-inner{max-width:1180px;margin:auto}.eyebrow{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;opacity:.72}
+    h1{font-size:clamp(2rem,5vw,3.7rem);line-height:1.12;margin:.35rem 0 1rem;letter-spacing:-.04em}
+    .lead{max-width:820px;font-size:1.1rem;color:#dce8ff;margin:0}.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+    .badge{padding:5px 10px;border:1px solid rgba(255,255,255,.25);border-radius:999px;background:rgba(255,255,255,.09);font-size:.82rem}.hero a.badge{color:#fff}.hero a.badge:hover{background:rgba(255,255,255,.18);text-decoration:none}
+    .layout{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:250px minmax(0,1fr);gap:28px;padding:28px 24px 72px}
+    aside{position:sticky;top:20px;align-self:start;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);max-height:calc(100vh - 40px);overflow:auto}
+    aside strong{display:block;margin:0 0 10px}.toc{margin:0;padding:0;list-style:none}.toc li{margin:4px 0}.toc a{display:block;padding:5px 8px;border-radius:7px;color:#45546b;font-size:.88rem}.toc a:hover{background:var(--blue2);text-decoration:none;color:var(--blue)}
+    main{min-width:0}section{scroll-margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px;margin-bottom:22px;box-shadow:var(--shadow)}
+    h2{font-size:1.55rem;margin:0 0 16px;letter-spacing:-.025em}h3{font-size:1.1rem;margin:27px 0 9px}h4{margin:20px 0 7px}
+    p{margin:8px 0 14px}.muted{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .mini{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fbfcff}.mini h3{margin:0 0 5px;color:#20365c}.mini p{margin:0;color:var(--muted);font-size:.92rem}
+    .callout{border-left:4px solid var(--blue);background:var(--blue2);padding:14px 16px;border-radius:4px 10px 10px 4px;margin:16px 0}
+    .callout.warn{border-color:var(--amber);background:var(--amber2)}
+    .flow{display:flex;align-items:stretch;gap:9px;overflow:auto;padding:8px 2px 14px}.node{min-width:150px;flex:1;border:1px solid #bfd0fa;background:var(--blue2);border-radius:12px;padding:13px;text-align:center;font-weight:650;font-size:.9rem}.node small{display:block;color:var(--muted);font-weight:400;margin-top:4px}.arrow{display:flex;align-items:center;color:var(--blue);font-size:1.45rem;font-weight:bold}
+    .node.teal{background:var(--teal2);border-color:#a9dcd6}.node.amber{background:var(--amber2);border-color:#efd39a}
+    table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.91rem}th,td{padding:10px 12px;border:1px solid var(--line);vertical-align:top;text-align:left}th{background:#eef2f8;color:#283c5d}tbody tr:nth-child(even){background:#fafbfe}
+    code{font-family:"SFMono-Regular",Consolas,monospace;background:#eef2f7;border-radius:5px;padding:.1em .35em;font-size:.88em}
+    pre{background:#142035;color:#dce8ff;border-radius:12px;padding:16px;overflow:auto;line-height:1.55;font-size:.86rem}pre code{background:none;padding:0;color:inherit}
+    ul,ol{padding-left:1.35rem}li{margin:.3rem 0}.check li::marker{color:var(--teal)}
+    .relation{display:grid;grid-template-columns:1fr 54px 1fr 54px 1fr;align-items:center;gap:8px;margin:18px 0}.relation .box{height:100%;border:1px solid var(--line);border-radius:12px;padding:14px;background:#fbfcff;text-align:center}.relation .connector{text-align:center;color:var(--blue);font-size:1.5rem}
+    .status{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.pill{border-radius:999px;padding:6px 11px;background:#edf1f7;font-weight:650;font-size:.84rem}.pill.ok{background:var(--teal2);color:var(--teal)}.pill.fail{background:#fdecec;color:var(--red)}
+    .footer{color:var(--muted);font-size:.85rem;text-align:center;padding:6px 0 30px}
+    @media(max-width:900px){.layout{grid-template-columns:1fr}aside{position:relative;top:auto;max-height:none}.grid,.grid.three{grid-template-columns:1fr}.relation{grid-template-columns:1fr}.relation .connector{transform:rotate(90deg)}section{padding:22px}.hero{padding-top:42px}}
+    @media print{body{background:#fff}.hero{background:#20365c!important;print-color-adjust:exact}.layout{display:block;padding:12px}aside{display:none}section{box-shadow:none;break-inside:avoid;margin:0 0 14px}.flow{overflow:visible}.node{min-width:0}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Maro architecture · 2026-09-07</div>
+      <h1>Blueprint 전체 개념과 흐름</h1>
+      <p class="lead">재사용 가능한 생성 규칙에서 업무별 Binding을 확정하고, 마이크로서비스 단위 BindingSet을 통해 기존 VM3인 Pit과 Pi 모델을 만드는 전체 설계 안내서입니다.</p>
+      <div class="badges"><span class="badge">PR 독립 설계 자원</span><span class="badge">동일 Binding ID 수정</span><span class="badge">Set 단위 Materialization</span><span class="badge">기존 VM3 호환</span><a class="badge" href="blueprint-concepts-and-flow.md">Markdown 원문</a></div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside aria-label="목차">
+      <strong>목차</strong>
+      <ol class="toc">
+        <li><a href="#overview">1. 한눈에 보기</a></li><li><a href="#why">2. 도입 목적</a></li>
+        <li><a href="#concepts">3. 핵심 개념</a></li><li><a href="#models">4. 핵심 모델</a></li>
+        <li><a href="#relations">5. 모델 관계</a></li><li><a href="#flow">6. 전체 생성 흐름</a></li>
+        <li><a href="#sdo">7. SDO 생성</a></li><li><a href="#update">8. 수정·재동기화</a></li>
+        <li><a href="#pr-lineage">9. PR·Lineage·출처</a></li><li><a href="#composition">10. Facade·Feature·Move</a></li>
+        <li><a href="#validation">11. 상태와 검증</a></li><li><a href="#implementation">12. 구현 범위</a></li>
+        <li><a href="#example">13. 주문 예시</a></li><li><a href="#rules">14. 금지·체크리스트</a></li>
+      </ol>
+    </aside>
+
+    <main>
+      <section id="overview">
+        <h2>1. 한눈에 보기</h2>
+        <p>Blueprint는 <code>Pit</code>, <code>PiAggregate</code>, <code>PiEntity</code>, <code>PiFeature</code>, <code>PiFacade</code> 같은 VM3 모델보다 먼저 존재하는 <strong>재사용 가능한 설계 메타모델</strong>이다. 특정 업무의 실제 값은 Blueprint가 아니라 Binding이 가진다.</p>
+        <div class="flow" aria-label="Blueprint 전체 흐름">
+          <div class="node">Blueprint<small>공통 생성 규칙</small></div><div class="arrow">→</div>
+          <div class="node">Binding<small>업무 명세·입력·Profile</small></div><div class="arrow">→</div>
+          <div class="node teal">Resolved Model<small>확정 설계 계약</small></div><div class="arrow">→</div>
+          <div class="node teal">MsBindingSet<small>MS 단위 교차 검증</small></div><div class="arrow">→</div>
+          <div class="node amber">VM3<small>Pit / Pi* 생성</small></div>
+        </div>
+        <div class="callout"><strong>단계 간 계약:</strong> 다음 Maro 단계는 BlueprintBinding을 직접 소비하지 않는다. Materialize된 기존 VM3를 기존 방식대로 소비한다.</div>
+        <ol class="check">
+          <li>Blueprint는 공통 생성 규칙, Binding은 주문·결제 같은 업무별 설계다.</li>
+          <li>Profile은 Blueprint 바깥의 독립 <code>StageEntity</code>다.</li>
+          <li>Binding은 Blueprint와 Profile의 정확한 ID·key·version을 고정한다.</li>
+          <li>BindingSet 포함 여부와 Materialization 이력은 Binding 수정 가능 여부를 제한하지 않는다.</li>
+          <li>Aggregate·Move·Feature·Facade Binding은 직접 FK 없이 <code>MsBlueprintBindingSet</code>에 묶인다.</li>
+          <li>Pit은 개별 Binding ID가 아닌 <code>sourceMsBlueprintBindingSetId</code>만 출처로 보존한다.</li>
+          <li>새 PR의 Pit은 직전 최신 PR Pit의 Set 참조를 snapshot하여 동일 Binding ID들을 이어받는다.</li>
+        </ol>
+      </section>
+
+      <section id="why">
+        <h2>2. 도입 목적</h2>
+        <div class="grid">
+          <div class="mini"><h3>기존 방식</h3><p>사용자가 Entity 값을 직접 입력하고 생성 도중 Aggregate를 지정했다. 결과 모델은 남지만 생성 규칙과 설계 의도는 재사용하기 어렵다.</p></div>
+          <div class="mini"><h3>Blueprint 방식</h3><p>공통 규칙과 업무 결정을 분리해 보존한다. 같은 Blueprint/Profile로 다른 업무를 일관되게 만들고, 동일 Binding의 변경을 VM3에 다시 반영한다.</p></div>
+        </div>
+        <pre><code>공통 생성 규칙 정의
+→ 업무 명세와 Profile을 Binding에 결합
+→ 최종 Aggregate 설계 resolve
+→ VM3 materialize
+→ 재사용·추적·변경 동기화</code></pre>
+      </section>
+
+      <section id="concepts">
+        <h2>3. 핵심 개념과 의존 방향</h2>
+        <table><thead><tr><th>개념</th><th>책임</th><th>포함하지 않는 것</th></tr></thead><tbody>
+          <tr><td>Blueprint</td><td>재사용 가능한 생성 규칙</td><td>특정 업무값, PR/Pit, runtime lineage</td></tr>
+          <tr><td>BlueprintProfile</td><td>여러 Binding이 선택하는 기본값·정책</td><td>특정 Blueprint 소유 관계</td></tr>
+          <tr><td>BlueprintBinding</td><td>특정 업무에 규칙을 적용한 설계 작업</td><td>PR/Pit 소유 키, 암묵적 최신 버전</td></tr>
+          <tr><td>DesignWork</td><td>설계 중 후보·질문·오류를 보관</td><td>완료된 VM3 결과</td></tr>
+          <tr><td>Resolved Model</td><td>검증·해석이 끝난 Materializer 입력</td><td>VM3 물리 ID와 lineage</td></tr>
+          <tr><td>MsBlueprintBindingSet</td><td>마이크로서비스 범위 구성·교차 검증 경계</td><td>Pit/PR 소유 관계</td></tr>
+          <tr><td>VM3</td><td>기존 Maro 단계가 사용하는 실행 메타모델</td><td>Blueprint 규칙의 중복 정의</td></tr>
+        </tbody></table>
+        <div class="relation">
+          <div class="box"><strong>Blueprint Domain</strong><br><span class="muted">독립 설계 자원</span></div><div class="connector">←</div>
+          <div class="box"><strong>Resolver / Application</strong><br><span class="muted">해석·검증·조합</span></div><div class="connector">←</div>
+          <div class="box"><strong>VM3 Materializer</strong><br><span class="muted">Pit / Pi* 생성</span></div>
+        </div>
+        <p><code>io.vizend.maro.domain.blueprint</code>는 Pit, Pr, Pi를 의존하지 않는다. 소비 계층이 Blueprint를 의존하는 단방향만 허용한다.</p>
+      </section>
+
+      <section id="models">
+        <h2>4. 핵심 모델</h2>
+        <div class="grid three">
+          <div class="mini"><h3>AggregateBlueprint</h3><p>입력 스키마, 해석 규칙, 전역 제약, 데이터 이벤트 정책을 가진 공통 기준. ID는 <code>{key}:{version}</code>.</p></div>
+          <div class="mini"><h3>BlueprintProfile</h3><p>scope, inputDefaults, policies, constraints, tags, active를 가진 독립 StageEntity. ID는 <code>{key}:{version}</code>.</p></div>
+          <div class="mini"><h3>BusinessSpecification</h3><p>업무 목적·경계·Root·Entity·Field·Operation·Rule·Lifecycle을 보존하는 원본 명세.</p></div>
+          <div class="mini"><h3>AggregateBlueprintBinding</h3><p>고정된 Blueprint 정체성과 Aggregate 정체성에 업무 명세·입력·Profile·해석 결과를 결합.</p></div>
+          <div class="mini"><h3>ResolvedAggregateModel</h3><p>Entity, Value, Operation, State, Invariant, Persistence, SDO가 확정된 Materializer 계약.</p></div>
+          <div class="mini"><h3>MsBlueprintBindingSet</h3><p>타입별 Binding ID 목록과 검증 결과·상태를 가진 마이크로서비스 단위 경계.</p></div>
+        </div>
+
+        <h3>AggregateBlueprint의 실행 규칙</h3>
+        <pre><code>AggregateResolutionDefinition
+├─ input key mapping
+├─ identifier / version rule
+├─ transaction / lifecycle defaults
+├─ entity generated-field templates
+└─ dataObjectTemplates[]: CDO, UDO, DDO, RDO, FDO</code></pre>
+        <p>Resolver는 <code>blueprintKey</code>를 보고 하드코딩된 구현을 선택하지 않는다. 선택된 Blueprint의 <code>resolutionDefinition</code>을 실행한다.</p>
+
+        <h3>Binding에서 고정되는 값과 변경되는 값</h3>
+        <table><thead><tr><th>고정</th><th>같은 Binding ID에서 변경 가능</th></tr></thead><tbody><tr>
+          <td><code>blueprintId</code>, <code>blueprintKey</code>, <code>blueprintVersion</code>, <code>aggregateName</code></td>
+          <td>businessSpecification, inputBindings, profileSelections, resolvedAggregateModel, resolvedDataEventContract, validationResult, status</td>
+        </tr></tbody></table>
+        <p>Aggregate 정체성이나 Blueprint 선택 자체가 달라지면 새 Binding 또는 명시적인 Blueprint migration으로 다룬다.</p>
+
+        <h3>Event Policy와 Event Definition</h3>
+        <table><thead><tr><th>모델</th><th>위치</th><th>책임</th></tr></thead><tbody>
+          <tr><td>AggregateDataEventPolicy</td><td>AggregateBlueprint</td><td>허용 이벤트·payload·발행 시점·트랜잭션·필수 조건의 공통 기준</td></tr>
+          <tr><td>AggregateDataEventDefinition</td><td>AggregateBlueprintBinding</td><td>업무별 이벤트 이름, 값 결합 경로와 최종 계약</td></tr>
+        </tbody></table>
+      </section>
+
+      <section id="relations">
+        <h2>5. 모델 관계</h2>
+        <svg viewBox="0 0 1000 420" role="img" aria-label="Blueprint 핵심 모델 관계도" style="width:100%;height:auto;background:#fbfcff;border:1px solid var(--line);border-radius:12px">
+          <defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#627086"/></marker></defs>
+          <g fill="#eaf0ff" stroke="#7898e6" stroke-width="2"><rect x="40" y="45" rx="13" width="220" height="78"/><rect x="40" y="165" rx="13" width="220" height="78"/><rect x="360" y="90" rx="13" width="275" height="210"/><rect x="730" y="80" rx="13" width="230" height="95"/><rect x="730" y="250" rx="13" width="230" height="85"/></g>
+          <g fill="#172235" font-family="sans-serif" text-anchor="middle"><text x="150" y="76" font-weight="700">AggregateBlueprint</text><text x="150" y="101" font-size="14">공통 규칙 · 버전 고정</text><text x="150" y="196" font-weight="700">BlueprintProfile</text><text x="150" y="221" font-size="14">독립 정책 · 버전 고정</text><text x="497" y="123" font-weight="700">AggregateBlueprintBinding</text><text x="497" y="153" font-size="14">AggregateBusinessSpecification</text><text x="497" y="179" font-size="14">inputBindings / profileSelections</text><text x="497" y="205" font-size="14">ResolvedAggregateModel</text><text x="497" y="231" font-size="14">AggregateDataEventDefinition</text><text x="497" y="263" font-size="14">status / validationResult</text><text x="845" y="116" font-weight="700">MsBlueprintBindingSet</text><text x="845" y="143" font-size="14">타입별 Binding ID 목록</text><text x="845" y="284" font-weight="700">Pit / Pi* VM3</text><text x="845" y="311" font-size="14">sourceMsBlueprintBindingSetId</text></g>
+          <g stroke="#627086" stroke-width="2" fill="none" marker-end="url(#arrowhead)"><path d="M260 84 L350 145"/><path d="M260 204 L350 204"/><path d="M635 165 L720 128"/><path d="M845 175 L845 240"/></g>
+          <g fill="#627086" font-family="sans-serif" font-size="13"><text x="275" y="109">적용</text><text x="278" y="195">선택</text><text x="650" y="135">ID 구성원</text><text x="858" y="215">materialize</text></g>
+        </svg>
+        <p class="muted">BindingSet의 목록은 구성원 참조이며 JPA FK 소유 관계가 아니다. 각 Binding의 실행 의존성은 논리 ContractRef로 표현하고 Set에서 교차 검증한다.</p>
+      </section>
+
+      <section id="flow">
+        <h2>6. 전체 생성 흐름</h2>
+        <h3>① 카탈로그 준비</h3><p>실행 가능한 <code>resolutionDefinition</code>을 가진 AggregateBlueprint와 독립 BlueprintProfile을 등록한다.</p>
+        <h3>② 업무 설계</h3><p>사용자 또는 AI가 목적·경계·Entity·Field·Operation을 입력하고 Blueprint, Profile, Blueprint 입력값을 선택한다. 중단·재개가 필요하면 DesignWork/AuthoringSession 또는 Draft를 사용한다.</p>
+        <h3>③ 결정적 resolve</h3>
+        <pre><code>fixedValue
+→ 사용자 BlueprintInputBinding
+→ Profile inputDefaults / policies
+→ Blueprint defaultValue
+→ derivationRule 계산값</code></pre>
+        <p>이후 ID·Version, Root/Child, Field, SDO, Operation, State, Invariant, Persistence와 Event 계약을 순차 확정한다.</p>
+        <h3>④ BindingSet 구성·교차 검증</h3>
+        <pre><code>AggregateBinding[] + MoveBinding[] + FeatureBinding[] + FacadeBinding[]
++ optional Query / History / Event Binding[]
+→ MsBlueprintBindingSet
+→ 교차 검증
+→ Resolved</code></pre>
+        <h3>⑤ VM3 Materialization</h3>
+        <pre><code>Pit → PiDomain → PiAggregate[]
+→ PiEntity / PiEntityVo / PiField
+→ PiEntity CDO / UDO / DDO / FDO / RDO / OptionStore
+→ PiFeature → PiFlow / PiSeek / PiLoad
+→ PiFacade → PiCommand / PiFetch / PiQueryRequest
+→ PiFeature SDO / VO / Method
+→ lineage·교차 참조 검증</code></pre>
+        <h3>⑥ 다음 단계</h3><p>Moti 등은 Binding을 건너뛰고 Materialize된 Pit/Pi*를 기존 방식대로 조회한다.</p>
+      </section>
+
+      <section id="sdo">
+        <h2>7. CDO·UDO 등 SDO 생성 방식</h2>
+        <div class="flow"><div class="node">dataObjectTemplates<small>Blueprint 규칙</small></div><div class="arrow">+</div><div class="node">Entity / Field<small>업무 명세</small></div><div class="arrow">→</div><div class="node teal">DataObjectDefinition<small>확정 SDO 설계</small></div><div class="arrow">→</div><div class="node amber">PiEntity SDO<small>VM3 변환</small></div></div>
+        <p>템플릿이 객체 타입, object key/name 패턴, Field 투영, 고정 요청 필드와 ID 전략 출처를 정한다. Materializer는 확정 정의를 변환할 뿐 SDO 종류를 다시 추론하지 않는다.</p>
+      </section>
+
+      <section id="update">
+        <h2>8. Binding 수정과 Pit 재동기화</h2>
+        <p>Materialization 여부는 Binding의 수정 가능 여부를 결정하지 않는다. Binding은 여러 PR의 Pit VM3 snapshot에 걸쳐 같은 ID로 유지되며 언제든 수정할 수 있다.</p>
+        <div class="grid">
+          <div class="mini"><h3>카탈로그에서 수정</h3><p>동일 Binding ID를 다시 resolve하여 갱신한다. 특정 Pit 문맥이 없으므로 기존 Pit VM3 snapshot은 그대로 두고, 필요한 활성 Pit에서 나중에 명시적으로 동기화한다.</p></div>
+          <div class="mini"><h3>Pit 화면에서 수정</h3><p>동일 Binding ID를 갱신하고 수정 전·후 Resolved 모델 diff를 선택한 활성 Pit에 한 트랜잭션으로 반영한다.</p></div>
+        </div>
+        <div class="flow"><div class="node">기존 Binding<small>이전 Resolved 보관</small></div><div class="arrow">→</div><div class="node">동일 버전 resolve<small>같은 Binding ID</small></div><div class="arrow">→</div><div class="node teal">Resolved diff<small>Create / Update / Remove</small></div><div class="arrow">→</div><div class="node amber">활성 Pit 동기화<small>한 트랜잭션</small></div></div>
+        <table><thead><tr><th>반드시 유지</th><th>갱신 대상</th></tr></thead><tbody><tr><td>Binding ID, Blueprint ID/key/version, aggregateName, BindingSet ID, Pit source Set ID, 같은 의미 VM3 lineage</td><td>업무 명세, 입력값, Profile 선택, 해석 결과, 이벤트 계약, 검증 결과와 상태</td></tr></tbody></table>
+        <div class="callout warn">Materialization 실패 시 확정 Binding은 보존한다. 동일 Binding ID의 같은 해석 결과로 안전하게 재시도할 수 있어야 하며, 일부 생성 상태를 완료로 노출하지 않는다.</div>
+      </section>
+
+      <section id="pr-lineage">
+        <h2>9. PR 독립성, Lineage와 출처</h2>
+        <div class="grid">
+          <div class="mini"><h3>새 PR 생성</h3><p>직전 최신 PR의 Pit/Pi*를 snapshot하고, 새 Pit에 같은 <code>sourceMsBlueprintBindingSetId</code>를 복사하여 Set의 동일 Binding ID들을 이어받는다.</p></div>
+          <div class="mini"><h3>새 PR에서 업무 변경</h3><p>동일 Binding ID에서 허용 필드를 수정하고 이전/신규 Resolved 모델 diff를 새 PR의 활성 Pit에 반영한다.</p></div>
+        </div>
+        <p>여기서 “Binding ID snapshot”은 Binding Entity를 PR마다 복제한다는 뜻이 아니다. Pit이 직전 최신 Pit의 BindingSet 참조를 복사하여 같은 구성원 Binding ID를 계속 사용한다는 의미다.</p>
+        <h3>Lineage 책임</h3>
+        <p>Blueprint, Binding, Resolved 모델에는 최종 <code>lineageId</code>를 두지 않는다. 내부 참조는 <code>aggregateKey</code>, <code>entityKey</code>, <code>fieldKey</code>, <code>objectKey</code>, <code>operationKey</code>를 사용한다.</p>
+        <pre><code>실제 Drama/Pit/부모 lineage + 이름·경로
+→ Geno 등록 흐름의 LineageKeyBuilder
+→ 최종 Pi lineageId</code></pre>
+        <h3>출처 역추적</h3>
+        <pre><code>Pit.sourceMsBlueprintBindingSetId
+→ MsBlueprintBindingSet.aggregateBindingIds[]
+→ AggregateBlueprintBinding.blueprintId
+→ AggregateBlueprint</code></pre>
+      </section>
+
+      <section id="composition">
+        <h2>10. Aggregate · Move · Feature · Facade 확장 흐름</h2>
+        <div class="grid">
+          <div class="mini"><h3>사용자 입력: 바깥에서 안으로</h3><p>Facade/API 요구 → Feature UseCase → Move 흐름 → Aggregate Operation과 상태 설계</p></div>
+          <div class="mini"><h3>확정·검증: 안에서 밖으로</h3><p>Aggregate Contract → Move target → Feature MoveComposition → Facade featureOperationRef</p></div>
+        </div>
+        <pre><code>FacadeOperationBinding → FeatureOperation ContractRef
+FeatureOperationBinding → MoveComposition
+MoveBlueprintBinding → Aggregate Operation ContractRef</code></pre>
+        <p>Binding끼리는 직접 FK를 갖지 않는다. 논리 ContractRef를 사용하고 같은 <code>MsBlueprintBindingSet</code>에서 교차 검증한다.</p>
+        <h3>선택 Binding</h3>
+        <table><thead><tr><th>종류</th><th>생성 조건</th></tr></thead><tbody>
+          <tr><td>QueryModelBlueprintBinding</td><td>목록·검색·통계·다중 Aggregate 조합·Projection이 필요할 때</td></tr>
+          <tr><td>HistoryBlueprintBinding</td><td>변경 이력·시점 조회·Lifecycle·감사 추적이 필요할 때</td></tr>
+          <tr><td>EventBlueprintBinding</td><td>업무 변화를 다른 Drama·서비스·Broker에 발행할 때</td></tr>
+        </tbody></table>
+      </section>
+
+      <section id="validation">
+        <h2>11. 상태와 검증</h2>
+        <div class="status"><span class="pill">Draft</span><span>→</span><span class="pill">Validated</span><span>→</span><span class="pill ok">Resolved</span><span>또는</span><span class="pill fail">Failed</span></div>
+        <p>VM3 Materialization은 resolve와 validation이 끝난 Binding/BindingSet만 사용한다.</p>
+        <div class="grid">
+          <div><h3>Binding 검증</h3><ul><li>Blueprint/Profile ID·key·version 일치</li><li>필수 입력·source·Profile 우선순위</li><li>Root 1개, Child 소유, 모든 Entity ID</li><li>Operation·Field·Value·State·Invariant 참조</li><li>SDO 투영과 Event Policy 호환</li></ul></div>
+          <div><h3>Set/Materialization 검증</h3><ul><li>Facade→Feature→Move→Aggregate 참조</li><li>Move 입출력 타입과 read/write 효과</li><li>동일 입력 재실행 멱등성</li><li>모든 VM3의 출처 역추적</li><li>Pit source Set ID 보존과 실패 재시도</li></ul></div>
+        </div>
+      </section>
+
+      <section id="implementation">
+        <h2>12. 모듈 책임과 현재 구현 범위</h2>
+        <table><thead><tr><th>모듈</th><th>책임</th></tr></thead><tbody>
+          <tr><td>maro-domain</td><td>Blueprint Entity, CDO, ValueObject, Validator, Logic/Store 계약</td></tr><tr><td>maro-feature</td><td>조회·선택·resolve·검증·Binding 수정·Materialization 조합</td></tr><tr><td>maro-store-jpa</td><td>Blueprint/Profile/Binding/BindingSet 영속화</td></tr><tr><td>maro-facade</td><td>Command/Fetch API</td></tr><tr><td>maro-code-gen</td><td>검증된 해석 결과를 코드로 변환</td></tr><tr><td>maro-front</td><td>카탈로그·Binding CRUD와 Pit 생성·동기화 UI</td></tr>
+        </tbody></table>
+        <table><thead><tr><th>영역</th><th>상태</th></tr></thead><tbody>
+          <tr><td>Aggregate Blueprint/Profile/Binding, Resolver/Validator</td><td>구현됨</td></tr>
+          <tr><td>Aggregate → Pit/Pi* Materialization</td><td>구현됨</td></tr>
+          <tr><td>MsBlueprintBindingSet Aggregate 구성·검증</td><td>구현됨</td></tr>
+          <tr><td>Move/Feature/Facade Binding·Materializer</td><td>확장 대상</td></tr>
+          <tr><td>Query/History/Event Binding·Materializer</td><td>필요 시 확장</td></tr>
+          <tr><td>Materialization 실행 이력 전용 모델</td><td>권장, 추가 구현 대상</td></tr>
+        </tbody></table>
+        <div class="callout warn">현재 Set에 Move/Feature/Facade/Query/History/Event ID가 포함되면 해당 Materializer가 마련될 때까지 전체 Set Materialization은 명시적으로 실패해야 한다. 부분 성공으로 완료 처리하지 않는다.</div>
+      </section>
+
+      <section id="example">
+        <h2>13. 주문 Aggregate 예시</h2>
+        <pre><code>AggregateBlueprint aggregate.standard:3
+  ID/Version 규칙 · SDO 템플릿 · 이벤트 정책
++ BlueprintProfile aggregate.standard.jpa:2
+  StageEntity · JPA · Optimistic Lock Required
++ Order 업무 명세
+  Order(root) · OrderLine(child)
+  createOrder · changeAddress · cancelOrder
+
+→ AggregateBlueprintBinding (Order 업무 설계)
+→ MsBlueprintBindingSet에 구성원으로 추가
+→ Pit / PiDomain / PiAggregate Order
+  / PiEntity Order, OrderLine / PiField / PiEntity SDO / Store</code></pre>
+        <p>같은 Blueprint와 Profile을 Product나 Customer 업무 명세에 적용하면 동일한 기술 기준의 다른 Aggregate를 재현할 수 있다.</p>
+      </section>
+
+      <section id="rules">
+        <h2>14. 금지 사항과 작업 체크리스트</h2>
+        <div class="grid">
+          <div><h3>금지 사항</h3><ul><li>Blueprint에 특정 업무 구조 저장</li><li>Blueprint/Profile/Binding을 PR·Pit이 소유</li><li>Binding에 prId·pitId·dramaId 추가</li><li>Blueprint/Resolved 모델에 최종 lineage 저장</li><li>Blueprint key 기반 Resolver 하드코딩</li><li>최신 버전으로 암묵 치환</li><li>Binding 사이 직접 FK·순환 소유</li><li>Materializer의 원본 업무 재추론</li></ul></div>
+          <div><h3>완료 전 확인</h3><ul class="check"><li>공통 규칙과 업무값을 분리했는가?</li><li>정확한 ID·key·version을 고정했는가?</li><li>Resolved 상태만 Materialize하는가?</li><li>동일 결과 재실행이 멱등적인가?</li><li>기존 Binding ID와 Pit source Set ID를 유지하는가?</li><li>다음 단계가 기존 VM3를 소비하는가?</li><li>미구현 Binding을 부분 생성하지 않는가?</li></ul></div>
+        </div>
+      </section>
+
+      <div class="footer">정본 계약: maro-domain/BLUEPRINT_IMPLEMENTATION_GUIDE.md · AI 작업 규칙: AGENTS.md 및 maro-domain/AGENTS.md</div>
+    </main>
+  </div>
+</body>
+</html>

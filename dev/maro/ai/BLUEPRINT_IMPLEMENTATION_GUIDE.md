@@ -1,612 +1,73 @@
-# Aggregate Blueprint AI 구현 계약
-
-## 1. 문서의 지위
-
-이 문서는 `maro-back`에서 Aggregate Blueprint 모델과 이를 소비하는 생성 기능을 구현할 때 사용하는 규범 문서다.
-
-이 문서에서 사용하는 표현은 다음 의미를 가진다.
-
-- **반드시(MUST)**: 예외 없이 지켜야 하는 모델 계약이다.
-- **금지(MUST NOT)**: 구현에 포함하면 안 되는 구조다.
-- **권장(SHOULD)**: 특별한 근거가 없으면 따라야 한다.
-
-구현 편의를 이유로 모델 경계나 의존 방향을 바꾸면 안 된다. 새로운 개념이 필요하면 먼저 Spec, 책임, 데이터 구조, 검증 규칙과 생성 영향을 문서화한 다음 사용자의 승인을 받아야 한다.
-
-### 구현 기준선
-
-현재 구조의 참조 구현은 저장소 루트 기준 다음 위치다.
-
-- 모델: `../maro-domain/maro-domain/src/main/java/io/vizend/maro/domain/blueprint`
-- 구조 설명: `../maro-domain/maro-domain/docs/aggregate-blueprint-model.md`
-
-해당 경로에 접근할 수 있으면 구현 전에 반드시 현재 필드와 타입을 비교한다. 참조 구현을 그대로 복사하는 것만으로 작업을 끝내지 말고, 이 문서에 정의된 의존성·검증·생성 규칙과 `maro-back`의 API 호환성을 함께 확인한다. 기준선과 이 문서가 충돌하면 임의로 결정하지 말고 사용자에게 차이를 보고한다.
-
-## 2. Blueprint의 정의
-
-Aggregate Blueprint는 `PiAggregate`, `PiEntity`와 그 주변 모델을 만들기 전에 존재하는 재사용 가능한 중간 메타모델이다.
-
-기존 방식은 사용자가 Entity 값을 직접 입력하고 Entity 생성 과정에서 Aggregate를 지정했다. Blueprint 방식은 반대 방향으로 동작한다.
-
-1. Aggregate 수준의 공통 설계 기준을 Blueprint로 정의한다.
-2. 사용자가 특정 업무 명세를 입력하고 Blueprint와 Profile을 선택한다.
-3. 입력을 해석하여 Aggregate Root, Child Entity, Value, Operation, 상태 전이, 불변식과 영속 정책을 확정한다.
-4. 확정된 설계를 이용해 Pi 모델을 생성한다.
-5. 같은 버전의 Blueprint, Profile과 Binding 입력을 사용하면 같은 설계를 다시 생성할 수 있다. 단, Pi의 최종 lineage는 그 설계를 적용하는 실제 Drama/Pit/Geno 부모 계층에서 정한다.
-
-Blueprint는 Pit이나 Pr의 구성 요소가 아니다. Blueprint가 먼저 존재하고 Pit을 포함한 생성 영역이 이를 소비한다.
-
-```text
-AggregateBlueprint + BlueprintProfile + AggregateBusinessSpecification
-                              │
-                              ▼
-                 AggregateBlueprintBinding
-                              │ validate / resolve
-                              ▼
-          ResolvedAggregateModel + AggregateDataEventDefinition
-                              │ materialize (lineage 미지정)
-                              ▼
-             Pi CDO ── Geno 등록(실제 부모 lineage) ── Pi 모델
-```
-
-## 3. 의존성 방향
-
-허용되는 의존 방향은 다음과 같다.
-
-```text
-blueprint model  ←  resolver/application layer  ←  geno materializer
-```
-
-다음 규칙을 반드시 지킨다.
-
-- `io.vizend.maro.domain.blueprint..`는 Geno, Pit, Pr 모델을 import하지 않는다.
-- Blueprint의 ID 생성, 검증, JSON 표현과 ValueObject 구조는 Blueprint 패키지 안에서 완결한다.
-- `AggregateBlueprintMaterializer` 같은 하위 생성 어댑터만 Blueprint를 import한다.
-- Materializer는 해석이 끝난 `ResolvedAggregateModel`을 Pi 모델로 변환한다.
-- Materializer가 원본 자연어 업무 명세나 Profile 정책을 다시 해석하면 안 된다.
-- Pit ID, Pr ID 또는 Pi 모델 ID를 Blueprint의 식별자로 사용하면 안 된다.
-- Blueprint와 `ResolvedAggregateModel`은 최종 `lineageId` 또는 lineage 패턴을 소유하면 안 된다.
-- Blueprint 내부 참조는 `aggregateKey`, `entityKey`, `fieldKey`, `objectKey` 같은 설계 키로 연결한다.
-
-## 4. 패키지 구조
-
-```text
-io.vizend.maro.domain.blueprint.cm.entity
-├── AggregateBlueprint.java
-├── AggregateBlueprintBinding.java
-├── BlueprintProfile.java
-├── MsBlueprintBindingSet.java
-├── policy
-│   └── AggregateBlueprintValidator.java
-├── sdo
-│   ├── AggregateBlueprintCdo.java
-│   ├── AggregateBlueprintBindingCdo.java
-│   ├── BlueprintProfileCdo.java
-│   └── MsBlueprintBindingSetCdo.java
-└── vo
-    ├── AggregateBusinessSpecification.java
-    ├── ResolvedAggregateModel.java
-    ├── AggregateResolutionDefinition.java
-    ├── AggregateEntityResolutionRule.java
-    ├── AggregateDataObjectTemplate.java
-    ├── BlueprintFieldTemplate.java
-    ├── AggregateDataEventDefinition.java
-    ├── AggregateDataEventPolicy.java
-    ├── BlueprintInputDefinition.java
-    ├── BlueprintInputBinding.java
-    ├── ProfileSelection.java
-    └── ... 하위 설계 ValueObject
-
-io.vizend.maro.feature.blueprint.aggregate.action
-└── AggregateBlueprintMaterializer.java
-
-io.vizend.maro.feature.geno.pit.action
-└── BlueprintPitIrGenerationAction.java
-```
-
-구조 규칙은 다음과 같다.
-
-- 독립적인 수명주기와 ID가 필요한 원본만 `StageEntity`로 둔다.
-- Binding 내부의 업무 명세와 해석 결과는 재현 가능한 설계 스냅샷이므로 `ValueObject`로 둔다.
-- 생성 입력은 `sdo`에, 순수 검증은 `policy`에 둔다.
-- Pi 모델 변환기는 Blueprint 패키지 밖의 downstream 패키지에 둔다.
-
-## 5. 핵심 모델과 필드 계약
-
-### 5.1 AggregateBlueprint
-
-모든 Aggregate에 재사용할 수 있는 공통 설계 기준이다. 특정 업무의 Aggregate 구조를 직접 담지 않는다.
-
-활성 필드는 다음 목록으로 제한한다.
-
-| 필드 | 책임 |
-| --- | --- |
-| `blueprintKey` | Blueprint 종류를 식별하는 버전 비종속 논리 키 |
-| `blueprintVersion` | 동일 키 안에서 규칙을 고정하는 양의 버전 |
-| `blueprintName` | 표시 이름 |
-| `description` | 목적, 적용 예시와 사용 설명 |
-| `inputDefinitions` | Binding이 받을 입력 스키마와 해석 규칙 |
-| `resolutionDefinition` | 입력 키 매핑, ID·Version 필드와 SDO 템플릿을 포함한 실행 가능한 해석 계약 |
-| `constraints` | 모든 해석 결과가 만족해야 하는 전역 제약 |
-| `dataEventPolicy` | Binding별 이벤트 계약이 따라야 하는 공통 기준 |
-| `bindings` | 이 Blueprint를 선택한 Binding의 조회용 역방향 관계 |
-
-`bindings`는 객체 탐색 관계이며 반드시 `transient`로 선언한다. Binding의 `blueprintId`, `blueprintKey`, `blueprintVersion`이 영속성과 재현성의 기준이다.
-
-다음 내용을 `AggregateBlueprint`에 두면 안 된다.
-
-- 주문, 결제, 배송 등 특정 업무 용어
-- 업무별 Entity와 Operation의 확정 구조
-- 업무별 이벤트 이름과 값 결합 경로
-- Pit, Pr 또는 Pi 모델 참조
-- 검증·해석 의미가 정의되지 않은 범용 확장 맵
-
-`resolutionDefinition`은 공통 Blueprint 규칙이며 특정 업무 Entity를 담지 않는다. Resolver는 `blueprintKey`로 구현을 선택하면 안 되고, 선택된 Blueprint 버전의 `resolutionDefinition`만 실행해야 한다. 해석 계약이 없는 이전 Blueprint는 다른 키 기반 기본값으로 보완하지 않고 명시적으로 실패시킨다.
-
-### 5.1.1 AggregateResolutionDefinition
-
-Blueprint가 어떤 입력을 최종 모델 속성에 결합하고, Entity의 ID·Version과 SDO를 어떻게 설계할지 정의한다.
-
-| 구성 | 책임 |
-| --- | --- |
-| 입력 키 매핑 | `packagePath`, 모델 버전, Entity/CQRS/Store 유형을 어떤 `inputDefinitions` 키에서 읽을지 지정 |
-| 기본 정책 | Profile 적용 전 잠금, 트랜잭션, 이벤트 payload·발행 시점과 수명주기 정책 지정 |
-| `entityRule` | 업무 Identifier/Version 재사용 여부, fallback 기술 필드와 ID 생성 전략 지정 |
-| `dataObjectTemplates` | Entity마다 생성할 CDO/UDO/DDO/RDO/FDO 종류, 이름, 필드 투영과 ID 전략 지정 |
-
-SDO 템플릿은 문자열 코드나 범용 Map이 아니라 `AggregateDataObjectTemplate`의 제한된 Enum 규칙으로 표현한다. 업무 필드와 Entity 이름은 Binding의 업무 명세에서 오지만, 어떤 필드를 투영하고 어떤 SDO를 만들지는 Blueprint가 결정한다.
-
-`AggregateResolutionDefinition`은 업무 객체의 기술 ID와 SDO 구조를 설계하지만 Pi의 runtime lineage는 설계하지 않는다. 동일한 Binding도 서로 다른 Pit에 적용될 수 있으므로 최종 lineage는 실제 부모 모델이 존재하는 Geno 등록 단계의 책임이다.
-
-### 5.2 AggregateBlueprintBinding
-
-하나의 업무 명세에 특정 Blueprint 버전과 Profile 버전을 적용하는 설계 작업 단위다.
-
-| 필드 | 책임 |
-| --- | --- |
-| `blueprintId` | 선택한 Blueprint StageEntity ID |
-| `blueprintKey` | Blueprint 논리 키 스냅샷 |
-| `blueprintVersion` | 선택한 정확한 Blueprint 버전 |
-| `aggregateName` | 설계 대상 Aggregate 이름 |
-| `businessSpecification` | 사용자가 입력한 원본 업무 명세 |
-| `inputBindings` | Blueprint 입력별 실제 값과 해석 상태 |
-| `profileSelections` | Profile ID·키·버전·파라미터·우선순위 선택 |
-| `resolvedAggregateModel` | 최종 Aggregate 구조 설계 |
-| `resolvedDataEventContract` | 최종 데이터 이벤트 계약 |
-| `validationResult` | 가장 최근 입력 또는 최종 설계 검증 결과 |
-| `status` | Binding 수명주기 상태 |
-| `blueprint` | 선택한 Blueprint의 조회용 객체 관계 |
-| `profiles` | 선택한 Profile들의 조회용 객체 관계 |
-
-`blueprint`와 `profiles`는 반드시 `transient`로 선언한다. 버전 고정 참조인 `blueprintId/key/version`과 `profileSelections`를 제거하거나 객체 관계로 대체하면 안 된다.
-
-Binding은 다음 두 단계를 구분해야 한다.
-
-- **입력 단계**: 업무 명세, Blueprint 입력, Profile 선택을 보관하고 `validateInput()`을 수행한다.
-- **해석 단계**: `ResolvedAggregateModel`과 이벤트 계약을 보관하고 `validateDesign()`을 수행한다.
-
-Binding은 PR이나 Pit에 소유되지 않는 독립 `StageEntity`다. `prId`, `pitId`, `dramaId`를 Binding 필드로 추가하지 않는다. 새 PR의 Pit snapshot은 직전 최신 PR Pit의 BindingSet 참조를 복사하여 기존 Binding ID를 그대로 사용한다.
-
-같은 Aggregate 업무 설계를 변경할 때는 새 Binding을 만들지 않고 기존 Binding의 `businessSpecification`, `inputBindings`, `profileSelections`, `resolvedAggregateModel`, `resolvedDataEventContract`, `validationResult`, `status`를 함께 수정한다. `blueprintId/key/version`과 `aggregateName`은 Binding 정체성이므로 수정하지 않는다. StageEntity의 버전은 동시 수정 충돌을 검출하는 데 사용한다.
-
-BindingSet에 포함되었거나 이미 VM3로 Materialize되었다는 사실은 Binding을 불변으로 만들지 않는다. Materialization 전용/이후 전용 Binding 수정 모델을 나누거나, Materialization 이력으로 편집을 거부하면 안 된다. Pit 문맥이 없는 카탈로그 수정은 동일 Binding ID의 설계만 갱신하고 기존 Pit VM3 snapshot은 유지한다. Pit 문맥에서 수정할 때는 동일 Binding 갱신과 선택한 활성 Pit 동기화를 한 트랜잭션으로 처리한다.
-
-### 5.3 BlueprintProfile
-
-여러 Binding에서 재사용하는 기본값과 정책 묶음이며 독립 `StageEntity`다.
-
-| 필드 | 책임 |
-| --- | --- |
-| `profileKey` | Profile 종류의 논리 키 |
-| `profileVersion` | Profile 내용의 고정 버전 |
-| `name` | 표시 이름 |
-| `description` | 설계 방향과 적용 목적 |
-| `scope` | Profile 적용 가능 범위 |
-| `inputDefaults` | 사용자가 생략한 Blueprint 입력의 기본값 |
-| `policies` | 대상 경로에 값을 기본 또는 강제 적용하는 정책 |
-| `constraints` | Profile 적용 결과의 유효성 제약 |
-| `tags` | 검색과 분류용 비기능 메타데이터 |
-| `active` | Binding 생성 또는 수정에서 이 Profile 버전을 선택할 수 있는지 여부 |
-| `bindings` | 이 Profile 버전을 선택한 Binding의 조회용 역방향 관계 |
-
-`bindings`는 반드시 `transient`로 선언한다. Profile은 특정 Blueprint를 소유하거나 참조하지 않는다. Profile에 `blueprintId`를 추가하면 안 된다.
-
-### 5.4 AggregateBusinessSpecification
-
-사용자가 업무 언어로 입력하는 원본이다. 다음 정보를 잃지 않고 보존해야 한다.
-
-- 업무 명세 식별 키와 제목
-- Aggregate 이름, 목적과 일관성 경계
-- 원본 업무 서술
-- Aggregate Root 후보
-- Root 및 Child Entity 후보와 주요 필드
-- Command, Query와 도메인 행위
-- 전역 업무 규칙과 주요 생명주기 상태
-
-이 모델은 입력 원본이다. 해석 과정에서 이를 `ResolvedAggregateModel`로 덮어쓰면 안 된다.
-
-### 5.5 ResolvedAggregateModel
-
-Java 클래스명은 `ResolvedAggregateModel`이다. 문서나 대화에서 `ResolvedModel`이라고 부르더라도 새 클래스를 만들지 않는다.
-
-이 모델은 다음 최종 설계를 소유한다.
-
-- Aggregate 키, 이름, 패키지 경로와 모델 버전
-- 유일한 Root Entity 키
-- Root 및 Child `AggregateEntityDefinition`
-- `AggregateValueDefinition`
-- `AggregateOperationDefinition`
-- `AggregateStateTransitionDefinition`
-- `AggregateInvariantDefinition`
-- `AggregatePersistenceDefinition`
-
-모든 내부 참조는 생성 전에도 안정적인 논리 키로 연결한다. Root가 정확히 하나인지, 참조 키가 존재하는지, 소유 관계가 순환하지 않는지를 검증해야 한다.
-
-### 5.6 AggregateDataEventDefinition
-
-Binding별로 확정되는 데이터 이벤트 계약이다.
-
-반드시 다음을 표현할 수 있어야 한다.
-
-- 이벤트 사용 여부와 이벤트 이름
-- 이벤트, Aggregate, Entity, Entity 타입과 버전의 값 결합 경로
-- `Create`, `Update`, `Delete` 지원 범위
-- `BeforeAfter` 또는 `FieldChangeSet` 변경 payload 방식
-- 발생 시각과 Command 문맥 결합
-- 발행 시점과 저장-발행 트랜잭션 정책
-- 멱등 키와 Command 문맥 전달 방식
-
-Blueprint의 `AggregateDataEventPolicy`는 허용 범위와 필수 조건만 정한다. `AggregateDataEventDefinition`의 업무별 값과 결합 경로를 Blueprint에 올리면 안 된다.
-
-### 5.7 MsBlueprintBindingSet
-
-하나의 마이크로서비스 개발 범위에서 독립적으로 설계한 Binding들을 교차 검증 및 VM3 Materialization 단위로 묶는 PR 독립 `StageEntity`다. Materialization된 Pit IR 전체는 이 Set ID를 설계 출처로 보존하지만, Set은 Pit이나 PR을 소유하거나 의존하지 않는다.
-
-| 필드 | 책임 |
-| --- | --- |
-| `bindingSetKey` | 하나의 마이크로서비스 설계 묶음을 식별하는 PR 비종속 논리 키 |
-| `aggregateBindingIds` | 구성 AggregateBlueprintBinding ID 목록 |
-| `moveBindingIds` | 구성 MoveBlueprintBinding ID 목록 |
-| `featureBindingIds` | 구성 FeatureBlueprintBinding ID 목록 |
-| `facadeBindingIds` | 구성 FacadeBlueprintBinding ID 목록 |
-| `queryModelBindingIds` | 선택적인 QueryModelBlueprintBinding ID 목록 |
-| `historyBindingIds` | 선택적인 HistoryBlueprintBinding ID 목록 |
-| `eventBindingIds` | 선택적인 EventBlueprintBinding ID 목록 |
-| `validationResult` | 구성 및 Binding 간 교차 검증의 최근 결과 |
-| `status` | Draft, Validated, Resolved 또는 Failed 상태 |
-| `aggregateBindings` | ID로 조회한 Aggregate Binding의 transient 탐색 관계 |
-
-타입별 ID 목록은 BindingSet의 구성원 참조이며 JPA에서는 JSON 값으로 저장한다. 개별 Binding이 다른 Binding의 물리 ID나 FK를 소유하면 안 된다. Move→Aggregate Operation, Feature→MoveComposition, Facade→Feature Operation 연결은 결정적인 논리 ContractRef로 표현하고 BindingSet의 Resolver/Validator가 실제 구성원에 대해 해석한다.
-
-기존 Aggregate 단일 생성 API는 호환 어댑터로만 유지한다. 해당 Aggregate Binding이 이미 하나의 BindingSet에 속하면 그 Set으로 위임하고, 최초 Materialization이며 아직 Set이 없으면 Aggregate-only BindingSet을 먼저 생성한다. 어느 경우에도 Pit Materializer가 개별 Binding을 출처 경계로 받거나 Pit에 개별 Binding ID를 저장하면 안 된다. 하나의 Aggregate Binding이 여러 BindingSet에 속해 단일 API로 Set을 판별할 수 없다면 임의로 선택하지 않고 Set ID를 받는 API를 사용한다.
-
-현재 Aggregate Binding만 구현되어 있으므로 `MsBlueprintBindingSetLogic`은 Aggregate 참조의 존재성과 `Resolved` 상태를 검증한다. 이후 Move, Feature, Facade Binding 모델이 추가되면 같은 경계에서 각 참조의 존재성과 교차 Contract를 검증한다.
-
-## 6. 핵심 UML
-
-구현 키워드가 아니라 도메인 관계만 표현한다.
-
-```mermaid
-classDiagram
-    class AggregateBlueprint {
-        <<StageEntity>>
-        +blueprintKey
-        +blueprintVersion
-        +blueprintName
-        +inputDefinitions
-        +resolutionDefinition
-        +constraints
-        +dataEventPolicy
-    }
-
-    class AggregateBlueprintBinding {
-        <<StageEntity>>
-        +blueprintId
-        +blueprintKey
-        +blueprintVersion
-        +aggregateName
-        +businessSpecification
-        +profileSelections
-        +resolvedAggregateModel
-        +resolvedDataEventContract
-        +status
-    }
-
-    class BlueprintProfile {
-        <<StageEntity>>
-        +profileKey
-        +profileVersion
-        +name
-        +scope
-        +inputDefaults
-        +policies
-        +constraints
-    }
-
-    class AggregateBusinessSpecification {
-        <<ValueObject>>
-        +aggregateName
-        +purpose
-        +boundary
-        +rootEntityKey
-        +entities
-        +operations
-        +businessRules
-    }
-
-    class ResolvedAggregateModel {
-        <<ValueObject>>
-        +aggregateKey
-        +aggregateName
-        +rootEntityKey
-        +entities
-        +values
-        +operations
-        +stateTransitions
-        +invariants
-        +persistence
-    }
-
-    class AggregateDataEventDefinition {
-        <<ValueObject>>
-        +dataEventEnabled
-        +dataEventName
-        +supportedEventTypes
-        +changePayloadMode
-        +publicationTiming
-        +transactionPolicy
-        +commandContextTransfer
-    }
-
-    class MsBlueprintBindingSet {
-        <<StageEntity>>
-        +bindingSetKey
-        +aggregateBindingIds
-        +moveBindingIds
-        +featureBindingIds
-        +facadeBindingIds
-        +validationResult
-        +status
-    }
-
-    AggregateBlueprint "1" <-- "0..*" AggregateBlueprintBinding : 적용
-    BlueprintProfile "0..*" <-- "0..*" AggregateBlueprintBinding : 선택
-    AggregateBlueprintBinding "1" *-- "1" AggregateBusinessSpecification : 업무 명세
-    AggregateBlueprintBinding "1" *-- "0..1" ResolvedAggregateModel : 해석 결과
-    AggregateBlueprintBinding "1" *-- "0..1" AggregateDataEventDefinition : 이벤트 계약
-    AggregateBlueprint ..> AggregateDataEventDefinition : 이벤트 정책으로 제약
-    MsBlueprintBindingSet "0..*" o-- "1..*" AggregateBlueprintBinding : ID 구성원 참조
-```
-
-## 7. 하위 모델 구조
-
-```text
-AggregateBusinessSpecification
-├── BusinessEntitySpecification[*]
-│   └── BusinessFieldSpecification[*]
-├── BusinessOperationSpecification[*]
-├── businessRules[*]
-└── lifecycleStates[*]
-
-ResolvedAggregateModel
-├── AggregateEntityDefinition[*]
-│   ├── AggregateFieldDefinition[*]
-│   ├── AggregateDataObjectDefinition[*]
-│   └── BlueprintStoreMethod[*]
-├── AggregateValueDefinition[*]
-├── AggregateOperationDefinition[*]
-├── AggregateStateTransitionDefinition[*]
-├── AggregateInvariantDefinition[*]
-└── AggregatePersistenceDefinition
-
-AggregateBlueprint
-└── AggregateResolutionDefinition
-    ├── AggregateEntityResolutionRule
-    │   ├── BlueprintFieldTemplate generatedIdentifierField
-    │   ├── BlueprintIdStrategy businessIdentifierStrategy
-    │   ├── BlueprintIdStrategy generatedIdentifierStrategy
-    │   └── BlueprintFieldTemplate generatedVersionField
-    └── AggregateDataObjectTemplate[*]
-
-AggregateBlueprintBinding
-├── AggregateBusinessSpecification
-├── BlueprintInputBinding[*]
-├── ProfileSelection[*]
-├── ResolvedAggregateModel
-├── AggregateDataEventDefinition
-└── BlueprintValidationResult
-```
-
-`ValueObject` 하위 구조는 Binding의 재현 가능한 설계 데이터다. 이 소유 구조를 조회용 관계로 오해하여 `transient`로 바꾸면 안 된다.
-
-## 8. Binding 해석 순서
-
-Resolver 또는 Application Service는 반드시 다음 순서를 따른다.
-
-1. `blueprintId`, `blueprintKey`, `blueprintVersion`이 같은 Blueprint를 가리키는지 검증한다.
-2. 각 `ProfileSelection`의 ID, 키, 버전과 활성 상태 및 적용 범위를 검증한다.
-3. Profile을 우선순위 규칙에 따라 결정적인 순서로 정렬한다.
-4. 입력값을 다음 우선순위로 해석한다.
-   1. Blueprint의 고정값
-   2. 사용자가 명시한 Binding 값
-   3. 선택한 Profile의 기본값과 정책
-   4. Blueprint 기본값
-   5. derivation rule 계산값
-5. 입력 타입, 필수성, cardinality, 허용 source와 validation rule을 검증한다.
-6. Blueprint의 `resolutionDefinition`에 선언된 입력 매핑, ID·Version과 SDO 템플릿으로 `ResolvedAggregateModel`을 생성한다.
-7. Root 유일성, Entity 소유 구조, 필드·Operation·불변식·상태 전이 참조를 검증한다.
-8. Blueprint의 `dataEventPolicy` 범위 안에서 `AggregateDataEventDefinition`을 확정한다.
-9. 전체 설계 검증이 성공한 경우에만 Binding을 `Validated` 또는 `Resolved`로 전환한다.
-10. Materializer는 검증된 최종 결과만 Pi 모델로 변환한다.
-
-같은 우선순위의 Profile이 같은 경로를 서로 다른 값으로 강제하는 경우 임의로 하나를 선택하지 않는다. 충돌을 검증 오류로 반환하거나 Spec에 정의된 안정적인 tie-breaker를 사용한다.
-
-## 9. 검증 규칙
-
-### 9.1 입력 검증
-
-- Blueprint ID, 키, 버전은 필수이며 서로 일치해야 한다.
-- `aggregateName`과 업무 명세의 Aggregate 이름은 일치해야 한다.
-- 필수 Blueprint 입력은 모두 해석되어야 한다.
-- Input Binding 키는 Blueprint Input Definition에 존재해야 한다.
-- Profile 선택은 ID, 키, 버전으로 정확히 고정되어야 한다.
-- 동일 Profile 버전을 중복 선택하면 안 된다.
-
-### 9.2 최종 모델 검증
-
-- Aggregate Root는 정확히 하나다.
-- 모든 Entity 키, Field 키, Value 키, Operation 키와 Data Object 키는 필요한 범위에서 유일해야 한다.
-- Child Entity의 owner는 존재해야 하며 소유 관계는 순환하면 안 된다.
-- ID 필드와 version 필드 참조는 실제 필드를 가리켜야 한다.
-- Operation의 대상 Entity와 입력·출력 객체 참조가 존재해야 한다.
-- 상태 전이의 Entity, 필드와 Operation 참조가 존재해야 한다.
-- 불변식의 Entity와 Operation 참조가 존재해야 한다.
-- 데이터 객체 유형은 Entity 종류와 생성 대상이 허용하는 범위에 있어야 한다.
-
-### 9.3 이벤트 검증
-
-- 정책이 이벤트를 요구하면 `dataEventEnabled`가 참이어야 한다.
-- 필수 사건 종류를 모두 지원해야 한다.
-- payload, 발행 시점과 트랜잭션 정책은 Blueprint 허용 범위 안에 있어야 한다.
-- 정책이 요구하는 경우 Entity version, Command context와 idempotency key 결합이 존재해야 한다.
-- 상태를 변경하는 Operation에 필요한 이벤트 타입이 계약에 포함되어야 한다.
-
-## 10. 생성 규칙
-
-`AggregateBlueprintMaterializer`는 다음 원칙을 지킨다.
-
-- 입력은 검증된 `AggregateBlueprintBinding` 또는 `ResolvedAggregateModel`이다.
-- `resolvedAggregateModel`이 없으면 생성하지 않는다.
-- Materializer는 Pi CDO의 `lineageId`를 비워 둔다. Blueprint의 설계 키를 runtime lineage로 복사하면 안 된다.
-- Geno Application Flow는 등록 시점의 실제 부모 lineage와 객체 이름·경로를 `LineageKeyBuilder`에 전달하여 최종 lineage를 발급한다.
-- 같은 Pit에 반복 적용할 때는 실제 부모 ID와 Geno가 계산한 lineage ID로 기존 Pi 모델을 찾아 재사용한다. 서로 다른 Pit의 물리 StageEntity ID와 lineage가 같을 필요는 없다.
-- Root/Child 종류와 소유 관계를 보존한다.
-- Blueprint 타입과 객체 타입을 Pi 타입으로 명시적으로 매핑한다.
-- CDO, UDO, DDO, RDO, FDO와 Store 메서드 정의를 손실 없이 변환한다.
-- 알 수 없는 Enum이나 객체 종류를 임의 기본값으로 바꾸지 않고 실패시킨다.
-- Blueprint 패키지에 Pi 변환 메서드를 추가하지 않는다.
-
-SDO 결정은 Materializer가 수행하지 않는다. Resolver는 `AggregateDataObjectTemplate`을 적용한 최종 `AggregateDataObjectDefinition`을 Binding에 저장하고, Materializer는 그 결과를 해당 `PiEntityCdo/Udo/Ddo/Rdo/Fdo` 생성 데이터로 손실 없이 변환한다.
-
-Resolver는 특정 `blueprintKey` 상수로 분기하거나 코드에 표준 SDO 목록을 하드코딩하면 안 된다. 같은 Resolver에 서로 다른 키와 템플릿을 가진 Blueprint를 전달했을 때 각 Blueprint 데이터에 맞는 ID와 SDO 결과가 나와야 한다.
-
-### 10.1 PR snapshot과 동일 Binding 수정·재동기화
-
-`Pit.sourceMsBlueprintBindingSetId`는 해당 Pit IR 전체의 설계 원본인 `MsBlueprintBindingSet` ID다. Pit은 개별 Aggregate·Move·Feature·Facade Binding ID를 출처 필드로 저장하지 않는다. 개별 Binding은 BindingSet의 타입별 구성원 ID를 통해 추적한다. 이 필드는 Blueprint 모델의 일부가 아니라 downstream Geno 참조 정보다. Blueprint, Binding과 BindingSet은 모두 PR과 독립적으로 존재한다.
-
-수정·재동기화 흐름은 다음과 같다.
-
-1. 새 PR을 만들 때 직전 최신 PR의 Pit과 Pi 모델을 snapshot하고, 새 Pit에 직전 최신 Pit의 `sourceMsBlueprintBindingSetId`를 그대로 복사한다.
-2. 새 PR의 Pit은 직전 최신 Pit과 동일한 BindingSet ID를 참조한다. 개별 Binding ID는 해당 BindingSet의 구성원 참조로 해석한다. “Binding ID snapshot”은 Binding Entity 복제가 아니라 동일 Set 참조를 통해 같은 구성원 ID를 이어받는다는 뜻이다. PR snapshot을 이유로 Blueprint, Binding 또는 BindingSet을 복제하지 않는다.
-3. 새 PR에서 업무 설계를 수정하기 직전에 같은 Binding의 기존 `ResolvedAggregateModel`을 트랜잭션 내부 비교 기준으로 보관한다.
-4. 사용자의 새 업무 명세·입력·Profile 선택을 기존 Binding이 고정한 동일 Blueprint 버전으로 다시 resolve한다.
-5. 기존 Binding ID를 유지한 채 Binding의 변경 가능한 설계 필드와 해석 결과를 수정한다.
-6. 수정 전·후 해석 결과를 비교하여 새 PR의 활성 Pit을 동기화한다. 동일 runtime lineage의 모델은 변경 가능한 속성을 갱신하고, 새 설계 항목은 생성하며, 이전 결과에는 있지만 새 결과에는 없는 Blueprint 관리 항목만 제거한다.
-7. 성공 후에도 `Pit.sourceMsBlueprintBindingSetId`는 같은 BindingSet ID다.
-
-Binding 수정과 Pit 동기화 전체는 하나의 트랜잭션이어야 한다. 실패하면 Binding과 Pit 변경이 모두 롤백되어야 한다. 이전 해석 결과는 비교를 위한 트랜잭션 내부 값이지 별도 Binding이나 PR 소유 스냅샷 모델이 아니다. Aggregate Blueprint는 기존 Pit의 `PiDomain`을 소유하거나 교체하지 않는다. 사용자가 수동 생성한 모델을 Blueprint 관리 항목으로 오인해 제거하면 안 된다.
-
-카탈로그처럼 특정 PR/Pit 문맥이 없는 곳에서도 Binding은 동일 ID로 수정할 수 있다. 이 경우에는 Binding만 갱신하고 이미 생성된 Pit VM3 snapshot은 자동 동기화하지 않는다. 이후 Pit 화면에서 사용자가 동기화를 요청하거나, 새 PR 생성 시 직전 최신 Pit snapshot을 복사한 뒤 변경된 Binding을 적용하는 명시적 흐름을 사용한다. Materialization 여부를 이유로 이 카탈로그 수정을 거부하면 안 된다.
-
-공통 생성 규칙 자체를 바꾸는 경우에는 기존 Blueprint 버전을 덮어쓰지 않고 새 `blueprintVersion`을 등록한다. 다만 기존 Binding은 자신이 고정한 Blueprint 버전을 계속 사용하며, 새 버전으로의 전환을 새 PR이나 최신 버전 조회가 암묵적으로 수행하면 안 된다. Blueprint 버전 전환은 별도의 명시적 migration Spec이 생기기 전까지 같은 Binding 수정 경로의 범위 밖이다.
-
-## 11. 비활성 후보와 변경 통제
-
-다음 개념은 현재 핵심 모델의 활성 관계에 포함하지 않는다.
-
-- `AggregateBlueprintPatterns`
-- `BlueprintExtensionPointDefinition`
-- `AggregateGenerationPlan`
-- `AggregateCompatibilityPolicy`
-- `AggregateLogicBinding`
-
-관련 클래스가 존재하더라도 Blueprint 또는 Binding의 필드로 연결하지 않는다. 다음이 모두 준비된 별도 변경에서만 활성화할 수 있다.
-
-1. 구체적인 사용자 시나리오와 Spec
-2. 문자열이 아닌 구조화된 데이터 계약
-3. Resolver 적용 순서와 충돌 규칙
-4. Validator 규칙
-5. Pi 생성 또는 실행 단계에 미치는 영향
-6. 단위 테스트와 회귀 테스트
-7. 사용자의 명시적 승인
-
-범용 `Map<String, Object>`나 의미가 불명확한 `extensionPoints`를 우회로로 추가하면 안 된다.
-
-## 12. AI 작업 절차
-
-AI는 Blueprint 관련 요청을 받으면 다음 절차를 반드시 수행한다.
-
-### 12.1 작업 전
-
-1. `maro-domain/AGENTS.md`와 이 문서를 전체 읽는다.
-2. `git status --short`로 사용자의 기존 변경을 확인한다.
-3. 관련 Entity, CDO, VO, Validator, Materializer와 테스트를 함께 읽는다.
-4. 요청을 다음 책임 중 하나 이상으로 분류한다.
-   - 공통 Blueprint 규칙
-   - 업무별 Binding 입력
-   - 독립 Profile
-   - 최종 Aggregate 해석 모델
-   - 데이터 이벤트 계약
-   - downstream Pi 생성
-5. 변경할 필드와 의존 방향을 먼저 설명하고 구현한다.
-
-### 12.2 구현 중
-
-1. 활성 필드만 코드로 선언하고 보류 필드를 주석으로 남기지 않는다.
-2. 모든 필드에 업무 의미, 값의 출처와 사용 시점을 설명하는 주석을 작성한다.
-3. Entity 필드를 변경하면 대응 CDO와 복사 로직을 함께 맞춘다.
-4. 새 키 참조에는 존재성·중복·순환 검증을 추가한다.
-5. 변환 로직에는 지원하지 않는 값의 명시적 실패 처리를 추가한다.
-6. 사용자의 기존 변경을 덮어쓰거나 무관한 파일을 정리하지 않는다.
-
-### 12.3 작업 후
-
-1. 금지 import와 주석 필드를 검색한다.
-2. 컴파일과 테스트를 실행한다.
-3. 같은 입력을 두 번 변환해 결과가 같은지 테스트한다.
-4. 업무별 값이 공통 Blueprint에 들어가지 않았는지 리뷰한다.
-5. 변경한 모델 관계, 검증 규칙과 생성 영향을 보고한다.
-
-## 13. 필수 테스트 시나리오
-
-최소한 다음 테스트를 유지한다.
-
-- Blueprint ID가 `blueprintKey:blueprintVersion`으로 안정적으로 생성된다.
-- Profile ID가 `profileKey:profileVersion`으로 안정적으로 생성된다.
-- 해석 전 Draft Binding은 입력 검증만 수행한다.
-- 유효한 해석 결과를 가진 Binding은 전체 설계 검증을 통과한다.
-- Root가 없거나 여러 개인 모델은 실패한다.
-- 존재하지 않는 Entity, 필드, Operation 또는 불변식 키 참조는 실패한다.
-- Profile 선택 버전이 다르면 실패한다.
-- Blueprint의 `resolutionDefinition`이 없거나 입력 키·ID 규칙·템플릿이 유효하지 않으면 실패한다.
-- 알려지지 않은 `blueprintKey`도 유효한 `resolutionDefinition`을 가지면 같은 Resolver로 해석된다.
-- Blueprint가 지정한 기술 ID 필드, ID 전략, SDO 종류·이름과 필드 투영이 그대로 결과에 반영된다.
-- Profile 충돌이 묵시적으로 덮어써지지 않는다.
-- Event Policy를 위반하는 Event Definition은 실패한다.
-- 유효한 Binding에서 기대한 PiAggregate, PiEntity와 데이터 객체가 생성된다.
-- Materializer 결과의 Pi CDO에는 lineage가 없고, Geno 등록 단계에서 실제 부모 기반 lineage가 생성된다.
-- 동일 Binding을 같은 Pit에 반복 적용해도 중복 생성되지 않는다.
-- BindingSet 포함 및 Materialization 이력과 무관하게 같은 Binding ID를 수정할 수 있다.
-- 카탈로그에서 Binding만 수정하면 기존 Pit VM3 snapshot이 자동 변경되지 않는다.
-- 새 PR이 직전 최신 PR의 Pit/Pi snapshot과 `sourceMsBlueprintBindingSetId`를 복사하고 같은 Binding ID를 계속 사용한다.
-- Pit 문맥에서 같은 Binding 수정 시 수정 전·후 관리 범위만 활성 Pit에 추가·수정·삭제된다.
-
-## 14. 완료 체크리스트
-
-- [ ] Blueprint 패키지에 Geno, Pit, Pr import가 없다.
-- [ ] 공통 기준과 업무별 값의 경계가 지켜졌다.
-- [ ] Resolver가 `blueprintKey`로 분기하지 않고 Blueprint의 구조화된 `resolutionDefinition`을 실행한다.
-- [ ] Entity ID·Version과 SDO 생성 규칙은 Blueprint 데이터에 있고 runtime lineage 규칙은 없다.
-- [ ] Profile이 독립 StageEntity로 유지된다.
-- [ ] StageEntity 탐색 관계는 `transient`이고 식별자 스냅샷이 남아 있다.
-- [ ] Binding 소유 ValueObject는 재현 가능한 일반 필드로 유지된다.
-- [ ] 입력 검증과 최종 설계 검증이 구분된다.
-- [ ] Event Policy와 Event Definition의 책임이 분리된다.
-- [ ] Materializer가 ResolvedAggregateModel만 생성 입력으로 사용한다.
-- [ ] Materializer는 lineage를 비워 두고 Geno 등록 흐름이 실제 부모 기반 lineage를 발급한다.
-- [ ] Pit source BindingSet ID가 snapshot과 동일 Binding 수정 후에도 바뀌지 않는다.
-- [ ] BindingSet 포함 여부와 Materialization 이력을 Binding 편집 잠금 조건으로 사용하지 않는다.
-- [ ] 새 PR Pit은 직전 최신 PR Pit의 BindingSet 참조를 복사하고 같은 구성원 Binding ID를 사용한다.
-- [ ] 비활성 후보 필드, 주석 처리 필드와 임시 TODO가 없다.
-- [ ] 결정성, 유효/무효 입력과 참조 무결성 테스트가 있다.
-- [ ] `gradle :maro-domain:compileJava`가 성공한다.
-- [ ] `gradle :maro-domain:test`가 성공한다.
+# Blueprint 구현 가이드
+
+[루트 지침](../AGENTS.md)의 BindingSet 흐름과 [domain 제약](AGENTS.md)을 전제로 한다.
+정확한 필드·타입은 현재 Entity/CDO/Validator/Resolver/JPO에서 확인한다.
+
+## 1. 입력과 해석
+
+1. 선택한 Blueprint의 ID/key/version과 실행 가능한 입력·해석 규칙을 검증한다. 최신 버전으로 암묵 치환하지 않는다.
+2. ProfileSelection의 ID/key/version·활성·적용 범위를 검증한다. 현재 Aggregate Resolver는 Aggregate Profile을 지원한다.
+3. `AggregateBlueprint.inputDefinitions`와 선택된 `BlueprintProfile.inputDefinitions`를 합성해 입력 계약으로 삼는다. Profile은 Blueprint에 없는 새 키를 정의할 수 있다. Binding의 inputBindings에는 직접 입력·Profile 파라미터·기본값·계산값을 모두 보존한다.
+4. 우선순위는 고정값 → 사용자 입력 → Profile 값 → Blueprint 기본값 → 계산값이다. 같은 Profile에서는 parameter가 default보다 우선하며 Profile 간 priority 동률의 상이한 값은 실패시킨다.
+5. inputDefault/parameter/직접 입력은 합성된 계약에 선언된 키여야 한다. 선택하지 않은 Profile의 정의는 포함하지 않는다. 같은 키를 여러 소유자가 재정의하면 오류로 처리하며, 기본값 변경은 inputDefaults로 표현한다. Profile 전용 입력에도 필수값·타입·cardinality·출처 검증을 동일하게 적용한다.
+6. unknown/중복 키, 누락, 타입, cardinality, allowedSources와 validation rule을 검증한다. 클라이언트 직접 입력은 Selected 또는 출처 생략만 허용하며 Migrated는 지원하지 않는다.
+7. resolutionDefinition의 매핑·Entity ID/Version 규칙·SDO 템플릿으로 해석한다. Blueprint key별 코드 분기나 임의 템플릿으로 규칙 누락을 숨기지 않는다.
+8. Root 유일성, Child 소유 관계/순환, ID/Version, 의미 키 유일성, Operation/Field/SDO/상태 전이/불변식 및 이벤트 계약을 검증한다.
+9. 검증된 ResolvedAggregateModel과 이벤트 계약을 Binding에 저장하고 Materializer에 전달한다. Materializer가 업무 문장/Profile을 다시 해석하지 않는다.
+
+Binding 상태는 Draft/Validated/Resolved/Failed다. VM3 생성에는 검증을 통과한 Resolved Binding만 사용한다.
+Blueprint의 입력 schema와 업무별 해석 결과를 혼동하지 않는다. Binding에 저장된 현재 해석 결과는 별도 PR별 snapshot이나 변경 이력이 아니다.
+
+### Aggregate와 Profile의 책임
+
+- Aggregate Blueprint는 경계·Root/Child·Value Object/Group·식별/소유·상태 전이·불변식·CUD/업무 행위·CDO/UDO/DDO·Operation/Logic 확장점·Store/Persistence·Aggregate/Entity Version·내부 Data Event·History/Query/Event용 변경 Source·모델/코드 생성 계획을 정의하는 계약이다. 업무별 실제 설계값은 Binding에 결합한다.
+- Profile은 Structure, Command Input, Persistence, Versioning, Context, Data Event 등 반복되는 구현·운영 정책과 필요한 입력을 제공한다. 업무 경계·상태 전이·불변식을 결정하지 않는다.
+- History Blueprint를 쓰는 Aggregate는 TransactionalDataEventProfile + HistoryCompatibleDataEventProfile을 기본 적용 대상으로 설계한다. 실제 Profile 자원·History 생성기 존재 여부는 별도로 확인하며 이름만으로 자동 구현되었다고 가정하지 않는다.
+- Profile 입력 추가만으로 Entity 필드나 새 정책 실행 로직을 만들지 않는다. 현재 Resolver의 지원 정책 경로·리터럴 값 범위를 지키고, 미지원 정책/표현식은 오류로 처리한다.
+
+## 2. BindingSet과 조회
+
+- MsBlueprintBindingSet은 bindingSetKey, Aggregate/Move/Feature/Facade/QueryModel/History/Event Binding ID 목록, validationResult와 status를 보관한다.
+- 구성원은 ID로 참조하며 Aggregate 목록은 조회 시 transient aggregateBindings로 해석한다. 다른 종류의 모델·생성기는 현재 미구현이므로 목록만 보고 구현 완료로 간주하지 않는다.
+- 현재 MsBlueprintBindingSetLogic은 Aggregate 구성원의 존재·Resolved 상태·설계 유효성을 검증한다. 미래 종류가 추가되면 공개 ContractRef의 교차 검증도 구현한다.
+- 개별 Aggregate 생성 API도 속한 Set을 찾거나 최초 Aggregate-only Set을 만든 뒤 Set Flow에 위임한다. 개별 Binding으로 Pit Materializer를 직접 호출하지 않는다.
+- Binding이 여러 Set에 속하면 단일 Set을 추측하지 않는다. 현재 단일 API는 모호성을 오류로 처리한다.
+- 미적용 Binding은 Binding ID/카탈로그로 조회·수정한다. 생성 후 Pit 조회는 sourceMsBlueprintBindingSetId → Set → Binding을 따른다. Aggregate가 여러 개인 Set을 단일 Binding으로 임의 축약하지 않는다.
+- Set 참조가 있는 Binding은 삭제할 수 없지만 같은 ID의 설계 수정은 가능하다. 별도 Context·적용 이력 Entity/API를 만들지 않는다.
+
+## 3. 생성·수정·트랜잭션
+
+1. 선택 PR의 활성 상태와 Drama의 PR 소속을 확인한다. Resolved Set과 구성원 검증을 통과한 뒤 생성한다.
+2. 현재 생성기는 Aggregate-only Set을 처리한다. Move/Feature/Facade 등의 구성원이 있으면 미지원 오류로 중단한다.
+3. Pit → PiDomain → PiAggregate → Entity/Field/VO/SDO/Store를 기존 Geno 등록 흐름으로 생성한다. Pi CDO lineage는 비워 두고 실제 부모를 기준으로 발급한다.
+4. Pit의 sourceMsBlueprintBindingSetId를 기록한다. 다른 Set이 이미 출처인 Pit에 덮어쓰지 않는다.
+5. 카탈로그 modifyBinding은 같은 Binding 설계만 갱신한다. reviseBindingAndSynchronizePitIr은 수정 전 ResolvedAggregateModel을 메모리에 보관하고 수정·선택 Pit 동기화를 한 트랜잭션으로 수행한다.
+6. 생성·동기화는 PR/Pit 및 부모 물리 ID로 범위를 제한한다. 유지 대상 ID/lineage, 수동 모델과 사용자 구현을 보존하며 동일 입력 반복 적용으로 중복 생성하지 않는다.
+7. 실패 시 트랜잭션을 롤백하고 불완전 VM3를 완료로 노출하지 않는다. 별도 성공/실패 이력 저장이 구현됐다고 주장하지 않는다.
+
+현재 수정 전·후 해석 모델 비교 방식의 한계를 숨기지 않는다. 카탈로그 수정 후 나중에 적용하는 경우처럼 실제 Pit과 비교 기준이 달라질 수 있는 변경은 별도 검증 없이 안전하다고 단정하지 않는다.
+
+## 4. PR 이월과 단계 경계
+
+- 새 PR은 직전 최신 PR의 Pit/Pi를 새 물리 ID로 복사하고 lineage와 sourceMsBlueprintBindingSetId를 보존한다.
+- Blueprint/Binding/Set을 PR별로 복제하지 않으며 같은 ID를 재사용한다. 새 PR 생성만으로 Binding을 재해석하지 않는다.
+- 같은 PR 수정·재적용은 허용하며 새 PR 적용은 해당 복사본만 바꾼다. 이전 PR의 VM3 데이터는 유지한다.
+- Moti는 생성된 Pit/PiEntity/PiFeature/PiFacade 등 VM3를 소비한다. 앞 단계 Binding을 직접 읽는 파이프라인으로 바꾸지 않는다.
+- 향후 Geno 계약 해석 순서는 Aggregate → Move → Feature → Facade다. Facade는 Feature 하나, Feature는 MoveComposition, Move는 공개 Aggregate Operation을 참조한다.
+
+## 5. 완료 검증
+
+변경 범위에 맞춰 다음을 확인한다.
+
+- Blueprint/Profile 입력 합성·우선순위·출처·타입·unknown/누락 거부.
+- Profile 전용 키의 직접 입력/파라미터/기본값·선택 입력 null·목록값, 미선택 Profile 거부·정의 중복 거부, Profile 입력 정의 JPO round-trip.
+- Binding JSON 및 JPO round-trip의 ProfileSelection·해석 결과 보존.
+- Set 구성 검증·Aggregate-only 생성·미지원 종류 거부.
+- 같은 Binding 수정, 선택 Pit 동기화, 반복 적용 멱등성과 실패 롤백.
+- Pit 생성·JPO·projection·PR 복사에서 Set 출처 보존과 이전 PR 데이터 격리.
+- 기존 Geno 및 다음 단계 VM3 소비 호환성.
+
+domain 테스트와 영향받은 feature/facade/store-jpa 테스트를 실행한다. NO-SOURCE, 미실행 DB 통합 테스트·migration·History 연동은 구분해 보고한다.
+기존 DB 자료는 승인 없이 삭제하거나 변환하지 않는다.
+Profile 입력 정의 저장에는 BLUEPRINT_PROFILE의 inputDefinitionsJson에 대응하는 TEXT 컬럼이 필요하다. 기존 DB의 컬럼명 규칙과 schema 관리 방식을 확인하고 배포 시 별도로 반영한다.
+기존 JSON/DB에 Migrated 입력 출처가 남아 있다면 배포 전에 확인한다. 의미 확인 없이 Selected 등으로 자동 치환하지 않는다.

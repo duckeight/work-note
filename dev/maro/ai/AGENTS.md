@@ -1,87 +1,27 @@
-# Maro Domain AI 작업 지침
+# Maro Domain 작업 지침
 
-## 적용 범위
+이 모듈은 [루트 AGENTS](../AGENTS.md)를 따른다. 공통 흐름·PR 격리·경량 AI 위임 규칙은 중복 정의하지 않는다.
+Blueprint 관련 작업에서는 [구현 가이드](BLUEPRINT_IMPLEMENTATION_GUIDE.md)를 끝까지 읽는다.
 
-이 파일은 `maro-domain/` 아래의 모든 작업에 적용한다.
+## 모델 제약
 
-`io.vizend.maro.domain.blueprint` 패키지를 생성·수정·리뷰하는 작업에서는 다음 문서를 작업 전에 처음부터 끝까지 반드시 읽는다.
+- Blueprint 모델의 유일한 정의는 `io.vizend.maro.domain.blueprint`다. 소비 모듈에 같은 의미의 Entity/VO/Enum을 만들지 않는다.
+- Blueprint 패키지는 Geno/Pit/Pr 클래스를 import하지 않는다. 생성·적용 영역이 Blueprint를 의존하는 단방향을 유지한다.
+- Blueprint/Binding/BindingSet에는 PR/Pit/Drama 소유 키를 넣지 않는다. Pit에서 Set ID를 출처로 참조한다.
+- 독립 StageEntity 탐색 관계는 ID + transient 객체로 표현한다. Set의 타입별 ID 목록은 영속 구성원 참조이며 `aggregateBindings`는 조회용 transient 관계다. 미래 Facade/Feature/Move 탐색 관계도 해당 모델 구현 후 transient로 추가한다.
+- `resolvedAggregateModel`과 `resolvedDataEventContract`는 현재 Binding/JPO의 영속 설계 결과다. 원본 `businessSpecification`을 해석 결과로 덮어쓰지 않는다.
+- 최종 클래스명은 `ResolvedAggregateModel`이다. 별도 ResolvedModel이나 Context/Materialization 모델을 추가하지 않는다.
+- `BlueprintProfile`은 독립 StageEntity이며 `ProfileSelection` 사용을 유지한다. Blueprint와 Profile 모두 공통 VO인 BlueprintInputDefinition으로 입력을 정의한다. Profile은 Blueprint에 없는 구현·운영 입력 키도 추가할 수 있다.
+- ProfileInputDefault는 Blueprint 또는 선택한 Profile이 정의한 키에 제공하는 기본값이며 입력 정의 자체가 아니다. Profile inputDefinitions는 Entity/CDO/JPO에서 함께 보존한다.
+- `inputBindings`는 두 종류의 입력 정의에 사용자 값·Profile 파라미터·기본값을 결합한 결과다. 출처는 `valueSource/resolvedBy`로 구분한다. 입력값을 업무 Entity 필드로 자동 승격하지 않는다.
+- `BlueprintValueSource`는 Fixed/Selected/Inferred/Defaulted/Computed를 사용한다. 삭제한 Migrated를 코드·예제에 다시 추가하지 않는다.
+- `AggregateDataEventPolicy`는 공통 허용 기준, `AggregateDataEventDefinition`은 해석 이벤트 계약이다. 두 책임을 합치지 않는다.
+- Blueprint/Binding/Resolved 모델에는 runtime lineage나 패턴을 넣지 않는다. 내부 참조는 의미 키, 최종 lineage 발급은 실제 부모가 존재하는 Geno 등록 흐름의 책임이다.
+- domain Entity에 Repository 접근·코드 생성·외부 호출을 넣지 않는다. 새 필드/확장은 책임·검증·생성 영향이 정의된 경우에만 추가한다.
 
-- [`BLUEPRINT_IMPLEMENTATION_GUIDE.md`](./BLUEPRINT_IMPLEMENTATION_GUIDE.md)
+## 변경과 검증
 
-이 문서와 실제 코드가 충돌하면 임의로 한쪽을 맞추지 않는다. 차이를 사용자에게 보고하고 어느 쪽을 기준으로 할지 확인한다. 사용자의 현재 요청이 이 문서보다 우선한다.
-
-## Blueprint 작업의 필수 제약
-
-1. Blueprint는 Pit을 만들기 위한 선행 설계도다. Pit, Pr 또는 이미 생성된 Pi 모델이 존재한다고 가정해서 설계하지 않는다.
-2. `io.vizend.maro.domain.blueprint..`에서는 다음 패키지를 import하지 않는다.
-   - `io.vizend.maro.domain.geno..`
-   - Pit 또는 Pr을 정의하는 모든 패키지
-3. 의존 방향은 `blueprint <- 생성/적용 영역`이어야 한다. `AggregateBlueprintMaterializer`는 Blueprint를 참조할 수 있지만 Blueprint가 Materializer나 Pi 모델을 참조해서는 안 된다.
-4. `AggregateBlueprint`에는 업무별 이름, 주문·결제 같은 도메인 용어, 업무 Entity 구조 또는 업무별 이벤트 결합 경로를 넣지 않는다.
-5. 업무별 내용은 `AggregateBlueprintBinding.businessSpecification`과 Binding의 입력·해석 결과에 둔다.
-6. `BlueprintProfile`은 독립 `StageEntity`다. Blueprint의 하위 객체로 만들거나 Blueprint ID를 Profile의 소유 키로 추가하지 않는다.
-7. 독립 `StageEntity` 사이의 객체 탐색 관계는 `transient`로 선언한다. ID·논리 키·버전 스냅샷이 영속성과 재현성의 기준이다.
-8. Binding이 소유하는 업무 명세와 해석 결과 등의 `ValueObject`는 설계 스냅샷이므로 일반 필드로 유지한다. 이를 `transient`로 바꾸지 않는다.
-9. `AggregateDataEventPolicy`는 Blueprint의 공통 허용 기준이고, `AggregateDataEventDefinition`은 Binding별로 확정된 이벤트 계약이다. 두 책임을 합치지 않는다.
-10. `ResolvedAggregateModel`만 Pi 모델 생성의 입력으로 사용한다. 원본 업무 문장이나 Profile을 Materializer에서 다시 추론하지 않는다.
-11. 버전이 지정된 Blueprint와 Profile을 현재 활성 버전으로 암묵 치환하지 않는다.
-12. 구체적인 Spec, Resolver, 검증 규칙과 테스트가 없는 후보 필드를 활성화하지 않는다.
-13. 주석 처리된 필드, 사용되지 않는 임시 필드, 미해결 `TODO`를 완성 코드에 남기지 않는다.
-14. 기존 사용자 변경과 무관한 파일을 수정하지 않는다.
-15. Blueprint 및 Binding의 해석 결과에는 Pi의 최종 `lineageId`나 lineage 패턴을 넣지 않는다. Blueprint 내부 설계 참조는 자체 논리 키로 연결한다.
-16. Pi CDO를 만드는 Materializer는 lineage를 지정하지 않는다. 실제 부모가 존재하는 Geno 등록 시점에서 `LineageKeyBuilder`로 발급한다.
-17. `Pit.sourceMsBlueprintBindingSetId`는 downstream 참조 필드이며 Blueprint 패키지가 Pit에 의존하는 근거가 될 수 없다. Pit은 개별 Binding ID를 소스로 저장하지 않고 PR snapshot은 BindingSet ID를 보존한다.
-18. Blueprint와 Binding은 PR 독립 `StageEntity`다. Binding에 PR/Pit/Drama 소유 필드를 추가하지 않으며 새 PR snapshot을 이유로 새 Binding을 생성하지 않는다.
-19. 업무 설계 변경은 같은 Binding의 변경 가능한 설계 필드를 수정한다. `blueprintId/key/version`과 `aggregateName`은 Binding 정체성이므로 수정하지 않는다.
-20. Aggregate, Move, Feature, Facade Binding은 서로 물리 FK를 갖지 않는다. `MsBlueprintBindingSet`이 타입별 Binding ID 목록을 소유하며, Binding 간 실행 의존성은 논리 ContractRef로 검증한다.
-21. Pit Materialization은 항상 `MsBlueprintBindingSet`을 출처 경계로 사용한다. Aggregate 단일 호환 API는 속한 Set을 찾거나 Aggregate-only Set을 먼저 만든 뒤 Set 기반 Flow로 위임한다.
-22. BindingSet 포함 여부와 Materialization 이력은 Binding 편집 잠금 조건이 아니다. Binding은 Materialization 전후에 같은 ID로 수정하며 `blueprintId/key/version`과 `aggregateName`만 정체성으로 고정한다.
-23. 새 PR의 Pit은 직전 최신 PR Pit의 `sourceMsBlueprintBindingSetId`를 snapshot으로 복사한다. Binding 또는 BindingSet Entity를 PR별로 복제하지 않고, 같은 Set의 동일 구성원 Binding ID를 계속 사용한다.
-24. Pit 문맥 없는 Binding 수정은 설계만 갱신하고 기존 Pit VM3 snapshot을 자동 변경하지 않는다. Pit 문맥의 수정은 같은 Binding 갱신과 선택한 활성 Pit 동기화를 한 트랜잭션으로 수행한다.
-
-## 변경 절차
-
-Blueprint 관련 변경은 다음 순서로 수행한다.
-
-1. `git status --short`로 기존 변경을 확인한다.
-2. 저장소 루트 기준 `../maro-domain/maro-domain`이 존재하면 그곳의 Blueprint 모델을 구조 기준선으로 비교한다.
-3. 구현 가이드의 핵심 모델 필드 화이트리스트와 금지 의존성을 확인한다.
-4. 변경 사항을 공통 설계 기준, 업무별 Binding, Profile, 해석 결과, 생성 어댑터 중 하나로 분류한다.
-5. Entity 필드를 변경하면 대응 CDO, 생성자 복사, 검증기와 테스트를 함께 확인한다.
-6. 참조 키를 추가하면 대상 존재성, 버전 고정, 중복과 순환 참조 검증을 추가한다.
-7. 해석 결과를 변경하면 `AggregateBlueprintValidator`와 `AggregateBlueprintMaterializer`의 영향을 확인한다.
-8. 아래 검증 명령을 실행하고 실패 원인을 해결한다.
-9. 변경 파일, 설계 결정, 검증 결과와 남은 위험을 사용자에게 보고한다.
-
-## 완료 조건
-
-다음 조건을 모두 만족하기 전에는 작업을 완료했다고 보고하지 않는다.
-
-- Blueprint 패키지에서 Geno, Pit, Pr 의존성이 검출되지 않는다.
-- 핵심 StageEntity의 관계 필드와 식별자 필드가 구현 가이드의 계약과 일치한다.
-- 업무별 값이 `AggregateBlueprint`나 `BlueprintProfile`에 새어 들어가지 않는다.
-- Binding 입력 검증과 최종 설계 검증이 분리되어 실행된다.
-- 동일한 버전 고정 입력에 대해 생성 결과가 결정적이다.
-- BindingSet 포함 여부와 Materialization 이력 때문에 Binding 수정을 거부하지 않는다.
-- 새 PR Pit이 직전 최신 PR Pit의 BindingSet 참조를 보존한다.
-- Blueprint 모델과 해석 결과에 runtime lineage 필드가 없다.
-- 주석 처리된 필드와 미해결 `TODO`가 없다.
-- `gradle :maro-domain:compileJava`가 성공한다.
-- Blueprint 모델 또는 Materializer를 변경했다면 `gradle :maro-domain:test`가 성공한다.
-
-## 필수 검증 명령
-
-```bash
-rg -n "io\.vizend\.maro\.domain\.geno|import .*\.Pit;|import .*\.Pr;" \
-  maro-domain/src/main/java/io/vizend/maro/domain/blueprint
-
-rg -n "^\s*//\s*(private|protected|public|transient).*;|TODO|FIXME" \
-  maro-domain/src/main/java/io/vizend/maro/domain/blueprint \
-  maro-feature/src/main/java/io/vizend/maro/feature/blueprint/aggregate/action/AggregateBlueprintMaterializer.java
-
-gradle :maro-domain:compileJava
-gradle :maro-domain:test
-gradle :maro-feature:test --tests io.vizend.maro.feature.blueprint.aggregate.action.AggregateBlueprintMaterializerTest
-```
-
-첫 번째와 두 번째 `rg` 명령은 검색 결과가 없어야 정상이다.
+- 기존 필드·주석과 Entity/CDO/Validator/JPO를 함께 확인한다. 형제 `../maro-domain/maro-domain`은 요청 없이 수정하지 않는다.
+- 코드 변경 시 `gradle :maro-domain:compileJava :maro-domain:test`와 영향받는 모듈의 관련 테스트를 실행한다.
+- 입력/Profile 해석, BindingSet 검증·조회·JPO round-trip, Pit 출처 보존, 같은 Binding 수정과 PR 격리를 변경 범위에 맞게 검증한다.
+- 금지 import, 깨진 참조, 무관한 변경을 확인한다. NO-SOURCE와 실제 실행 테스트를 구분한다.

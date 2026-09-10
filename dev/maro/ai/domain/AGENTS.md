@@ -18,10 +18,10 @@
    - Pit 또는 Pr을 정의하는 모든 패키지
 3. 의존 방향은 `blueprint <- 생성/적용 영역`이어야 한다. `AggregateBlueprintMaterializer`는 Blueprint를 참조할 수 있지만 Blueprint가 Materializer나 Pi 모델을 참조해서는 안 된다.
 4. `AggregateBlueprint`에는 업무별 이름, 주문·결제 같은 도메인 용어, 업무 Entity 구조 또는 업무별 이벤트 결합 경로를 넣지 않는다.
-5. 업무별 내용은 `AggregateBlueprintBinding.businessSpecification`과 Binding의 입력·해석 결과에 둔다.
+5. 업무별 내용은 `AggregateBlueprintBinding.inputBindings`와 해석 결과에 둔다. 버전 고정 시스템 표준 schema와 Blueprint 추가 `inputDefinitions.properties`로 입력 구조를 정의하고 Resolver가 표준 의미 키로 내부 업무 설계를 조립하며 별도 `businessSpecification` 입력·저장 경로는 두지 않는다.
 6. `BlueprintProfile`은 독립 `StageEntity`다. Blueprint의 하위 객체로 만들거나 Blueprint ID를 Profile의 소유 키로 추가하지 않는다.
 7. 독립 `StageEntity` 사이의 객체 탐색 관계는 `transient`로 선언한다. ID·논리 키·버전 스냅샷이 영속성과 재현성의 기준이다.
-8. Binding이 소유하는 업무 명세와 해석 결과 등의 `ValueObject`는 설계 스냅샷이므로 일반 필드로 유지한다. 이를 `transient`로 바꾸지 않는다.
+8. Binding이 소유하는 입력값과 해석 결과는 영속 설계값이므로 일반 필드로 유지한다. Resolver 내부 DTO인 `AggregateBusinessSpecification`을 Binding 필드로 추가하지 않는다.
 9. `AggregateDataEventPolicy`는 Blueprint의 공통 허용 기준이고, `AggregateDataEventDefinition`은 Binding별로 확정된 이벤트 계약이다. 두 책임을 합치지 않는다.
 10. `ResolvedAggregateModel`만 Pi 모델 생성의 입력으로 사용한다. 원본 업무 문장이나 Profile을 Materializer에서 다시 추론하지 않는다.
 11. 버전이 지정된 Blueprint와 Profile을 현재 활성 버전으로 암묵 치환하지 않는다.
@@ -30,9 +30,14 @@
 14. 기존 사용자 변경과 무관한 파일을 수정하지 않는다.
 15. Blueprint 및 Binding의 해석 결과에는 Pi의 최종 `lineageId`나 lineage 패턴을 넣지 않는다. Blueprint 내부 설계 참조는 자체 논리 키로 연결한다.
 16. Pi CDO를 만드는 Materializer는 lineage를 지정하지 않는다. 실제 부모가 존재하는 Geno 등록 시점에서 `LineageKeyBuilder`로 발급한다.
-17. `Pit.sourceBlueprintBindingId`는 downstream 참조 필드이며 Blueprint 패키지가 Pit에 의존하는 근거가 될 수 없다. PR snapshot은 동일 Binding ID를 보존한다.
-18. Blueprint와 Binding은 PR 독립 `StageEntity`다. Binding에 PR/Pit/Drama 소유 필드를 추가하지 않으며 새 PR snapshot을 이유로 새 Binding을 생성하지 않는다.
-19. 업무 설계 변경은 같은 Binding의 변경 가능한 설계 필드를 수정한다. `blueprintId/key/version`과 `aggregateName`은 Binding 정체성이므로 수정하지 않는다.
+17. Pi 모델은 Blueprint Binding 출처를 보관하지 않는다. Blueprint domain이 Pit/Pi 클래스를 import하지 않으며 Binding의 현재 생성 모델 참조만 문자열 `piAggregateId`로 보관한다.
+18. Blueprint/Profile은 공용이고 Binding은 `edificeId`가 필수인 Edifice 소유 `StageEntity`다. PR 복사 시 같은 Binding ID를 유지하고 실제 복사 ID 맵으로 현재 생성 모델 참조만 갱신한다. edificeId는 수정할 수 없으며 PR/Pit/Drama 소유 필드를 중복 저장하지 않는다.
+19. ID·Version·SDO 자동 생성은 Resolver의 공통 규칙이며 Blueprint에 별도 생성 규칙 필드를 두지 않는다. 명시 입력을 우선하고 기술·정책 입력 기본값은 inputDefinitions/Profile에서 공급한다.
+20. domain Logic·Store는 Vista 생성 CRUD·조회·이벤트 패턴을 유지한다. 추가 업무 동작은 feature Action에 구현하고 generated 메서드에 끼워 넣지 않는다.
+21. 업무 설계 변경은 같은 Binding의 변경 가능한 설계 필드를 수정한다. `blueprintId/key/version`과 `aggregateName`은 Binding 정체성이므로 수정하지 않는다.
+22. 서비스 Bean 호출 방향은 `Flow/Seek → Action(Task 등 실행 컴포넌트) → Logic`으로 제한한다. Flow/Seek 간 호출, Action에서 Flow/Seek 호출, Flow/Seek에서 Logic·Store 직접 호출을 금지한다. 공통 동작은 Action에서 공유하며 Action 간 조합은 순환 없이 허용한다. Logic에서 feature 서비스를 호출하지 않는다.
+
+23. 현재 계층 정리·검증 범위는 Blueprint Flow/Seek와 Blueprint feature 서비스를 호출하는 부분이다. Geno 등 다른 기존 서비스 호출 관계는 유지하며 이 규칙 적용을 이유로 일괄 리팩터링하지 않는다.
 
 ## 변경 절차
 
@@ -70,7 +75,7 @@ rg -n "io\.vizend\.maro\.domain\.geno|import .*\.Pit;|import .*\.Pr;" \
 
 rg -n "^\s*//\s*(private|protected|public|transient).*;|TODO|FIXME" \
   maro-domain/src/main/java/io/vizend/maro/domain/blueprint \
-  maro-feature/src/main/java/io/vizend/maro/feature/blueprint/aggregate/action/AggregateBlueprintMaterializer.java
+  maro-feature/src/main/java/io/vizend/maro/feature/blueprint/action/AggregateBlueprintMaterializer.java
 
 gradle :maro-domain:compileJava
 gradle :maro-domain:test
@@ -78,3 +83,5 @@ gradle :maro-feature:test --tests io.vizend.maro.feature.blueprint.aggregate.act
 ```
 
 첫 번째와 두 번째 `rg` 명령은 검색 결과가 없어야 정상이다.
+
+24. AggregateBlueprint는 불변 standardInputVersion을 저장한다. 공통 입력 정의는 버전별 classpath JSON에 한 번만 선언하며 inputDefinitions에는 추가 키만 저장한다. AggregateBlueprintInputSchema.compose가 표준·추가·선택 Profile 입력을 합성하고 중복을 거부한다. 표준 schema는 Binding 값이나 Blueprint DB row에 복제하지 않는다.

@@ -5,6 +5,8 @@
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
       <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-gate-token" enabled="false">
@@ -41,7 +43,7 @@
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-passin-admin">
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-passin-admin" enabled="false">
         <collectionProp name="HeaderManager.headers">
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">content-type</stringProp>
@@ -125,7 +127,7 @@
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-payin-admin" enabled="false">
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-payin-admin-dev">
         <collectionProp name="HeaderManager.headers">
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">content-type</stringProp>
@@ -133,7 +135,7 @@
           </elementProp>
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">authorization</stringProp>
-            <stringProp name="Header.value">Bearer eyJraWQiOiJ2aXplbmQiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJwYXlpbi1hZG1pbiIsImlzcyI6Imh0dHA6Ly9tb2RsaW1lLWRldi52aXplbmQuaW8iLCJkaXNwbGF5X25hbWUiOiJwYXlpbi1hZG1pbiIsImF1ZCI6InZpemVuZCIsInBhc3N3b3JkIjoiIiwibmJmIjoxNzg0NjAwMzk3LCJzY29wZSI6WyJjaXRpemVuIl0sImF0dHJpYnV0ZXMiOnsiZGV2aWNlX2lwIjoiMTIxLjE1Ny4yNC4yMjkiLCJjaXRpemVuX2lkIjoib0BOVDo1IiwiY2l0aXplbl9zZXNzaW9uX2lkIjoiMDE5ZjgyNzktMDczNS03MDAwLTkyNzktZjEzYjAxZjI0NmI4IiwibG9jYXRpb24iOiJTb3V0aCBLb3JlYTpTZW91bDpHYW5nbmFtLWd1IiwiZGV2aWNlX3R5cGUiOiJEZXNrdG9wOkNocm9tZTpNYWNPUyIsImxvZ2luX2NhdGVnb3J5IjoiUGFzc3dvcmQiLCJwYXZpbGlvbl9pZCI6Ik5UOjUiLCJjaXRpemVuX3VzZXJfaWQiOiIwMTllOTU0ZS1hNGZkLTcwMDAtOWE1NS1hMjdhMDQ3MGI0YTkiLCJjaW5lcm9vbV9pZHMiOlsiTlQ6NToyIl19LCJleHAiOjE3ODQ2MDE1OTcsImlhdCI6MTc4NDYwMDM5NywianRpIjoiMDE5ZjgyNzktMDc0Mi03MDAwLTk0ZDItMWE4ZGIwYzUzNGNiIiwiZW1haWwiOiJwYXlpbi1hZG1pbkBuZXh0cmVlLmlvIiwidXNlcm5hbWUiOiJwYXlpbi1hZG1pbiJ9.Yp9GNjXAbtZ0BFdaOIXhB7cLW5K4G80oy7bA-ueD_ELy91cfEy1KqJPduKj8is8vJf-XnvodYCdTuSdDVxuVK5x_JPaWtl38yy4RzUUIMoyR9hQUsm-lu_g3iX_8MIXxRYZ32R4S5XPgfn_Umogj8VupPGlYeTqdHDbmBEtLJyh8MhrDwQZI8OsIgkRZILp3OGNa7tqBlMF97xywZ_VkM92tsxqVwYlswGPoo_SIn35KeOIgaL1XGTbEf_ueQPhJ52IfkfNlJs9FaxdjIBtCCi0kJaTc6ksCqN1qdvo3XJom45_-8kyOdkey7O3xovqDufBZvc9BUQTMMJmI23ojMg </stringProp>
+            <stringProp name="Header.value">Bearer eyJraWQiOiJ2aXplbmQiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJwYXlpbi1hZG1pbiIsImlzcyI6Imh0dHA6Ly92aXplbmQtc3RnLnZpemVuZC5pbyIsImRpc3BsYXlfbmFtZSI6InBheWluLWFkbWluIiwiYXVkIjoidml6ZW5kIiwicGFzc3dvcmQiOiIiLCJuYmYiOjE3OTA1NzgwOTksInNjb3BlIjpbImNpdGl6ZW4iXSwiYXR0cmlidXRlcyI6eyJkZXZpY2VfaXAiOiIxODIuMjMwLjI1MC4xNjYiLCJjaXRpemVuX2lkIjoib0BOVDo1IiwiY2l0aXplbl9zZXNzaW9uX2lkIjoiMDFhMGU2YzUtODUxOC03MDAwLThlMTItMmIxODM3NTc2ODllIiwibG9jYXRpb24iOiJTb3V0aCBLb3JlYTpudWxsOm51bGwiLCJkZXZpY2VfdHlwZSI6IkRlc2t0b3A6Q2hyb21lOk1hY09TIiwibG9naW5fY2F0ZWdvcnkiOiJQYXNzd29yZCIsInBhdmlsaW9uX2lkIjoiTlQ6NSIsImNpdGl6ZW5fdXNlcl9pZCI6IjAxOWU5NTRlLWE0ZmQtNzAwMC05YTU1LWEyN2EwNDcwYjRhOSIsImNpbmVyb29tX2lkcyI6WyJOVDo1OjIiXX0sImV4cCI6MTc5MDU3OTI5OSwiaWF0IjoxNzkwNTc4MDk5LCJqdGkiOiIwMWEwZTZjNS04NTNkLTcwMDAtYjQxMy03OWQyMDg3NDhmNDYiLCJlbWFpbCI6InBheWluLWFkbWluQG5leHRyZWUuaW8iLCJ1c2VybmFtZSI6InBheWluLWFkbWluIn0.c_qHZzr5XKus-_r3502kqxcaAfps6LIHhWkkoTia9gAx33id3z1TKg2QkkxfuwSC7zxVdaQHx3BymwUcKZUM2uC7xw6P_xHa4Nn483ZSxUGRFikXskhvk3P0Uon2-179cgRlDjXuNFTszZeb_DPZbRjoA4tPRQ5BDIdXGK7HR7YHRtME4ATy2pHohmlkiQI_JJiBKepqLh409nOo3lS7C4r53l3BdQz_Dj8Ax_4Hfz036T6-N9noYo1ju3Y-EFB50PMj22K0kC9dI5lUoA7gT-C6cUV5BMbWvU-whOfperVko_KRT1s5N4r54iGAridEsHaO_gZIfHJ7AZ7hRA6cAQ</stringProp>
           </elementProp>
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">referer</stringProp>
@@ -146,7 +148,7 @@
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-payin-admin" enabled="false">
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-payin-admin-stg" enabled="false">
         <collectionProp name="HeaderManager.headers">
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">content-type</stringProp>
@@ -234,7 +236,7 @@
         <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
       </ConfigTestElement>
       <hashTree/>
-      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="request default - local passin">
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="request default - local passin" enabled="false">
         <stringProp name="HTTPSampler.domain">localhost</stringProp>
         <stringProp name="HTTPSampler.port">9093</stringProp>
         <stringProp name="HTTPSampler.protocol">http</stringProp>
@@ -244,7 +246,7 @@
         <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
       </ConfigTestElement>
       <hashTree/>
-      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="request default - local payin" enabled="false">
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="request default - local payin">
         <stringProp name="HTTPSampler.domain">localhost</stringProp>
         <stringProp name="HTTPSampler.port">9093</stringProp>
         <stringProp name="HTTPSampler.protocol">http</stringProp>
@@ -284,7 +286,7 @@
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="variables - local">
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="variables - local" enabled="true">
         <collectionProp name="Arguments.arguments">
           <elementProp name="prefix" elementType="Argument">
             <stringProp name="Argument.name">prefix</stringProp>
@@ -1077,7 +1079,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerApprovalFormWithApprovalLine">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="registerApprovalFormWithApprovalLine" enabled="true">
           <stringProp name="HTTPSampler.path">${prefix}/role/neut/bulletin/cm/test</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -1096,7 +1098,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -1134,7 +1136,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="passin">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="passin" enabled="false">
         <intProp name="ThreadGroup.num_threads">1</intProp>
         <intProp name="ThreadGroup.ramp_time">1</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -1747,7 +1749,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findMyOrgTeams">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="findMyOrgTeams" enabled="true">
           <stringProp name="HTTPSampler.path">${prefix}/feature/neut/shared/cm/find-my-org-teams/fetch</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -1997,7 +1999,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -2035,7 +2037,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="payin" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="payin">
         <intProp name="ThreadGroup.num_threads">1</intProp>
         <intProp name="ThreadGroup.ramp_time">1</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -2163,7 +2165,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testFindPayment">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="testFindPayment" enabled="false">
           <stringProp name="HTTPSampler.path">${prefix}/feature/neut/payment/cm/test/find-payment</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -2265,6 +2267,31 @@
     &quot;taxFreeAmount&quot;: null,&#xd;
     &quot;taxExemptionAmount&quot;: null&#xd;
   }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="cancelPayment">
+          <stringProp name="HTTPSampler.path">${prefix}/restful/payment/cm/cancel-payment/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;paymentId&quot;: &quot;01a0e6c6-2116-7000-a02f-4a3f0d9d1cb6&quot;,&#xd;
+  &quot;cancelReason&quot;: &quot;취소 사유입니다2&quot;,&#xd;
+  &quot;cancelAmount&quot;: {&#xd;
+    &quot;value&quot;: 8900.00,&#xd;
+    &quot;currency&quot;: &quot;KRW&quot;&#xd;
+  },&#xd;
+  &quot;idempotencyKey&quot;: &quot;test-123474&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>

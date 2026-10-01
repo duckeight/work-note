@@ -135,7 +135,7 @@
           </elementProp>
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">authorization</stringProp>
-            <stringProp name="Header.value">Bearer eyJraWQiOiJ2aXplbmQiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJwYXlpbi1hZG1pbiIsImlzcyI6Imh0dHA6Ly92aXplbmQtc3RnLnZpemVuZC5pbyIsImRpc3BsYXlfbmFtZSI6InBheWluLWFkbWluIiwiYXVkIjoidml6ZW5kIiwicGFzc3dvcmQiOiIiLCJuYmYiOjE3OTA1NzgwOTksInNjb3BlIjpbImNpdGl6ZW4iXSwiYXR0cmlidXRlcyI6eyJkZXZpY2VfaXAiOiIxODIuMjMwLjI1MC4xNjYiLCJjaXRpemVuX2lkIjoib0BOVDo1IiwiY2l0aXplbl9zZXNzaW9uX2lkIjoiMDFhMGU2YzUtODUxOC03MDAwLThlMTItMmIxODM3NTc2ODllIiwibG9jYXRpb24iOiJTb3V0aCBLb3JlYTpudWxsOm51bGwiLCJkZXZpY2VfdHlwZSI6IkRlc2t0b3A6Q2hyb21lOk1hY09TIiwibG9naW5fY2F0ZWdvcnkiOiJQYXNzd29yZCIsInBhdmlsaW9uX2lkIjoiTlQ6NSIsImNpdGl6ZW5fdXNlcl9pZCI6IjAxOWU5NTRlLWE0ZmQtNzAwMC05YTU1LWEyN2EwNDcwYjRhOSIsImNpbmVyb29tX2lkcyI6WyJOVDo1OjIiXX0sImV4cCI6MTc5MDU3OTI5OSwiaWF0IjoxNzkwNTc4MDk5LCJqdGkiOiIwMWEwZTZjNS04NTNkLTcwMDAtYjQxMy03OWQyMDg3NDhmNDYiLCJlbWFpbCI6InBheWluLWFkbWluQG5leHRyZWUuaW8iLCJ1c2VybmFtZSI6InBheWluLWFkbWluIn0.c_qHZzr5XKus-_r3502kqxcaAfps6LIHhWkkoTia9gAx33id3z1TKg2QkkxfuwSC7zxVdaQHx3BymwUcKZUM2uC7xw6P_xHa4Nn483ZSxUGRFikXskhvk3P0Uon2-179cgRlDjXuNFTszZeb_DPZbRjoA4tPRQ5BDIdXGK7HR7YHRtME4ATy2pHohmlkiQI_JJiBKepqLh409nOo3lS7C4r53l3BdQz_Dj8Ax_4Hfz036T6-N9noYo1ju3Y-EFB50PMj22K0kC9dI5lUoA7gT-C6cUV5BMbWvU-whOfperVko_KRT1s5N4r54iGAridEsHaO_gZIfHJ7AZ7hRA6cAQ</stringProp>
+            <stringProp name="Header.value">Bearer eyJraWQiOiJ2aXplbmQiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJwYXlpbi1hZG1pbiIsImFtciI6WyJwd2QiXSwiaXNzIjoiaHR0cDovL3ZpemVuZC1zdGcudml6ZW5kLmlvIiwibWZhX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJ0d29fZmFfcmVxdWlyZWRfdXJscyI6W10sImRpc3BsYXlfbmFtZSI6InBheWluLWFkbWluIiwidHdvX2ZhX2VuYWJsZWQiOmZhbHNlLCJhdWQiOiJ2aXplbmQiLCJhY3IiOiJ1cm46dml6ZW5kOmFhbDEiLCJwYXNzd29yZCI6IiIsIm5iZiI6MTc5MDc0MzYzOSwic2NvcGUiOlsiY2l0aXplbiJdLCJhdHRyaWJ1dGVzIjp7ImRldmljZV9pcCI6IjE4Mi4yMzAuMjUwLjE2NiIsImNpdGl6ZW5faWQiOiJvQE5UOjUiLCJjaXRpemVuX3Nlc3Npb25faWQiOiIwMWEwZjBhMy03NWIzLTcwMDAtYmJhMC0wNDJlM2FiODRjNTgiLCJsb2NhdGlvbiI6IlNvdXRoIEtvcmVhOm51bGw6bnVsbCIsImRldmljZV90eXBlIjoiRGVza3RvcDpDaHJvbWU6TWFjT1MiLCJsb2dpbl9jYXRlZ29yeSI6IlBhc3N3b3JkIiwicGF2aWxpb25faWQiOiJOVDo1IiwiY2l0aXplbl91c2VyX2lkIjoiMDE5ZTk1NGUtYTRmZC03MDAwLTlhNTUtYTI3YTA0NzBiNGE5IiwiY2luZXJvb21faWRzIjpbIk5UOjU6MiJdfSwiZXhwIjoxNzkwNzQ0ODM5LCJpYXQiOjE3OTA3NDM2MzksImp0aSI6IjAxYTBmMGEzLTc1ZTMtNzAwMC05MWNkLWYxZWE2ZDFlYzQ4ZiIsImVtYWlsIjoicGF5aW4tYWRtaW5AbmV4dHJlZS5pbyIsInVzZXJuYW1lIjoicGF5aW4tYWRtaW4ifQ.Y3RmfFcouFBKFiWsF53MXqAnSuisah6o_GQrRcR9msoqhU5_wH_vUhCP-gjatzAebHS4a5xawF-2OP5er-A9DPKGui86bPxtNnBY7UhuLa6s4fUFGGBJIsnk2Y-1wc2DYwVny_fWuM5-FErYUpVGzoav11-fhXkmvg2IBI3oKJhCcEWLOiwqmr5aHYyEolpDT-dDidVNQoDyv4JIzM4g2INVPSejf_hpASicCDFdZsBD6ManYgvhuQYC6rKdwG6DlgrvsrP_zgSwpa1gEtbcc5L77EYaMkcktTOcBIvZvM6rz_xf5VdszhURTxvS-MfW0KMNE2RQAdshG9inNXd_5Q </stringProp>
           </elementProp>
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">referer</stringProp>
@@ -175,18 +175,10 @@
             <stringProp name="Header.name">content-type</stringProp>
             <stringProp name="Header.value">application/json</stringProp>
           </elementProp>
-          <elementProp name="" elementType="Header">
-            <stringProp name="Header.name">referer</stringProp>
-            <stringProp name="Header.value">https://celllime-dev.vizend.io/postin-boards/pavilion-boards-usr/notice</stringProp>
-          </elementProp>
-          <elementProp name="" elementType="Header">
-            <stringProp name="Header.name">authorization</stringProp>
-            <stringProp name="Header.value"></stringProp>
-          </elementProp>
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-guest" enabled="false">
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-toss" enabled="false">
         <collectionProp name="HeaderManager.headers">
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">content-type</stringProp>
@@ -198,6 +190,28 @@
           </elementProp>
         </collectionProp>
       </HeaderManager>
+      <hashTree/>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="header-toss-test" enabled="false">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">content-type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">authorization</stringProp>
+            <stringProp name="Header.value">Basic dGVzdF9nc2tfZG9jc19PYVB6OEw1S2RtUVhrelJ6M3k0N0JNdzY6 </stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="request default - toss" enabled="false">
+        <stringProp name="HTTPSampler.domain">api.tosspayments.com</stringProp>
+        <stringProp name="HTTPSampler.protocol">https</stringProp>
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+          <collectionProp name="Arguments.arguments"/>
+        </elementProp>
+        <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+      </ConfigTestElement>
       <hashTree/>
       <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="request default - gate" enabled="false">
         <stringProp name="HTTPSampler.domain">vizend-stg.vizend.io</stringProp>
@@ -286,7 +300,7 @@
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="variables - local" enabled="true">
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="variables - local">
         <collectionProp name="Arguments.arguments">
           <elementProp name="prefix" elementType="Argument">
             <stringProp name="Argument.name">prefix</stringProp>
@@ -2285,14 +2299,91 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;paymentId&quot;: &quot;01a0e6c6-2116-7000-a02f-4a3f0d9d1cb6&quot;,&#xd;
-  &quot;cancelReason&quot;: &quot;취소 사유입니다2&quot;,&#xd;
+  &quot;paymentId&quot;: &quot;01a0f009-88d5-7000-ba22-8cfd0ea6119a&quot;,&#xd;
+  &quot;cancelReason&quot;: &quot;취소 사유입니다2222&quot;,&#xd;
   &quot;cancelAmount&quot;: {&#xd;
-    &quot;value&quot;: 8900.00,&#xd;
+    &quot;value&quot;: 100.00,&#xd;
     &quot;currency&quot;: &quot;KRW&quot;&#xd;
   },&#xd;
-  &quot;idempotencyKey&quot;: &quot;test-123474&quot;&#xd;
+  &quot;idempotencyKey&quot;: &quot;test-1234741&quot;&#xd;
 }</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="statusChanged" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/webhook/toss/payment-status-changed</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;eventType&quot;: &quot;eventType_4a6ef84eb42a&quot;,&#xd;
+  &quot;data&quot;: {&#xd;
+    &quot;orderId&quot;: &quot;orderId_0f51f0bc979d&quot;,&#xd;
+    &quot;paymentKey&quot;: &quot;paymentKey_4c0a3926307d&quot;&#xd;
+  },&#xd;
+  &quot;response&quot;: {&#xd;
+    &quot;entityName&quot;: &quot;entityName_d0cbd3d4b119&quot;,&#xd;
+    &quot;entityIds&quot;: [&#xd;
+      &quot;entityIds_b84dbde8aa54&quot;&#xd;
+    ],&#xd;
+    &quot;requestFailed&quot;: false,&#xd;
+    &quot;failureMessage&quot;: {&#xd;
+      &quot;exceptionName&quot;: &quot;exceptionName_9d65fc029f84&quot;,&#xd;
+      &quot;exceptionMessage&quot;: &quot;exceptionMessage_73c0a3da4bc2&quot;,&#xd;
+      &quot;exceptionCode&quot;: &quot;exceptionCode_e98a73d39194&quot;&#xd;
+    }&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="=========================== toss" enabled="false">
+          <stringProp name="HTTPSampler.path">${prefix}/restful/payment/cm/cancel-payment/command</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;paymentId&quot;: &quot;01a0ec90-a44c-7000-9d1f-108813167a8b&quot;,&#xd;
+  &quot;cancelReason&quot;: &quot;취소 사유입니다2&quot;,&#xd;
+  &quot;cancelAmount&quot;: {&#xd;
+    &quot;value&quot;: 100.00,&#xd;
+    &quot;currency&quot;: &quot;KRW&quot;&#xd;
+  },&#xd;
+  &quot;idempotencyKey&quot;: &quot;test-1234741&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="카드번호결제" enabled="false">
+          <stringProp name="HTTPSampler.path">/v1/payments/key-in</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;amount&quot;:&quot;100&quot;,&quot;cardExpirationMonth&quot;:&quot;08&quot;,&quot;cardExpirationYear&quot;:&quot;28&quot;,&quot;cardNumber&quot;:&quot;5417070027523322&quot;,&quot;customerIdentityNumber&quot;:&quot;960329&quot;,&quot;orderId&quot;:&quot;test-order-5&quot;,&quot;orderName&quot;:&quot;테스트 오더5&quot;}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>

@@ -1,0 +1,75 @@
+{
+  "contract": {
+    "inputs": [
+      {
+        "name": "request",
+        "type": {
+          "name": "CounselingReservationCdo",
+          "typeArguments": [],
+          "piObjectType": "EntityCdo",
+          "piObjectId": "01a1330f-fc0f-7000-9405-8fb7f44c36ac"
+        }
+      }
+    ],
+    "resultType": {
+      "name": "String"
+    },
+    "effects": [
+      "REGISTER_ONE:01a1330f-fbfb-7000-93ef-2377897cc7e8"
+    ],
+    "errors": [
+      "request-required"
+    ]
+  },
+  "logicPlan": {
+    "steps": [
+      {
+        "id": "requireRequest",
+        "kind": "REQUIRE",
+        "condition": {
+          "kind": "OP",
+          "operator": "NE",
+          "args": [
+            {
+              "kind": "REF",
+              "path": "request"
+            },
+            {
+              "kind": "TYPED_LITERAL",
+              "type": {
+                "name": "CounselingReservationCdo",
+                "typeArguments": [],
+                "piObjectType": "EntityCdo",
+                "piObjectId": "01a1330f-fc0f-7000-9405-8fb7f44c36ac"
+              },
+              "value": null
+            }
+          ]
+        },
+        "error": "request-required"
+      },
+      {
+        "id": "registerReservation",
+        "kind": "CALL_DOMAIN",
+        "piEntityId": "01a1330f-fbfb-7000-93ef-2377897cc7e8",
+        "operation": "REGISTER_ONE",
+        "args": [
+          {
+            "kind": "REF",
+            "path": "request"
+          }
+        ],
+        "bind": "reservationId"
+      },
+      {
+        "id": "returnReservationId",
+        "kind": "RETURN",
+        "value": {
+          "kind": "REF",
+          "path": "reservationId"
+        }
+      }
+    ]
+  }
+}
+

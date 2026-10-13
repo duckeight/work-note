@@ -1,0 +1,124 @@
+{
+  "contract": {
+      "inputs": [
+        {
+          "name": "request",
+          "type": {
+            "name": "CounselingReservationFdo",
+            "typeArguments": [],
+            "piObjectType": "EntityFdo",
+            "piObjectId": "01a1330f-fc27-7000-b652-1c44b2be4cb6"
+          }
+        }
+      ],
+      "resultType": {
+        "name": "CounselingReservationRdo",
+        "typeArguments": [],
+        "piObjectType": "EntityRdo",
+        "piObjectId": "01a1330f-fc45-7000-a3e8-d07404259967"
+      },
+      "effects": [
+        "FIND_BY_ID:01a1330f-fbfb-7000-93ef-2377897cc7e8"
+      ],
+      "errors": []
+    },
+  "logicPlan": {
+    "steps": [
+      {
+        "id": "checkRequest",
+        "kind": "IF",
+        "condition": {
+          "kind": "OP",
+          "operator": "AND",
+          "args": [
+            {
+              "kind": "OP",
+              "operator": "NE",
+              "args": [
+                {
+                  "kind": "REF",
+                  "path": "request"
+                },
+                {
+                  "kind": "TYPED_LITERAL",
+                  "type": {
+                    "name": "CounselingReservationFdo",
+                    "piObjectType": "EntityFdo",
+                    "piObjectId": "01a1330f-fc27-7000-b652-1c44b2be4cb6"
+                  },
+                  "value": null
+                }
+              ]
+            },
+            {
+              "kind": "OP",
+              "operator": "NE",
+              "args": [
+                {
+                  "kind": "REF",
+                  "path": "request.id"
+                },
+                {
+                  "kind": "TYPED_LITERAL",
+                  "type": {
+                    "name": "String"
+                  },
+                  "value": null
+                }
+              ]
+            }
+          ]
+        },
+        "thenSteps": [
+          {
+            "id": "findReservation",
+            "kind": "CALL_DOMAIN",
+            "piEntityId": "01a1330f-fbfb-7000-93ef-2377897cc7e8",
+            "operation": "FIND_BY_ID",
+            "args": [
+              {
+                "kind": "REF",
+                "path": "request.id"
+              }
+            ],
+            "bind": "reservation"
+          },
+          {
+            "id": "returnReservation",
+            "kind": "RETURN",
+            "value": {
+              "kind": "OBJECT",
+              "type": {
+                "name": "CounselingReservationRdo",
+                "piObjectType": "EntityRdo",
+                "piObjectId": "01a1330f-fc45-7000-a3e8-d07404259967"
+              },
+              "fields": {
+                "id": {
+                  "kind": "REF",
+                  "path": "reservation.id"
+                }
+              }
+            }
+          }
+        ],
+        "elseSteps": [
+          {
+            "id": "returnNull",
+            "kind": "RETURN",
+            "value": {
+              "kind": "TYPED_LITERAL",
+              "type": {
+                "name": "CounselingReservationRdo",
+                "piObjectType": "EntityRdo",
+                "piObjectId": "01a1330f-fc45-7000-a3e8-d07404259967"
+              },
+              "value": null
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+
